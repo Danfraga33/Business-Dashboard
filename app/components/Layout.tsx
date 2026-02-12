@@ -30,7 +30,7 @@ export default function DashboardLayout() {
           sidebarCollapsed ? "ml-[80px]" : "ml-[280px]"
         }`}
       >
-        <div className="max-w-[1600px] mx-auto px-10 py-10">
+        <div className="max-w-[2000px] mx-auto px-10 py-10">
           <Outlet />
         </div>
       </main>
