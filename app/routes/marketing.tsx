@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router";
 import { getMarketingMetrics, getChannelPerformance, type MarketingMetrics, type ChannelPerformance } from "../lib/marketing.server";
+import { Layout } from "../components/Layout";
 import { PageHeader } from "../components/PageHeader";
 import { StatCard } from "../components/StatCard";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
@@ -58,10 +59,11 @@ export default function MarketingOverview() {
   }));
 
   return (
-    <div className="space-y-6">
+    <Layout>
+      <div className="space-y-6">
         <PageHeader
           title="Marketing Overview"
-          description="Last 30 days of marketing performance across all channels"
+          description="High-level marketing performance across all channels"
         />
 
         {/* Metrics Grid */}
@@ -211,6 +213,7 @@ export default function MarketingOverview() {
             </table>
           </div>
         </div>
-    </div>
+      </div>
+    </Layout>
   );
 }
