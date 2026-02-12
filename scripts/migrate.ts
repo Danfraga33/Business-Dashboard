@@ -49,7 +49,7 @@ async function migrate() {
         name VARCHAR(255),
         plan VARCHAR(50),
         mrr DECIMAL(10,2),
-        health_score INT,
+        health_score INT CHECK (health_score >= 0 AND health_score <= 100),
         segment VARCHAR(50),
         signup_date TIMESTAMP WITH TIME ZONE,
         activation_date TIMESTAMP WITH TIME ZONE,
@@ -59,11 +59,6 @@ async function migrate() {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       )
-    `;
-
-    await sql`
-      CREATE INDEX IF NOT EXISTS idx_customers_email
-      ON customers(email)
     `;
 
     await sql`
@@ -115,7 +110,8 @@ async function migrate() {
         signups INT,
         paid_conversions INT,
         revenue DECIMAL(10,2),
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(channel_name, date)
       )
     `;
 
@@ -166,7 +162,7 @@ async function migrate() {
         status VARCHAR(20),
         release_date DATE,
         adoption_rate DECIMAL(5,2),
-        engagement_score INT,
+        engagement_score INT CHECK (engagement_score >= 0 AND engagement_score <= 100),
         retention_impact DECIMAL(5,2),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -185,13 +181,14 @@ async function migrate() {
         date DATE NOT NULL,
         service_name VARCHAR(100),
         cost DECIMAL(10,2),
-        uptime_percentage DECIMAL(5,2),
+        uptime_percentage DECIMAL(5,2) CHECK (uptime_percentage >= 0 AND uptime_percentage <= 100),
         api_response_time_p50 INT,
         api_response_time_p95 INT,
         api_response_time_p99 INT,
         total_requests INT,
         error_rate DECIMAL(5,2),
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(service_name, date)
       )
     `;
 
@@ -209,7 +206,7 @@ async function migrate() {
     await sql`
       CREATE TABLE IF NOT EXISTS support_tickets (
         id SERIAL PRIMARY KEY,
-        customer_id INT REFERENCES customers(id),
+        customer_id INT REFERENCES customers(id) ON DELETE CASCADE,
         subject VARCHAR(255),
         description TEXT,
         priority VARCHAR(20),
@@ -237,6 +234,146 @@ async function migrate() {
       CREATE INDEX IF NOT EXISTS idx_tickets_customer
       ON support_tickets(customer_id)
     `;
+
+    // Add constraints to existing tables (idempotent)
+    console.log("Adding data integrity constraints...");
+
+    // Add CHECK constraint for customers.health_score
+    try {
+      await sql`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM pg_constraint
+            WHERE conname = 'customers_health_score_check'
+          ) THEN
+            ALTER TABLE customers
+            ADD CONSTRAINT customers_health_score_check
+            CHECK (health_score >= 0 AND health_score <= 100);
+          END IF;
+        END $$;
+      `;
+      console.log("✓ Added CHECK constraint on customers.health_score");
+    } catch (error) {
+      console.log("  customers.health_score constraint already exists or error:", error.message);
+    }
+
+    // Add CHECK constraint for infrastructure_metrics.uptime_percentage
+    try {
+      await sql`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM pg_constraint
+            WHERE conname = 'infrastructure_metrics_uptime_percentage_check'
+          ) THEN
+            ALTER TABLE infrastructure_metrics
+            ADD CONSTRAINT infrastructure_metrics_uptime_percentage_check
+            CHECK (uptime_percentage >= 0 AND uptime_percentage <= 100);
+          END IF;
+        END $$;
+      `;
+      console.log("✓ Added CHECK constraint on infrastructure_metrics.uptime_percentage");
+    } catch (error) {
+      console.log("  infrastructure_metrics.uptime_percentage constraint already exists or error:", error.message);
+    }
+
+    // Add CHECK constraint for feature_rollouts.engagement_score
+    try {
+      await sql`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM pg_constraint
+            WHERE conname = 'feature_rollouts_engagement_score_check'
+          ) THEN
+            ALTER TABLE feature_rollouts
+            ADD CONSTRAINT feature_rollouts_engagement_score_check
+            CHECK (engagement_score >= 0 AND engagement_score <= 100);
+          END IF;
+        END $$;
+      `;
+      console.log("✓ Added CHECK constraint on feature_rollouts.engagement_score");
+    } catch (error) {
+      console.log("  feature_rollouts.engagement_score constraint already exists or error:", error.message);
+    }
+
+    // Add UNIQUE constraint for marketing_channels(channel_name, date)
+    try {
+      await sql`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM pg_constraint
+            WHERE conname = 'marketing_channels_channel_name_date_key'
+          ) THEN
+            ALTER TABLE marketing_channels
+            ADD CONSTRAINT marketing_channels_channel_name_date_key
+            UNIQUE (channel_name, date);
+          END IF;
+        END $$;
+      `;
+      console.log("✓ Added UNIQUE constraint on marketing_channels(channel_name, date)");
+    } catch (error) {
+      console.log("  marketing_channels unique constraint already exists or error:", error.message);
+    }
+
+    // Add UNIQUE constraint for infrastructure_metrics(service_name, date)
+    try {
+      await sql`
+        DO $$
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM pg_constraint
+            WHERE conname = 'infrastructure_metrics_service_name_date_key'
+          ) THEN
+            ALTER TABLE infrastructure_metrics
+            ADD CONSTRAINT infrastructure_metrics_service_name_date_key
+            UNIQUE (service_name, date);
+          END IF;
+        END $$;
+      `;
+      console.log("✓ Added UNIQUE constraint on infrastructure_metrics(service_name, date)");
+    } catch (error) {
+      console.log("  infrastructure_metrics unique constraint already exists or error:", error.message);
+    }
+
+    // Drop and recreate support_tickets foreign key with ON DELETE CASCADE
+    try {
+      await sql`
+        DO $$
+        BEGIN
+          -- Check if the constraint exists and doesn't have CASCADE
+          IF EXISTS (
+            SELECT 1 FROM pg_constraint
+            WHERE conname = 'support_tickets_customer_id_fkey'
+            AND confdeltype != 'c'  -- 'c' means CASCADE
+          ) THEN
+            -- Drop the old constraint
+            ALTER TABLE support_tickets
+            DROP CONSTRAINT support_tickets_customer_id_fkey;
+
+            -- Add the new constraint with CASCADE
+            ALTER TABLE support_tickets
+            ADD CONSTRAINT support_tickets_customer_id_fkey
+            FOREIGN KEY (customer_id) REFERENCES customers(id) ON DELETE CASCADE;
+          END IF;
+        END $$;
+      `;
+      console.log("✓ Updated foreign key constraint on support_tickets.customer_id with ON DELETE CASCADE");
+    } catch (error) {
+      console.log("  support_tickets foreign key constraint already correct or error:", error.message);
+    }
+
+    // Drop redundant index on customers.email (UNIQUE constraint already creates an index)
+    try {
+      await sql`
+        DROP INDEX IF EXISTS idx_customers_email;
+      `;
+      console.log("✓ Removed redundant index idx_customers_email");
+    } catch (error) {
+      console.log("  idx_customers_email index doesn't exist or error:", error.message);
+    }
 
     console.log("✓ Migration completed successfully");
   } catch (error) {
