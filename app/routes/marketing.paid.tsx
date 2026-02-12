@@ -1,8 +1,24 @@
 import { useLoaderData } from "react-router";
-import { getMarketingMetrics, getChannelPerformance, type MarketingMetrics, type ChannelPerformance } from "../lib/marketing.server";
-import { PageHeader } from "../components/PageHeader";
+import {
+  getMarketingMetrics,
+  getChannelPerformance,
+  type MarketingMetrics,
+  type ChannelPerformance,
+} from "../lib/marketing.server";
 import { StatCard } from "../components/StatCard";
-import { ScatterChart, Scatter, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ZAxis } from "recharts";
+import {
+  ScatterChart,
+  Scatter,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  ZAxis,
+} from "recharts";
+import { DollarSign, Target, TrendingUp } from "lucide-react";
 
 interface LoaderData {
   metrics: MarketingMetrics;
@@ -22,241 +38,306 @@ export async function loader() {
   return { metrics, paidChannels };
 }
 
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function ScatterTooltip({ active, payload }: any) {
+  if (!active || !payload?.length) return null;
+  const data = payload[0].payload;
+  return (
+    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-xs font-medium text-ink mb-1.5">{data.name}</p>
+      <p className="text-xs font-mono text-ink-secondary">
+        Spend: {formatCurrency(data.x)}
+      </p>
+      <p className="text-xs font-mono text-ink-secondary">
+        Conversions: {data.y.toLocaleString()}
+      </p>
+      <p className="text-xs font-mono text-ink-secondary">
+        CAC: {formatCurrency(data.z)}
+      </p>
+    </div>
+  );
+}
+
+function BarTooltip({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-xs text-ink-muted mb-1">{label}</p>
+      {payload.map((entry: any) => (
+        <p
+          key={entry.name}
+          className="text-xs font-mono"
+          style={{ color: entry.color }}
+        >
+          {entry.name}:{" "}
+          {entry.name === "CAC"
+            ? formatCurrency(entry.value)
+            : `${entry.value.toFixed(2)}x`}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export default function MarketingPaid() {
   const { metrics, paidChannels } = useLoaderData<LoaderData>();
 
-  // Format numbers for display
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
-  // Calculate paid-specific metrics from paidChannels data
-  const paidSpend = paidChannels.reduce((sum, channel) => sum + channel.spend, 0);
-  const paidSignups = paidChannels.reduce((sum, channel) => sum + channel.signups, 0);
-  const paidConversions = paidChannels.reduce((sum, channel) => sum + channel.conversions, 0);
+  const paidSpend = paidChannels.reduce((sum, ch) => sum + ch.spend, 0);
+  const paidSignups = paidChannels.reduce((sum, ch) => sum + ch.signups, 0);
+  const paidConversions = paidChannels.reduce(
+    (sum, ch) => sum + ch.conversions,
+    0
+  );
   const paidCAC = paidConversions > 0 ? paidSpend / paidConversions : 0;
 
-  // Prepare scatter plot data (Spend vs Conversions)
-  const scatterData = paidChannels.map((channel) => ({
-    x: channel.spend,
-    y: channel.conversions,
-    z: channel.cac,
-    name: channel.channel_name,
+  const scatterData = paidChannels.map((ch) => ({
+    x: ch.spend,
+    y: ch.conversions,
+    z: ch.cac,
+    name: ch.channel_name,
   }));
 
-  // Prepare CAC comparison data
-  const cacChartData = paidChannels.map((channel) => ({
-    name: channel.channel_name,
-    CAC: channel.cac,
+  const cacData = paidChannels.map((ch) => ({
+    name: ch.channel_name,
+    CAC: ch.cac,
   }));
 
-  // Prepare ROAS comparison data
-  const roasChartData = paidChannels.map((channel) => ({
-    name: channel.channel_name,
-    ROAS: channel.roas,
+  const roasData = paidChannels.map((ch) => ({
+    name: ch.channel_name,
+    ROAS: ch.roas,
   }));
-
-  // Custom tooltip for scatter plot
-  const CustomScatterTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
-      const data = payload[0].payload;
-      return (
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-3">
-          <p className="font-semibold text-gray-900 dark:text-white mb-2">{data.name}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            Spend: <span className="font-medium">{formatCurrency(data.x)}</span>
-          </p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            Conversions: <span className="font-medium">{data.y.toLocaleString()}</span>
-          </p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
-            CAC: <span className="font-medium">{formatCurrency(data.z)}</span>
-          </p>
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
-    <>
-      <PageHeader
-        title="Paid Channels"
-          description="Performance metrics for paid marketing channels"
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="animate-in">
+        <h2 className="text-2xl font-semibold text-ink leading-tight">
+          Paid Channels
+        </h2>
+        <p className="text-sm text-ink-muted mt-1">
+          Spend efficiency and acquisition metrics — last 30 days
+        </p>
+      </div>
+
+      {/* Metrics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <StatCard
+          label="Paid Spend"
+          value={formatCurrency(paidSpend)}
+          className="animate-in stagger-1"
         />
+        <StatCard
+          label="Paid CAC"
+          value={formatCurrency(paidCAC)}
+          className="animate-in stagger-1"
+        />
+        <StatCard
+          label="Paid Signups"
+          value={paidSignups.toLocaleString()}
+          className="animate-in stagger-2"
+        />
+        <StatCard
+          label="Paid Conversions"
+          value={paidConversions.toLocaleString()}
+          className="animate-in stagger-2"
+        />
+      </div>
 
-        {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            label="Paid Spend"
-            value={formatCurrency(paidSpend)}
-          />
-          <StatCard
-            label="Paid CAC"
-            value={formatCurrency(paidCAC)}
-          />
-          <StatCard
-            label="Paid Signups"
-            value={paidSignups.toLocaleString()}
-          />
-          <StatCard
-            label="Paid Conversions"
-            value={paidConversions.toLocaleString()}
-          />
-        </div>
+      {/* Scatter Plot */}
+      <div className="card animate-in stagger-3">
+        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+          <Target className="w-4 h-4 text-accent" />
+          Spend vs Conversions
+        </h3>
+        <ResponsiveContainer width="100%" height={320}>
+          <ScatterChart margin={{ top: 10, right: 20, bottom: 20, left: 20 }}>
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="var(--color-edge)"
+            />
+            <XAxis
+              type="number"
+              dataKey="x"
+              name="Spend"
+              tickFormatter={(v) => formatCurrency(v)}
+              tick={{ fill: "#78716C", fontSize: 11 }}
+              axisLine={{ stroke: "var(--color-edge)" }}
+              tickLine={false}
+              label={{
+                value: "Spend",
+                position: "insideBottom",
+                offset: -10,
+                style: { fill: "#78716C", fontSize: 11 },
+              }}
+            />
+            <YAxis
+              type="number"
+              dataKey="y"
+              name="Conversions"
+              tick={{ fill: "#78716C", fontSize: 11 }}
+              axisLine={false}
+              tickLine={false}
+              label={{
+                value: "Conversions",
+                angle: -90,
+                position: "insideLeft",
+                style: { fill: "#78716C", fontSize: 11 },
+              }}
+            />
+            <ZAxis type="number" dataKey="z" range={[50, 400]} name="CAC" />
+            <Tooltip content={<ScatterTooltip />} />
+            <Scatter name="Channels" data={scatterData} fill="#2563EB" />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </div>
 
-        {/* Scatter Plot: Spend vs Conversions */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-            Spend vs Conversions
+      {/* CAC + ROAS Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* CAC by Channel */}
+        <div className="card animate-in stagger-4">
+          <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-danger" />
+            CAC by Channel
           </h3>
-          <ResponsiveContainer width="100%" height={400}>
-            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" />
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={cacData}>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="var(--color-edge)"
+              />
               <XAxis
-                type="number"
-                dataKey="x"
-                name="Spend"
-                tickFormatter={(value) => formatCurrency(value)}
-                label={{ value: "Spend", position: "insideBottom", offset: -10 }}
+                dataKey="name"
+                angle={-45}
+                textAnchor="end"
+                height={80}
+                tick={{ fill: "#78716C", fontSize: 11 }}
+                axisLine={{ stroke: "var(--color-edge)" }}
+                tickLine={false}
               />
               <YAxis
-                type="number"
-                dataKey="y"
-                name="Conversions"
-                label={{ value: "Conversions", angle: -90, position: "insideLeft" }}
+                tick={{ fill: "#78716C", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+                tickFormatter={(v) => `$${v}`}
               />
-              <ZAxis type="number" dataKey="z" range={[50, 400]} name="CAC" />
-              <Tooltip content={<CustomScatterTooltip />} />
-              <Scatter name="Channels" data={scatterData} fill="#3b82f6" />
-            </ScatterChart>
+              <Tooltip content={<BarTooltip />} />
+              <Bar dataKey="CAC" fill="#DC2626" radius={[3, 3, 0, 0]} />
+            </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* CAC by Channel Bar Chart */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-              CAC by Channel
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={cacChartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                  dataKey="name"
-                  angle={-45}
-                  textAnchor="end"
-                  height={100}
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis tickFormatter={(value) => formatCurrency(value)} />
-                <Tooltip formatter={(value) => formatCurrency(value as number)} />
-                <Legend />
-                <Bar dataKey="CAC" fill="#ec4899" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* ROAS by Channel Bar Chart */}
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
-              ROAS by Channel
-            </h3>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={roasChartData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis
-                  dataKey="name"
-                  angle={-45}
-                  textAnchor="end"
-                  height={100}
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis />
-                <Tooltip formatter={(value) => `${(value as number).toFixed(2)}x`} />
-                <Legend />
-                <Bar dataKey="ROAS" fill="#10b981" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+        {/* ROAS by Channel */}
+        <div className="card animate-in stagger-5">
+          <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-success" />
+            ROAS by Channel
+          </h3>
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={roasData}>
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="var(--color-edge)"
+              />
+              <XAxis
+                dataKey="name"
+                angle={-45}
+                textAnchor="end"
+                height={80}
+                tick={{ fill: "#78716C", fontSize: 11 }}
+                axisLine={{ stroke: "var(--color-edge)" }}
+                tickLine={false}
+              />
+              <YAxis
+                tick={{ fill: "#78716C", fontSize: 11 }}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip content={<BarTooltip />} />
+              <Bar dataKey="ROAS" fill="#059669" radius={[3, 3, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
+      </div>
 
-        {/* Detailed Paid Channels Table */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Paid Channels Performance
-            </h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-              <thead className="bg-gray-50 dark:bg-gray-900">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Channel
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Spend
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Clicks
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    CTR
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Signups
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Conversions
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    CAC
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    ROAS
-                  </th>
+      {/* Table */}
+      <div className="card animate-in stagger-6">
+        <h3 className="text-base font-semibold text-ink mb-5">
+          Paid Channels Performance
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-edge">
+                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
+                  Channel
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                  Spend
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                  Clicks
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                  CTR
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                  Signups
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                  Conv.
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                  CAC
+                </th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
+                  ROAS
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {paidChannels.map((channel) => (
+                <tr
+                  key={channel.channel_name}
+                  className="border-b border-edge/50"
+                >
+                  <td className="py-3 pr-4 text-sm font-medium text-ink">
+                    {channel.channel_name}
+                  </td>
+                  <td className="py-3 px-4 text-sm font-mono text-right text-ink-secondary">
+                    {formatCurrency(channel.spend)}
+                  </td>
+                  <td className="py-3 px-4 text-sm font-mono text-right text-ink-secondary">
+                    {channel.clicks.toLocaleString()}
+                  </td>
+                  <td className="py-3 px-4 text-sm font-mono text-right text-ink-secondary">
+                    {channel.ctr.toFixed(2)}%
+                  </td>
+                  <td className="py-3 px-4 text-sm font-mono text-right text-ink-secondary">
+                    {channel.signups.toLocaleString()}
+                  </td>
+                  <td className="py-3 px-4 text-sm font-mono text-right text-ink-secondary">
+                    {channel.conversions.toLocaleString()}
+                  </td>
+                  <td className="py-3 px-4 text-sm font-mono text-right text-ink-secondary">
+                    {formatCurrency(channel.cac)}
+                  </td>
+                  <td className="py-3 pl-4 text-sm font-mono text-right font-semibold text-ink">
+                    {channel.roas.toFixed(2)}x
+                  </td>
                 </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {paidChannels.map((channel) => (
-                  <tr key={channel.channel_name} className="hover:bg-gray-50 dark:hover:bg-gray-700">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                      {channel.channel_name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                      {formatCurrency(channel.spend)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                      {channel.clicks.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                      {channel.ctr.toFixed(2)}%
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                      {channel.signups.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                      {channel.conversions.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900 dark:text-white">
-                      {formatCurrency(channel.cac)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-semibold text-gray-900 dark:text-white">
-                      {channel.roas.toFixed(2)}x
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
-    </>
+      </div>
+    </div>
   );
 }
