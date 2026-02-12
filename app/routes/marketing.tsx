@@ -1,6 +1,5 @@
 import { useLoaderData } from "react-router";
 import { getMarketingMetrics, getChannelPerformance, type MarketingMetrics, type ChannelPerformance } from "../lib/marketing.server";
-import { Layout } from "../components/Layout";
 import { PageHeader } from "../components/PageHeader";
 import { StatCard } from "../components/StatCard";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
@@ -14,8 +13,7 @@ interface LoaderData {
 
 export async function loader() {
   const endDate = new Date();
-  const startDate = new Date();
-  startDate.setDate(startDate.getDate() - 30);
+  const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
   const [metrics, channelPerformance] = await Promise.all([
     getMarketingMetrics(startDate, endDate),
@@ -59,12 +57,11 @@ export default function MarketingOverview() {
   }));
 
   return (
-    <Layout>
-      <div className="space-y-6">
-        <PageHeader
-          title="Marketing Overview"
-          description="High-level marketing performance across all channels"
-        />
+    <>
+      <PageHeader
+        title="Marketing Overview"
+        description="High-level marketing performance across all channels"
+      />
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -213,7 +210,6 @@ export default function MarketingOverview() {
             </table>
           </div>
         </div>
-      </div>
-    </Layout>
+    </>
   );
 }

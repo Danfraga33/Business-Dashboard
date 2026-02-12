@@ -1,6 +1,5 @@
 import { useLoaderData } from "react-router";
 import { getChannelPerformance, type ChannelPerformance } from "../lib/marketing.server";
-import { Layout } from "../components/Layout";
 import { PageHeader } from "../components/PageHeader";
 import { StatCard } from "../components/StatCard";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -75,10 +74,9 @@ export default function MarketingOrganic() {
   };
 
   return (
-    <Layout>
-      <div className="space-y-6">
-        <PageHeader
-          title="Organic Channels"
+    <>
+      <PageHeader
+        title="Organic Channels"
           description="Performance metrics for organic marketing channels"
         />
 
@@ -222,7 +220,6 @@ export default function MarketingOrganic() {
             </table>
           </div>
         </div>
-      </div>
-    </Layout>
+    </>
   );
 }

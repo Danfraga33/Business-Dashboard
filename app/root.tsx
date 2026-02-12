@@ -34,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
         <script
           dangerouslySetInnerHTML={{
-            __html: `try{if(localStorage.getItem('dashboard-theme')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
+            __html: `try{const stored=localStorage.getItem('dashboard-storage');if(stored){const state=JSON.parse(stored);if(state.state&&state.state.theme==='dark')document.documentElement.classList.add('dark')}}catch(e){}`,
           }}
         />
       </head>

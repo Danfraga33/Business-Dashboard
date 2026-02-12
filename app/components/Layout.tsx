@@ -8,8 +8,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function DashboardLayout() {
-  const { sidebarCollapsed, toggleSidebar } = useDashboardStore();
+  const { sidebarCollapsed, toggleSidebar, theme } = useDashboardStore();
 
+  // Keyboard shortcut for toggling sidebar
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "b") {
@@ -20,6 +21,15 @@ export default function DashboardLayout() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [toggleSidebar]);
+
+  // Apply theme changes to document
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   return (
     <div className="noise-overlay min-h-screen">

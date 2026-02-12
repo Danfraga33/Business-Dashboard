@@ -1,6 +1,5 @@
 import { useLoaderData } from "react-router";
 import { getMarketingMetrics, getChannelPerformance, type MarketingMetrics, type ChannelPerformance } from "../lib/marketing.server";
-import { Layout } from "../components/Layout";
 import { PageHeader } from "../components/PageHeader";
 import { StatCard } from "../components/StatCard";
 import { ScatterChart, Scatter, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ZAxis } from "recharts";
@@ -85,10 +84,9 @@ export default function MarketingPaid() {
   };
 
   return (
-    <Layout>
-      <div className="space-y-6">
-        <PageHeader
-          title="Paid Channels"
+    <>
+      <PageHeader
+        title="Paid Channels"
           description="Performance metrics for paid marketing channels"
         />
 
@@ -259,7 +257,6 @@ export default function MarketingPaid() {
             </table>
           </div>
         </div>
-      </div>
-    </Layout>
+    </>
   );
 }
