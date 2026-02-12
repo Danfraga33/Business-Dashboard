@@ -17,9 +17,20 @@ export async function getSaasMetrics(days: number = 30): Promise<SaasMetrics[]> 
     ORDER BY date DESC
   `;
 
-  return results.map((row) => ({
-    ...row,
+  return results.map((row: any) => ({
+    id: row.id,
     date: new Date(row.date),
+    mrr: row.mrr,
+    arr: row.arr,
+    cac: row.cac,
+    ltv: row.ltv,
+    ltv_cac_ratio: row.ltv_cac_ratio,
+    payback_period_months: row.payback_period_months,
+    gross_margin: row.gross_margin,
+    nrr: row.nrr,
+    active_customers: row.active_customers,
+    new_customers: row.new_customers,
+    churned_customers: row.churned_customers,
     created_at: new Date(row.created_at),
   }));
 }
@@ -34,10 +45,21 @@ export async function getLatestSaasMetrics(): Promise<SaasMetrics | null> {
 
   if (results.length === 0) return null;
 
-  const row = results[0];
+  const row: any = results[0];
   return {
-    ...row,
+    id: row.id,
     date: new Date(row.date),
+    mrr: row.mrr,
+    arr: row.arr,
+    cac: row.cac,
+    ltv: row.ltv,
+    ltv_cac_ratio: row.ltv_cac_ratio,
+    payback_period_months: row.payback_period_months,
+    gross_margin: row.gross_margin,
+    nrr: row.nrr,
+    active_customers: row.active_customers,
+    new_customers: row.new_customers,
+    churned_customers: row.churned_customers,
     created_at: new Date(row.created_at),
   };
 }
@@ -50,11 +72,19 @@ export async function getAllCustomers(): Promise<Customer[]> {
     ORDER BY created_at DESC
   `;
 
-  return results.map((row) => ({
-    ...row,
+  return results.map((row: any) => ({
+    id: row.id,
+    email: row.email,
+    name: row.name,
+    plan: row.plan,
+    mrr: row.mrr,
+    health_score: row.health_score,
+    segment: row.segment,
     signup_date: row.signup_date ? new Date(row.signup_date) : null,
     activation_date: row.activation_date ? new Date(row.activation_date) : null,
     churned_date: row.churned_date ? new Date(row.churned_date) : null,
+    churn_reason: row.churn_reason,
+    cohort: row.cohort,
     created_at: new Date(row.created_at),
     updated_at: new Date(row.updated_at),
   }));
@@ -124,23 +154,28 @@ export async function searchCustomers(
     health_status?: 'critical' | 'at-risk' | 'healthy' | 'excellent';
   }
 ): Promise<Customer[]> {
-  // Build dynamic query based on filters
-  let conditions = [];
-  let params: any[] = [];
+  // For now, return all customers - full search implementation would require
+  // more complex query building with Neon's template literal approach
+  // This is a placeholder for future enhancement
+  const allCustomers = await getAllCustomers();
 
+  let filtered = allCustomers;
+
+  // Client-side filtering for MVP
   if (query) {
-    conditions.push(`(name ILIKE $${params.length + 1} OR email ILIKE $${params.length + 2})`);
-    params.push(`%${query}%`, `%${query}%`);
+    const lowerQuery = query.toLowerCase();
+    filtered = filtered.filter(c =>
+      c.email.toLowerCase().includes(lowerQuery) ||
+      c.name?.toLowerCase().includes(lowerQuery)
+    );
   }
 
   if (filters?.plan) {
-    conditions.push(`plan = $${params.length + 1}`);
-    params.push(filters.plan);
+    filtered = filtered.filter(c => c.plan === filters.plan);
   }
 
   if (filters?.segment) {
-    conditions.push(`segment = $${params.length + 1}`);
-    params.push(filters.segment);
+    filtered = filtered.filter(c => c.segment === filters.segment);
   }
 
   if (filters?.health_status) {
@@ -151,27 +186,10 @@ export async function searchCustomers(
       excellent: [76, 100],
     };
     const [min, max] = ranges[filters.health_status];
-    conditions.push(`health_score BETWEEN $${params.length + 1} AND $${params.length + 2}`);
-    params.push(min, max);
+    filtered = filtered.filter(c =>
+      c.health_score !== null && c.health_score >= min && c.health_score <= max
+    );
   }
 
-  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
-  const queryText = `
-    SELECT *
-    FROM customers
-    ${whereClause}
-    ORDER BY created_at DESC
-    LIMIT 100
-  `;
-
-  const results = await sql(queryText, params);
-
-  return results.map((row) => ({
-    ...row,
-    signup_date: row.signup_date ? new Date(row.signup_date) : null,
-    activation_date: row.activation_date ? new Date(row.activation_date) : null,
-    churned_date: row.churned_date ? new Date(row.churned_date) : null,
-    created_at: new Date(row.created_at),
-    updated_at: new Date(row.updated_at),
-  }));
+  return filtered.slice(0, 100);
 }

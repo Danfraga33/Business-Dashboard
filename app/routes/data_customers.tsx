@@ -1,7 +1,3 @@
-import { json } from "react-router";
-import type { Route } from "./+types/data.customers";
-import { useLoaderData } from "react-router";
-import { Layout } from "../components/Layout";
 import { PageHeader } from "../components/PageHeader";
 import { StatCard } from "../components/StatCard";
 import { EmptyState } from "../components/EmptyState";
@@ -11,17 +7,17 @@ import {
   getCustomerStats,
   getCohortAnalysis,
 } from "../lib/data.server";
-import type { Customer } from "../types/dashboard";
+import type { Customer, CohortData } from "../types/dashboard";
 import { format } from "date-fns";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader() {
   const [customers, stats, cohorts] = await Promise.all([
     getAllCustomers(),
     getCustomerStats(),
     getCohortAnalysis(),
   ]);
 
-  return json({ customers, stats, cohorts });
+  return { customers, stats, cohorts };
 }
 
 function getHealthLabel(score: number | null): { label: string; color: string } {
@@ -32,12 +28,12 @@ function getHealthLabel(score: number | null): { label: string; color: string } 
   return { label: 'Critical', color: 'text-red-600' };
 }
 
-export default function Customers({ loaderData }: Route.ComponentProps) {
+export default function Customers({ loaderData }: { loaderData: Awaited<ReturnType<typeof loader>> }) {
   const { customers, stats, cohorts } = loaderData;
 
   if (customers.length === 0) {
     return (
-      <Layout>
+      <>
         <PageHeader
           title="Customers"
           description="Customer lifecycle and behavioral metrics"
@@ -47,12 +43,12 @@ export default function Customers({ loaderData }: Route.ComponentProps) {
           title="No customers yet"
           description="Run 'npm run seed' to populate the database with sample customer data."
         />
-      </Layout>
+      </>
     );
   }
 
   return (
-    <Layout>
+    <>
       <PageHeader
         title="Customers"
         description="Customer lifecycle and behavioral metrics"
@@ -71,7 +67,7 @@ export default function Customers({ loaderData }: Route.ComponentProps) {
         <StatCard
           label="New This Month"
           value={stats.new_this_month.toLocaleString()}
-          trend={15.2}
+          change={15.2}
         />
         <StatCard
           label="Churned"
@@ -105,7 +101,7 @@ export default function Customers({ loaderData }: Route.ComponentProps) {
               </tr>
             </thead>
             <tbody>
-              {cohorts.map((cohort) => (
+              {cohorts.map((cohort: CohortData) => (
                 <tr key={cohort.cohort} className="border-b border-edge">
                   <td className="py-3 px-4 text-sm text-ink">{cohort.cohort}</td>
                   <td className="py-3 px-4 text-sm text-ink text-right">{cohort.customers}</td>
@@ -135,7 +131,7 @@ export default function Customers({ loaderData }: Route.ComponentProps) {
               </tr>
             </thead>
             <tbody>
-              {customers.slice(0, 20).map((customer) => {
+              {customers.slice(0, 20).map((customer: Customer) => {
                 const health = getHealthLabel(customer.health_score);
                 return (
                   <tr key={customer.id} className="border-b border-edge">
@@ -160,6 +156,6 @@ export default function Customers({ loaderData }: Route.ComponentProps) {
           </table>
         </div>
       </div>
-    </Layout>
+    </>
   );
 }

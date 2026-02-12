@@ -1,31 +1,27 @@
-import { json } from "react-router";
-import type { Route } from "./+types/data.unit-economics";
-import { useLoaderData } from "react-router";
-import { Layout } from "../components/Layout";
 import { PageHeader } from "../components/PageHeader";
 import { StatCard } from "../components/StatCard";
-import { LoadingSpinner } from "../components/LoadingSpinner";
 import { EmptyState } from "../components/EmptyState";
 import { BarChart3 } from "lucide-react";
 import { getSaasMetrics, getLatestSaasMetrics } from "../lib/data.server";
+import type { SaasMetrics } from "../types/dashboard";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { format } from "date-fns";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export async function loader() {
   const [metrics, latest] = await Promise.all([
     getSaasMetrics(90),
     getLatestSaasMetrics(),
   ]);
 
-  return json({ metrics, latest });
+  return { metrics, latest };
 }
 
-export default function UnitEconomics({ loaderData }: Route.ComponentProps) {
+export default function UnitEconomics({ loaderData }: { loaderData: Awaited<ReturnType<typeof loader>> }) {
   const { metrics, latest } = loaderData;
 
   if (!latest) {
     return (
-      <Layout>
+      <>
         <PageHeader
           title="Unit Economics"
           description="Core SaaS metrics that define business health"
@@ -35,11 +31,11 @@ export default function UnitEconomics({ loaderData }: Route.ComponentProps) {
           title="No data available"
           description="Run 'npm run seed' to populate the database with sample data."
         />
-      </Layout>
+      </>
     );
   }
 
-  const chartData = metrics.map((m) => ({
+  const chartData = metrics.map((m: SaasMetrics) => ({
     date: format(m.date, 'MMM dd'),
     MRR: m.mrr,
     CAC: m.cac,
@@ -47,7 +43,7 @@ export default function UnitEconomics({ loaderData }: Route.ComponentProps) {
   }));
 
   return (
-    <Layout>
+    <>
       <PageHeader
         title="Unit Economics"
         description="Core SaaS metrics that define business health"
@@ -58,7 +54,7 @@ export default function UnitEconomics({ loaderData }: Route.ComponentProps) {
         <StatCard
           label="MRR"
           value={`$${latest.mrr?.toLocaleString() || 0}`}
-          trend={5.2}
+          change={5.2}
         />
         <StatCard
           label="ARR"
@@ -79,7 +75,7 @@ export default function UnitEconomics({ loaderData }: Route.ComponentProps) {
         <StatCard
           label="LTV:CAC Ratio"
           value={latest.ltv_cac_ratio?.toFixed(2) || '0'}
-          subtitle="Target: 3:1 or higher"
+          changeLabel="Target: 3:1 or higher"
         />
         <StatCard
           label="Payback Period"
@@ -123,14 +119,14 @@ export default function UnitEconomics({ loaderData }: Route.ComponentProps) {
         <StatCard
           label="New This Month"
           value={latest.new_customers?.toLocaleString() || '0'}
-          trend={12.5}
+          change={12.5}
         />
         <StatCard
           label="Churned This Month"
           value={latest.churned_customers?.toLocaleString() || '0'}
-          trend={-5.3}
+          change={-5.3}
         />
       </div>
-    </Layout>
+    </>
   );
 }
