@@ -8,5 +8,8 @@ export default [
     route("journal", "routes/journal.tsx"),
     route("experiments", "routes/experiments.tsx"),
     route("settings", "routes/settings.tsx"),
+    route("marketing", "routes/marketing.tsx"),
+    route("marketing/paid", "routes/marketing.paid.tsx"),
+    route("marketing/organic", "routes/marketing.organic.tsx"),
   ]),
 ] satisfies RouteConfig;
