@@ -7,7 +7,8 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "migrate": "tsx scripts/migrate.ts"
+    "migrate": "tsx scripts/migrate.ts",
+    "seed": "tsx scripts/seed-data.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
