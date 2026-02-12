@@ -3,7 +3,6 @@ import { Outlet } from "react-router";
 import { Sidebar } from "./Sidebar";
 import { useDashboardStore } from "../store/dashboard";
 
-// Simple Layout wrapper for individual routes
 export function Layout({ children }: { children: React.ReactNode }) {
   return <div className="space-y-6">{children}</div>;
 }
