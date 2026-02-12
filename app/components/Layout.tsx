@@ -4,12 +4,7 @@ import { Sidebar } from "./Sidebar";
 import { useDashboardStore } from "../store/dashboard";
 
 export default function DashboardLayout() {
-  const { sidebarCollapsed, toggleSidebar, initFromStorage } =
-    useDashboardStore();
-
-  useEffect(() => {
-    initFromStorage();
-  }, [initFromStorage]);
+  const { sidebarCollapsed, toggleSidebar } = useDashboardStore();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

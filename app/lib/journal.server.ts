@@ -117,6 +117,7 @@ export async function updateJournalEntry(
   `;
   values.push(id);
 
+  // @ts-ignore - Dynamic query construction with neon
   const entries = await sql(query, values);
   return entries[0] as JournalEntry || null;
 }
