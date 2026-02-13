@@ -5,6 +5,7 @@ export interface NavItem {
   icon: LucideIcon;
   label: string;
   children?: NavItem[];
+  separatorBefore?: boolean;
 }
 
 export interface NavSection {

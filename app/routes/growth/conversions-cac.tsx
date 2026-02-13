@@ -4,8 +4,10 @@ import {
   getChannelPerformance,
   type MarketingMetrics,
   type ChannelPerformance,
-} from "../lib/marketing.server";
-import { StatCard } from "../components/StatCard";
+} from "../../lib/marketing.server";
+import { getLatestSaasMetrics } from "../../lib/data.server";
+import type { SaasMetrics } from "../../types/dashboard";
+import { StatCard } from "../../components/StatCard";
 import {
   BarChart,
   Bar,
@@ -14,31 +16,31 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell,
 } from "recharts";
 import {
   TrendingUp,
-  DollarSign,
-  Users,
   MousePointerClick,
   ArrowRight,
+  Target,
 } from "lucide-react";
 
 interface LoaderData {
   metrics: MarketingMetrics;
   channels: ChannelPerformance[];
+  latestSaas: SaasMetrics | null;
 }
 
 export async function loader() {
   const thirtyDaysAgo = new Date();
   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  const [metrics, channels] = await Promise.all([
+  const [metrics, channels, latestSaas] = await Promise.all([
     getMarketingMetrics(thirtyDaysAgo),
     getChannelPerformance(thirtyDaysAgo),
+    getLatestSaasMetrics(),
   ]);
 
-  return { metrics, channels };
+  return { metrics, channels, latestSaas };
 }
 
 function ChartTooltip({ active, payload, label }: any) {
@@ -73,14 +75,13 @@ const CHANNEL_COLORS = [
   "#0891B2", "#DB2777", "#65A30D",
 ];
 
-export default function Growth() {
-  const { metrics, channels } = useLoaderData<LoaderData>();
+export default function ConversionsCac() {
+  const { metrics, channels, latestSaas } = useLoaderData<LoaderData>();
 
   const totalImpressions = channels.reduce((sum, c) => sum + c.impressions, 0);
   const totalClicks = channels.reduce((sum, c) => sum + c.clicks, 0);
   const totalLeads = channels.reduce((sum, c) => sum + c.leads, 0);
 
-  // Funnel data
   const funnelSteps = [
     { stage: "Impressions", value: totalImpressions },
     { stage: "Clicks", value: totalClicks },
@@ -89,50 +90,55 @@ export default function Growth() {
     { stage: "Conversions", value: metrics.totalConversions },
   ];
 
-  // Channel spend chart data
-  const spendData = channels
-    .filter((c) => c.spend > 0)
+  // CAC efficiency by channel (sorted best to worst)
+  const cacData = channels
+    .filter((c) => c.cac > 0)
+    .sort((a, b) => a.cac - b.cac)
     .map((c) => ({
       name: c.channel_name,
-      spend: c.spend,
-      revenue: c.revenue,
+      CAC: Math.round(c.cac),
     }));
 
   return (
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">Growth</h2>
+        <div className="flex items-center gap-2 mb-1">
+          <span className="text-xs font-semibold text-accent uppercase tracking-wider">Tier 2 — Efficiency</span>
+        </div>
+        <h2 className="text-2xl font-semibold text-ink leading-tight">
+          Conversions & CAC Efficiency
+        </h2>
         <p className="text-sm text-ink-muted mt-1">
-          Acquisition channels, spend efficiency, and funnel performance — last 30 days
+          Conversion optimization, CAC reduction, and funnel performance — last 30 days
         </p>
       </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard
-          label="Total Spend"
-          value={formatCurrency(metrics.totalSpend)}
-          className="animate-in stagger-1"
-        />
-        <StatCard
           label="Blended CAC"
           value={formatCurrency(metrics.blendedCAC)}
           className="animate-in stagger-1"
         />
         <StatCard
-          label="Total Signups"
-          value={formatNumber(metrics.totalSignups)}
-          className="animate-in stagger-2"
+          label="Conversion Rate"
+          value={metrics.conversionRate.toFixed(1) + "%"}
+          className="animate-in stagger-1"
         />
         <StatCard
           label="ROAS"
           value={metrics.roas.toFixed(2) + "x"}
           className="animate-in stagger-2"
         />
+        <StatCard
+          label="LTV:CAC Ratio"
+          value={latestSaas ? Number(latestSaas.ltv_cac_ratio).toFixed(1) + ":1" : "—"}
+          className="animate-in stagger-2"
+        />
       </div>
 
-      {/* Sales Funnel */}
+      {/* Acquisition Funnel */}
       <div className="card animate-in stagger-3">
         <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
           <MousePointerClick className="w-4 h-4 text-accent" />
@@ -165,22 +171,22 @@ export default function Growth() {
         </div>
       </div>
 
-      {/* Spend by Channel Chart */}
-      {spendData.length > 0 && (
+      {/* CAC by Channel Chart */}
+      {cacData.length > 0 && (
         <div className="card animate-in stagger-4">
           <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-warning" />
-            Spend vs Revenue by Channel
+            <Target className="w-4 h-4 text-warning" />
+            CAC by Channel (Best → Worst)
           </h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={spendData} layout="vertical">
+            <BarChart data={cacData} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
               <XAxis
                 type="number"
                 tick={{ fill: "#78716C", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
-                tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
+                tickFormatter={(v) => `$${v}`}
               />
               <YAxis
                 dataKey="name"
@@ -191,8 +197,7 @@ export default function Growth() {
                 width={120}
               />
               <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="spend" fill="#EF4444" radius={[0, 3, 3, 0]} name="Spend" />
-              <Bar dataKey="revenue" fill="#059669" radius={[0, 3, 3, 0]} name="Revenue" />
+              <Bar dataKey="CAC" fill="#EF4444" radius={[0, 3, 3, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -208,27 +213,13 @@ export default function Growth() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-edge">
-                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
-                  Channel
-                </th>
-                <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">
-                  Type
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">
-                  Spend
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">
-                  Signups
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">
-                  CAC
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">
-                  ROAS
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-2">
-                  CTR
-                </th>
+                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">Channel</th>
+                <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">Type</th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">Spend</th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">Signups</th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">CAC</th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">ROAS</th>
+                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-2">CTR</th>
               </tr>
             </thead>
             <tbody>
@@ -245,19 +236,13 @@ export default function Growth() {
                   </td>
                   <td className="py-2.5 px-2 text-center">
                     <span className={`inline-flex px-2 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-wider ${
-                      channel.channel_type === "paid"
-                        ? "bg-warning/10 text-warning"
-                        : "bg-success/10 text-success"
+                      channel.channel_type === "paid" ? "bg-warning/10 text-warning" : "bg-success/10 text-success"
                     }`}>
                       {channel.channel_type}
                     </span>
                   </td>
-                  <td className="py-2.5 px-2 text-sm font-mono text-right text-ink">
-                    {formatCurrency(channel.spend)}
-                  </td>
-                  <td className="py-2.5 px-2 text-sm font-mono text-right text-ink-secondary">
-                    {formatNumber(channel.signups)}
-                  </td>
+                  <td className="py-2.5 px-2 text-sm font-mono text-right text-ink">{formatCurrency(channel.spend)}</td>
+                  <td className="py-2.5 px-2 text-sm font-mono text-right text-ink-secondary">{formatNumber(channel.signups)}</td>
                   <td className={`py-2.5 px-2 text-sm font-mono text-right ${
                     channel.cac > 0 && channel.cac < 100 ? "text-success" : channel.cac > 200 ? "text-danger" : "text-ink-secondary"
                   }`}>

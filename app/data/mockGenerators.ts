@@ -167,7 +167,7 @@ export function generateMockFeatureRollouts(count: number) {
 
 // Generate mock infrastructure metrics
 export function generateMockInfrastructureMetrics(days: number) {
-  const services = ['AWS', 'Vercel', 'Neon DB', 'Anthropic API', 'Stripe', 'Cloudflare'];
+  const services = ['Vercel', 'Non DB', 'Anthropic API', 'Stripe', ];
   const dates = generateDateRange(days);
   const data: any[] = [];
 
