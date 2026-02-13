@@ -13,7 +13,7 @@ export async function getSaasMetrics(days: number = 30): Promise<SaasMetrics[]> 
   const results = await sql`
     SELECT *
     FROM saas_metrics
-    WHERE date >= CURRENT_DATE - ${days}
+    WHERE date >= CURRENT_DATE - (${days} || ' days')::interval
     ORDER BY date DESC
   `;
 
@@ -143,6 +143,22 @@ export async function getCohortAnalysis(): Promise<CohortData[]> {
     mrr: Number(row.mrr || 0),
     retention_rate: Number(row.retention_rate || 0),
     churn_rate: Number(row.churn_rate || 0),
+  }));
+}
+
+export async function getChurnReasons(): Promise<{ reason: string; count: number }[]> {
+  const results = await sql`
+    SELECT COALESCE(churn_reason, 'Unknown') as reason, COUNT(*) as count
+    FROM customers
+    WHERE churned_date IS NOT NULL
+    GROUP BY churn_reason
+    ORDER BY count DESC
+    LIMIT 10
+  `;
+
+  return results.map((row: any) => ({
+    reason: row.reason,
+    count: Number(row.count),
   }));
 }
 

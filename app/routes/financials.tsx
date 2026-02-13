@@ -1,263 +1,293 @@
-import { useState } from "react";
+import { useLoaderData } from "react-router";
 import {
-  AreaChart,
-  Area,
+  getSaasMetrics,
+  getLatestSaasMetrics,
+} from "../lib/data.server";
+import { getServiceCostSummary, type ServiceCostSummary } from "../lib/operations.server";
+import type { SaasMetrics } from "../types/dashboard";
+import { StatCard } from "../components/StatCard";
+import {
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { AlertTriangle, TrendingUp, TrendingDown, DollarSign, Flame } from "lucide-react";
-import { MetricComparison } from "../components/MetricComparison";
-import { plSummary, monthlyBurn, budgetAlerts } from "../data/financials";
+import {
+  DollarSign,
+  TrendingUp,
+  Clock,
+  Server,
+} from "lucide-react";
 
-type Period = "mtd" | "qtd" | "ytd";
+interface LoaderData {
+  metrics: SaasMetrics[];
+  latest: SaasMetrics | null;
+  serviceSummary: ServiceCostSummary[];
+}
 
-function CustomTooltip({ active, payload, label }: any) {
+export async function loader() {
+  const [metrics, latest, serviceSummary] = await Promise.all([
+    getSaasMetrics(90),
+    getLatestSaasMetrics(),
+    getServiceCostSummary(30),
+  ]);
+
+  return { metrics, latest, serviceSummary };
+}
+
+function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
       <p className="text-xs text-ink-muted mb-1">{label}</p>
       {payload.map((entry: any) => (
         <p key={entry.name} className="text-xs font-mono" style={{ color: entry.color }}>
-          {entry.name}: ${entry.value.toLocaleString()}
+          {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
     </div>
   );
 }
 
+function formatCurrency(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function HealthIndicator({ value, thresholds, format }: {
+  value: number;
+  thresholds: { good: number; warning: number };
+  format?: (v: number) => string;
+}) {
+  const color = value >= thresholds.good
+    ? "text-success"
+    : value >= thresholds.warning
+    ? "text-warning"
+    : "text-danger";
+  return <span className={`font-mono font-semibold ${color}`}>{format ? format(value) : Number(value).toFixed(1)}</span>;
+}
+
 export default function Financials() {
-  const [period, setPeriod] = useState<Period>("mtd");
-  const netIncome = plSummary.revenue.total - plSummary.expenses.total;
-  const margin = ((netIncome / plSummary.revenue.total) * 100).toFixed(1);
+  const { metrics, latest, serviceSummary } = useLoaderData<LoaderData>();
+
+  if (!latest) {
+    return (
+      <div className="space-y-8">
+        <div className="animate-in">
+          <h2 className="text-2xl font-semibold text-ink">Financials</h2>
+          <p className="text-sm text-ink-muted mt-1">
+            No financial data available. Run the seed script to populate data.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const chartData = [...metrics].reverse().map((m) => ({
+    date: new Date(m.date).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+    CAC: m.cac,
+    LTV: m.ltv,
+    "LTV:CAC": Number(Number(m.ltv_cac_ratio).toFixed(1)),
+    "Gross Margin": Number(Number(m.gross_margin).toFixed(1)),
+  }));
+
+  const totalInfraCost = serviceSummary.reduce((sum, s) => sum + s.total_cost, 0);
+  const prev = metrics.length > 1 ? metrics[1] : latest;
+  const cacChange = prev.cac > 0 ? ((latest.cac - prev.cac) / prev.cac) * 100 : 0;
+  const ltvChange = prev.ltv > 0 ? ((latest.ltv - prev.ltv) / prev.ltv) * 100 : 0;
 
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-end justify-between animate-in">
-        <div>
-          <h2 className="text-2xl font-semibold text-ink leading-tight">
-            Financial Dashboard
-          </h2>
-          <p className="text-sm text-ink-muted mt-1">
-            Budget tracking and P&L analysis
-          </p>
+      <div className="animate-in">
+        <h2 className="text-2xl font-semibold text-ink leading-tight">Financials</h2>
+        <p className="text-sm text-ink-muted mt-1">
+          Unit economics, margins, and cost structure — last 90 days
+        </p>
+      </div>
+
+      {/* Unit Economics */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <StatCard
+          label="Customer Lifetime Value"
+          value={formatCurrency(latest.ltv)}
+          change={ltvChange}
+          changeLabel="vs yesterday"
+          className="animate-in stagger-1"
+        />
+        <StatCard
+          label="Customer Acquisition Cost"
+          value={formatCurrency(latest.cac)}
+          change={-cacChange}
+          changeLabel="vs yesterday"
+          className="animate-in stagger-1"
+        />
+        <StatCard
+          label="Monthly Infra Cost"
+          value={formatCurrency(totalInfraCost)}
+          className="animate-in stagger-2"
+        />
+        <StatCard
+          label="Monthly Recurring Revenue"
+          value={formatCurrency(latest.mrr)}
+          className="animate-in stagger-2"
+        />
+      </div>
+
+      {/* Health Indicators */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="card animate-in stagger-3">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center">
+              <TrendingUp className="w-3.5 h-3.5 text-accent" />
+            </div>
+            <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">LTV:CAC Ratio</p>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <HealthIndicator value={latest.ltv_cac_ratio} thresholds={{ good: 3, warning: 2 }} />
+            <span className="text-xs text-ink-muted">:1</span>
+          </div>
+          <p className="text-2xs text-ink-muted mt-2">Target: 3:1 or higher</p>
         </div>
-        <div className="flex bg-surface border border-edge rounded-lg overflow-hidden">
-          {(["mtd", "qtd", "ytd"] as Period[]).map((p) => (
-            <button
-              key={p}
-              onClick={() => setPeriod(p)}
-              className={`px-4 py-1.5 text-xs font-medium uppercase tracking-wider transition-colors cursor-pointer ${
-                period === p
-                  ? "bg-accent/10 text-accent"
-                  : "text-ink-muted hover:text-ink-secondary"
-              }`}
-            >
-              {p}
-            </button>
-          ))}
+
+        <div className="card animate-in stagger-3">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-lg bg-warning/10 flex items-center justify-center">
+              <Clock className="w-3.5 h-3.5 text-warning" />
+            </div>
+            <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">Payback Period</p>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="font-mono font-semibold text-ink">{Number(latest.payback_period_months).toFixed(1)}</span>
+            <span className="text-xs text-ink-muted">months</span>
+          </div>
+          <p className="text-2xs text-ink-muted mt-2">Target: &lt;12 months</p>
+        </div>
+
+        <div className="card animate-in stagger-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-lg bg-success/10 flex items-center justify-center">
+              <DollarSign className="w-3.5 h-3.5 text-success" />
+            </div>
+            <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">Gross Margin</p>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <HealthIndicator value={latest.gross_margin} thresholds={{ good: 70, warning: 50 }} />
+            <span className="text-xs text-ink-muted">%</span>
+          </div>
+          <p className="text-2xs text-ink-muted mt-2">Target: &gt;70%</p>
+        </div>
+
+        <div className="card animate-in stagger-4">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center">
+              <TrendingUp className="w-3.5 h-3.5 text-accent" />
+            </div>
+            <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">Net Revenue Retention</p>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <HealthIndicator value={latest.nrr} thresholds={{ good: 110, warning: 100 }} />
+            <span className="text-xs text-ink-muted">%</span>
+          </div>
+          <p className="text-2xs text-ink-muted mt-2">Target: &gt;110%</p>
         </div>
       </div>
 
-      {/* P&L Summary + Burn Chart */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* P&L Summary */}
-        <div className="card animate-in stagger-1">
+      {/* CAC vs LTV Chart */}
+      <div className="card animate-in stagger-5">
+        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+          <DollarSign className="w-4 h-4 text-warning" />
+          CAC vs LTV
+          <span className="text-2xs text-ink-muted font-normal ml-auto">Last 90 days</span>
+        </h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={chartData.filter((_, i) => i % 3 === 0)}>
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+            <XAxis
+              dataKey="date"
+              tick={{ fill: "#78716C", fontSize: 11 }}
+              axisLine={{ stroke: "var(--color-edge)" }}
+              tickLine={false}
+            />
+            <YAxis
+              tick={{ fill: "#78716C", fontSize: 11 }}
+              axisLine={false}
+              tickLine={false}
+              tickFormatter={(v) => `$${v}`}
+            />
+            <Tooltip content={<ChartTooltip />} />
+            <Bar dataKey="CAC" fill="#EF4444" radius={[3, 3, 0, 0]} />
+            <Bar dataKey="LTV" fill="#059669" radius={[3, 3, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Service Cost Breakdown */}
+      {serviceSummary.length > 0 && (
+        <div className="card animate-in stagger-6">
           <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
-            <DollarSign className="w-4 h-4 text-accent" />
-            P&L Summary
+            <Server className="w-4 h-4 text-ink-muted" />
+            Infrastructure Costs
+            <span className="text-2xs text-ink-muted font-normal ml-auto">Last 30 days</span>
           </h3>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-ink-secondary">Revenue</span>
-              <span className="metric-value text-lg text-success">
-                ${plSummary.revenue.total.toLocaleString()}
-              </span>
-            </div>
-            <div className="pl-4 space-y-2">
-              {plSummary.revenue.breakdown.map((item) => (
-                <div key={item.name} className="flex justify-between items-center">
-                  <span className="text-xs text-ink-muted">{item.name}</span>
-                  <span className="text-xs font-mono text-ink-secondary">
-                    ${item.amount.toLocaleString()}
-                  </span>
-                </div>
-              ))}
-            </div>
-            <div className="border-t border-edge pt-3 flex justify-between items-center">
-              <span className="text-sm text-ink-secondary">Expenses</span>
-              <span className="metric-value text-lg text-danger">
-                -${plSummary.expenses.total.toLocaleString()}
-              </span>
-            </div>
-            <div className="border-t border-edge pt-3 flex justify-between items-center">
-              <span className="text-sm font-medium text-ink">
-                Net Income
-              </span>
-              <div className="text-right">
-                <span className="metric-value text-xl text-success">
-                  ${netIncome.toLocaleString()}
-                </span>
-                <p className="text-2xs font-mono text-ink-muted mt-0.5">
-                  {margin}% margin
-                </p>
-              </div>
-            </div>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-edge">
+                  <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
+                    Service
+                  </th>
+                  <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                    Cost
+                  </th>
+                  <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                    Uptime
+                  </th>
+                  <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
+                    Error Rate
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {serviceSummary.map((service) => (
+                  <tr key={service.service_name} className="border-b border-edge/50">
+                    <td className="py-2.5 pr-4 text-sm font-medium text-ink">
+                      {service.service_name}
+                    </td>
+                    <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">
+                      {formatCurrency(service.total_cost)}
+                    </td>
+                    <td className="py-2.5 px-4 text-sm font-mono text-right">
+                      <span className={service.avg_uptime >= 99.5 ? "text-success" : service.avg_uptime >= 99 ? "text-warning" : "text-danger"}>
+                        {service.avg_uptime.toFixed(2)}%
+                      </span>
+                    </td>
+                    <td className={`py-2.5 pl-4 text-sm font-mono text-right ${
+                      service.avg_error_rate > 1 ? "text-danger font-semibold" : "text-ink-secondary"
+                    }`}>
+                      {service.avg_error_rate.toFixed(2)}%
+                    </td>
+                  </tr>
+                ))}
+                <tr className="border-t-2 border-edge">
+                  <td className="py-2.5 pr-4 text-sm font-semibold text-ink">Total</td>
+                  <td className="py-2.5 px-4 text-sm font-mono font-semibold text-right text-ink">
+                    {formatCurrency(totalInfraCost)}
+                  </td>
+                  <td colSpan={2} />
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        {/* Burn Chart */}
-        <div className="card animate-in stagger-2">
-          <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
-            <Flame className="w-4 h-4 text-warning" />
-            Revenue vs Expenses
-          </h3>
-          <ResponsiveContainer width="100%" height={260}>
-            <AreaChart data={monthlyBurn}>
-              <defs>
-                <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#10B981" stopOpacity={0.15} />
-                  <stop offset="100%" stopColor="#10B981" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="expGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#EF4444" stopOpacity={0.1} />
-                  <stop offset="100%" stopColor="#EF4444" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1E2749" />
-              <XAxis
-                dataKey="month"
-                tick={{ fill: "#64748B", fontSize: 11 }}
-                axisLine={{ stroke: "#1E2749" }}
-                tickLine={false}
-              />
-              <YAxis
-                tick={{ fill: "#64748B", fontSize: 11 }}
-                axisLine={false}
-                tickLine={false}
-                tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Area
-                type="monotone"
-                dataKey="revenue"
-                name="Revenue"
-                stroke="#10B981"
-                strokeWidth={2}
-                fill="url(#revGrad)"
-              />
-              <Area
-                type="monotone"
-                dataKey="expenses"
-                name="Expenses"
-                stroke="#EF4444"
-                strokeWidth={2}
-                fill="url(#expGrad)"
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      {/* Expense Breakdown Table */}
-      <div className="card animate-in stagger-3">
-        <h3 className="text-base font-semibold text-ink mb-5">
-          Expense Breakdown
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-edge">
-                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
-                  Category
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
-                  Budget
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
-                  Actual
-                </th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
-                  Variance
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {plSummary.expenses.breakdown.map((item) => (
-                <MetricComparison
-                  key={item.category}
-                  label={item.category}
-                  budget={item.budget}
-                  actual={item.actual}
-                />
-              ))}
-            </tbody>
-            <tfoot>
-              <tr className="border-t-2 border-edge">
-                <td className="py-3 pr-4 text-sm font-semibold text-ink">
-                  Total
-                </td>
-                <td className="py-3 px-4 text-sm font-mono text-right text-ink-muted">
-                  $
-                  {plSummary.expenses.breakdown
-                    .reduce((s, i) => s + i.budget, 0)
-                    .toLocaleString()}
-                </td>
-                <td className="py-3 px-4 text-sm font-mono text-right font-semibold text-ink">
-                  ${plSummary.expenses.total.toLocaleString()}
-                </td>
-                <td className="py-3 pl-4 text-sm font-mono text-right font-semibold text-danger">
-                  +$
-                  {(
-                    plSummary.expenses.total -
-                    plSummary.expenses.breakdown.reduce((s, i) => s + i.budget, 0)
-                  ).toLocaleString()}
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      </div>
-
-      {/* Budget Alerts */}
-      <div className="card animate-in stagger-4">
-        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
-          <AlertTriangle className="w-4 h-4 text-warning" />
-          Budget Alerts
-        </h3>
-        <div className="space-y-3">
-          {budgetAlerts.map((alert, i) => (
-            <div
-              key={i}
-              className={`flex items-start gap-3 p-4 rounded-lg border ${
-                alert.severity === "danger"
-                  ? "bg-danger/5 border-danger/20"
-                  : "bg-warning/5 border-warning/20"
-              }`}
-            >
-              <div
-                className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
-                  alert.severity === "danger" ? "bg-danger" : "bg-warning"
-                }`}
-              />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-sm font-medium text-ink">
-                    {alert.category}
-                  </span>
-                  <span className="text-xs font-mono text-danger">
-                    +${alert.overage.toLocaleString()}
-                  </span>
-                </div>
-                <p className="text-xs text-ink-muted">{alert.message}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      )}
     </div>
   );
 }

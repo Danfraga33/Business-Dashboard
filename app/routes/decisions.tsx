@@ -17,7 +17,7 @@ import {
   type JournalEntry,
   type CreateJournalEntryData,
 } from "../lib/journal.server";
-import type { Route } from "./+types/journal";
+import type { Route } from "./+types/decisions";
 
 export async function loader() {
   const entries = await getAllJournalEntries();
@@ -156,7 +156,7 @@ function Section({ title, content }: { title: string; content: string }) {
   );
 }
 
-export default function Journal() {
+export default function Decisions() {
   const { entries } = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const navigation = useNavigation();
@@ -180,7 +180,6 @@ export default function Journal() {
     return matchesSearch && matchesBusiness;
   });
 
-  // Close form and show success message when submission succeeds
   if (actionData?.success && showNewEntry) {
     setShowNewEntry(false);
   }
@@ -191,7 +190,7 @@ export default function Journal() {
       <div className="flex items-end justify-between animate-in">
         <div>
           <h2 className="text-2xl font-semibold text-ink leading-tight">
-            Daily Journal
+            Decisions & Learning
           </h2>
           <p className="text-sm text-ink-muted mt-1">
             {entries.length} entries
