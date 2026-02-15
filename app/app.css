@@ -15,13 +15,13 @@
   --text-xs--line-height: 1.5;
   --text-sm: 1rem;
   --text-sm--line-height: 1.7;
-  --text-base: 1.25rem;
+  --text-base: 1rem;
   --text-base--line-height: 1.6;
-  --text-lg: 1.5rem;
+  --text-lg: 1.25rem;
   --text-lg--line-height: 1.4;
-  --text-xl: 1.75rem;
+  --text-xl: 1.5rem;
   --text-xl--line-height: 1.3;
-  --text-2xl: 2rem;
+  --text-2xl: 1.75rem;
   --text-2xl--line-height: 1.2;
 
   /* Colors — light mode (default) */
