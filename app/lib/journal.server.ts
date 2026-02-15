@@ -70,55 +70,19 @@ export async function updateJournalEntry(
   id: number,
   data: UpdateJournalEntryData
 ): Promise<JournalEntry | null> {
-  const updates: string[] = [];
-  const values: any[] = [];
-  let paramIndex = 1;
-
-  if (data.business !== undefined) {
-    updates.push(`business = $${paramIndex++}`);
-    values.push(data.business || null);
-  }
-  if (data.hypothesis !== undefined) {
-    updates.push(`hypothesis = $${paramIndex++}`);
-    values.push(data.hypothesis);
-  }
-  if (data.shipped !== undefined) {
-    updates.push(`shipped = $${paramIndex++}`);
-    values.push(data.shipped);
-  }
-  if (data.learned !== undefined) {
-    updates.push(`learned = $${paramIndex++}`);
-    values.push(data.learned);
-  }
-  if (data.blockers !== undefined) {
-    updates.push(`blockers = $${paramIndex++}`);
-    values.push(data.blockers || null);
-  }
-  if (data.tomorrow !== undefined) {
-    updates.push(`tomorrow = $${paramIndex++}`);
-    values.push(data.tomorrow);
-  }
-  if (data.tags !== undefined) {
-    updates.push(`tags = $${paramIndex++}`);
-    values.push(data.tags);
-  }
-
-  if (updates.length === 0) {
-    return getJournalEntryById(id);
-  }
-
-  updates.push(`updated_at = NOW()`);
-
-  const query = `
+  const entries = await sql`
     UPDATE journal_entries
-    SET ${updates.join(", ")}
-    WHERE id = $${paramIndex}
+    SET
+      business = COALESCE(${data.business ?? null}, business),
+      hypothesis = COALESCE(${data.hypothesis ?? null}, hypothesis),
+      shipped = COALESCE(${data.shipped ?? null}, shipped),
+      learned = COALESCE(${data.learned ?? null}, learned),
+      blockers = COALESCE(${data.blockers ?? null}, blockers),
+      tomorrow = COALESCE(${data.tomorrow ?? null}, tomorrow),
+      updated_at = NOW()
+    WHERE id = ${id}
     RETURNING *
   `;
-  values.push(id);
-
-  // @ts-ignore - Dynamic query construction with neon
-  const entries = await sql(query, values);
   return entries[0] as JournalEntry || null;
 }
 
