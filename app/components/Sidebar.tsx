@@ -12,13 +12,9 @@ import {
   PanelLeft,
   Hexagon,
   ChevronDown,
-  Shield,
   Target,
-  Rocket,
-  Briefcase,
-  DollarSign as PricingIcon,
   Share2,
-  Filter,
+  RefreshCw,
 } from "lucide-react";
 import { useDashboardStore } from "../store/dashboard";
 import type { NavItem } from "../types/navigation";
@@ -26,24 +22,23 @@ import type { NavItem } from "../types/navigation";
 const navItems: NavItem[] = [
   { to: "/", icon: Sun, label: "Morning Brief" },
   { to: "/health", icon: Activity, label: "Business Health" },
-  { to: "/customers", icon: Users, label: "Customer Deep Dive" },
   {
     to: "/growth",
     icon: TrendingUp,
     label: "Growth Optimization",
     children: [
-      { to: "/growth/retention-monetization", icon: Shield, label: "Retention & Monetization" },
-      { to: "/growth/conversions-cac", icon: Target, label: "Conversions & CAC" },
-      { to: "/growth/acquisition-expansion", icon: Rocket, label: "Acquisition & Expansion" },
+      { to: "/growth-levers/gtm", icon: Share2, label: "GTM" },
+      { to: "/growth/conversion-funnel", icon: Target, label: "Conversion Funnel" },
     ],
   },
+  { to: "/retention", icon: RefreshCw, label: "Retention" },
   {
-    to: "/growth-levers",
-    icon: Briefcase,
-    label: "Growth Levers",
+    to: "/diagnostics",
+    icon: Hexagon,
+    label: "Diagnostics",
     children: [
-      { to: "/growth-levers/gtm", icon: Share2, label: "Go-to-Market" },
-      { to: "/growth-levers/defensibility", icon: Shield, label: "Product Defensibility" },
+      { to: "/diagnostics/unit-economics", icon: DollarSign, label: "Unit Economics" },
+      { to: "/customers", icon: Users, label: "Customer Deep Dive" },
     ],
   },
   { to: "/financials", icon: DollarSign, label: "Financials" },

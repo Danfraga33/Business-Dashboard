@@ -133,7 +133,7 @@ export default function AcquisitionExpansion() {
       {/* NRR Health Gauge */}
       {latestSaas && (
         <div className="card animate-in stagger-3">
-          <h3 className="text-base font-semibold text-ink mb-4 flex items-center gap-2">
+          <h3 className="font-semibold text-ink mb-4 flex items-center gap-2">
             <Rocket className="w-4 h-4 text-accent" />
             Net Revenue Retention
           </h3>
@@ -167,7 +167,7 @@ export default function AcquisitionExpansion() {
       {/* Spend vs Revenue by Channel */}
       {spendData.length > 0 && (
         <div className="card animate-in stagger-4">
-          <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+          <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
             <DollarSign className="w-4 h-4 text-warning" />
             Spend vs Revenue by Channel
           </h3>
@@ -199,7 +199,7 @@ export default function AcquisitionExpansion() {
 
       {/* Channel Acquisition Table */}
       <div className="card animate-in stagger-5">
-        <h3 className="text-base font-semibold text-ink mb-5">Channel Acquisition</h3>
+        <h3 className="font-semibold text-ink mb-5">Channel Acquisition</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -240,7 +240,7 @@ export default function AcquisitionExpansion() {
 
       {/* Feature Rollouts for Expansion */}
       <div className="card animate-in stagger-6">
-        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-accent" />
           Feature Rollouts — Expansion Levers
         </h3>

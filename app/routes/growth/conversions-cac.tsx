@@ -140,7 +140,7 @@ export default function ConversionsCac() {
 
       {/* Acquisition Funnel */}
       <div className="card animate-in stagger-3">
-        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
           <MousePointerClick className="w-4 h-4 text-accent" />
           Acquisition Funnel
         </h3>
@@ -174,7 +174,7 @@ export default function ConversionsCac() {
       {/* CAC by Channel Chart */}
       {cacData.length > 0 && (
         <div className="card animate-in stagger-4">
-          <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+          <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
             <Target className="w-4 h-4 text-warning" />
             CAC by Channel (Best → Worst)
           </h3>
@@ -205,7 +205,7 @@ export default function ConversionsCac() {
 
       {/* Channel Performance Table */}
       <div className="card animate-in stagger-5">
-        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
           <TrendingUp className="w-4 h-4 text-accent" />
           Channel Performance
         </h3>

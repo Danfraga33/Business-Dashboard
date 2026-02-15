@@ -11,9 +11,11 @@ import { ActionButton } from "../components/ActionButton";
 import {
   getAllJournalEntries,
   createJournalEntry,
+  updateJournalEntry,
   deleteJournalEntry,
   type JournalEntry,
   type CreateJournalEntryData,
+  type UpdateJournalEntryData,
 } from "../lib/journal.server";
 import type { Route } from "./+types/learnings";
 
@@ -30,17 +32,34 @@ export async function action({ request }: Route.ActionArgs) {
     const data: CreateJournalEntryData = {
       business: formData.get("title") as string,
       hypothesis: formData.get("thoughts") as string,
-      shipped: formData.get("today") as string,
-      learned: formData.get("tomorrow") as string,
-      tomorrow: "", // Keep this for DB compatibility
+      shipped: (formData.get("today") as string) || "N/A",
+      learned: (formData.get("tomorrow") as string) || "N/A",
+      tomorrow: "",
       tags: [],
     };
 
     try {
       await createJournalEntry(data);
-      return { success: true, error: null };
+      return { success: true, error: null, intent: "create" };
     } catch (error) {
-      return { success: false, error: "Failed to save entry" };
+      return { success: false, error: "Failed to save entry", intent: "create" };
+    }
+  }
+
+  if (intent === "update") {
+    const id = parseInt(formData.get("id") as string);
+    const data: UpdateJournalEntryData = {
+      business: formData.get("title") as string,
+      hypothesis: formData.get("thoughts") as string,
+      shipped: (formData.get("today") as string) || "N/A",
+      learned: (formData.get("tomorrow") as string) || "N/A",
+    };
+
+    try {
+      await updateJournalEntry(id, data);
+      return { success: true, error: null, intent: "update" };
+    } catch (error) {
+      return { success: false, error: "Failed to update entry", intent: "update" };
     }
   }
 
@@ -48,13 +67,13 @@ export async function action({ request }: Route.ActionArgs) {
     const id = parseInt(formData.get("id") as string);
     try {
       await deleteJournalEntry(id);
-      return { success: true, error: null };
+      return { success: true, error: null, intent: "delete" };
     } catch (error) {
-      return { success: false, error: "Failed to delete entry" };
+      return { success: false, error: "Failed to delete entry", intent: "delete" };
     }
   }
 
-  return { success: false, error: "Invalid action" };
+  return { success: false, error: "Invalid action", intent: null };
 }
 
 function EntryCard({
@@ -65,8 +84,95 @@ function EntryCard({
   defaultExpanded?: boolean;
 }) {
   const [expanded, setExpanded] = useState(defaultExpanded);
+  const [editing, setEditing] = useState(false);
   const navigation = useNavigation();
-  const isDeleting = navigation.formData?.get("id") === String(entry.id);
+  const actionData = useActionData<typeof action>();
+  const isDeleting = navigation.formData?.get("id") === String(entry.id) && navigation.formData?.get("intent") === "delete";
+  const isUpdating = navigation.formData?.get("id") === String(entry.id) && navigation.formData?.get("intent") === "update";
+
+  useEffect(() => {
+    if (actionData?.success && editing) {
+      setEditing(false);
+    }
+  }, [actionData]);
+
+  if (editing) {
+    return (
+      <Form method="post" className="card space-y-5 border-accent/30">
+        <input type="hidden" name="intent" value="update" />
+        <input type="hidden" name="id" value={entry.id} />
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <Edit3 className="w-4 h-4 text-accent" />
+            <h3 className="font-semibold text-ink">Edit Entry</h3>
+          </div>
+          <button
+            type="button"
+            onClick={() => setEditing(false)}
+            className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-surface-hover transition-colors"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div>
+          <label className="text-2xs font-semibold text-ink-muted uppercase tracking-wider block mb-1.5">
+            Main Focus
+          </label>
+          <input
+            name="title"
+            type="text"
+            defaultValue={entry.business || ""}
+            placeholder="What's the main focus today?"
+            required
+            className="w-full bg-base border border-edge rounded-lg px-3 py-2 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent/50 transition-colors"
+          />
+        </div>
+
+        <TextArea
+          name="thoughts"
+          label="My Thoughts"
+          placeholder="What's on your mind today?"
+          defaultValue={entry.hypothesis}
+          required
+        />
+
+        <TextArea
+          name="today"
+          label="What I Did Today"
+          placeholder="What did you accomplish?"
+          defaultValue={entry.shipped === "N/A" ? "" : entry.shipped}
+        />
+
+        <TextArea
+          name="tomorrow"
+          label="Tomorrow's Plan"
+          placeholder="What's the priority for tomorrow?"
+          defaultValue={entry.learned === "N/A" ? "" : entry.learned}
+        />
+
+        {actionData?.error && actionData.intent === "update" && (
+          <div className="text-sm text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
+            {actionData.error}
+          </div>
+        )}
+
+        <div className="flex justify-end gap-3 pt-2">
+          <ActionButton
+            type="button"
+            variant="ghost"
+            onClick={() => setEditing(false)}
+            disabled={isUpdating}
+          >
+            Cancel
+          </ActionButton>
+          <ActionButton type="submit" disabled={isUpdating}>
+            {isUpdating ? "Saving..." : "Save Changes"}
+          </ActionButton>
+        </div>
+      </Form>
+    );
+  }
 
   return (
     <div className={`card ${isDeleting ? "opacity-50" : ""}`}>
@@ -88,6 +194,18 @@ function EntryCard({
           </p>
         </div>
         <div className="flex items-center gap-2 shrink-0 ml-4">
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setEditing(true);
+              setExpanded(false);
+            }}
+            className="p-1.5 rounded-lg text-ink-muted hover:text-accent hover:bg-accent/10 transition-colors"
+            title="Edit entry"
+          >
+            <Edit3 className="w-4 h-4" />
+          </button>
           <Form method="post" onClick={(e) => e.stopPropagation()}>
             <input type="hidden" name="intent" value="delete" />
             <input type="hidden" name="id" value={entry.id} />
@@ -141,11 +259,13 @@ function TextArea({
   label,
   placeholder,
   required,
+  defaultValue,
 }: {
   name: string;
   label: string;
   placeholder: string;
   required?: boolean;
+  defaultValue?: string;
 }) {
   return (
     <div>
@@ -157,6 +277,7 @@ function TextArea({
         placeholder={placeholder}
         rows={4}
         required={required}
+        defaultValue={defaultValue}
         className="w-full bg-base border border-edge rounded-lg px-3 py-2 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent/50 transition-colors resize-y"
       />
     </div>
@@ -172,10 +293,10 @@ export default function Learnings() {
   const isSubmitting = navigation.state === "submitting" && navigation.formData?.get("intent") === "create";
 
   useEffect(() => {
-    if (actionData?.success) {
+    if (actionData?.success && navigation.state === "idle") {
       setShowNewEntry(false);
     }
-  }, [actionData]);
+  }, [actionData, navigation.state]);
 
   return (
     <div className="space-y-8">
@@ -209,7 +330,7 @@ export default function Learnings() {
             <input type="hidden" name="intent" value="create" />
             <div className="flex items-center gap-2 mb-2">
               <Edit3 className="w-4 h-4 text-accent" />
-              <h3 className="text-base font-semibold text-ink">
+              <h3 className="font-semibold text-ink">
                 New Entry &mdash;{" "}
                 {new Date().toLocaleDateString("en-US", {
                   month: "short",
@@ -243,17 +364,15 @@ export default function Learnings() {
               name="today"
               label="What I Did Today"
               placeholder="What did you accomplish? Key wins, progress, or work completed..."
-              required
             />
 
             <TextArea
               name="tomorrow"
               label="Tomorrow's Plan"
               placeholder="What's the priority for tomorrow? Top 3 things to focus on..."
-              required
             />
 
-            {actionData?.error && (
+            {actionData?.error && actionData.intent === "create" && (
               <div className="text-sm text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
                 {actionData.error}
               </div>

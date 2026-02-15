@@ -171,7 +171,7 @@ export default function RetentionMonetization() {
       {churnReasons.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <div className="card animate-in stagger-3">
-            <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+            <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
               <UserX className="w-4 h-4 text-danger" />
               Churn Reasons
             </h3>
@@ -197,7 +197,7 @@ export default function RetentionMonetization() {
           </div>
 
           <div className="card animate-in stagger-3">
-            <h3 className="text-base font-semibold text-ink mb-5">Churn Breakdown</h3>
+            <h3 className="font-semibold text-ink mb-5">Churn Breakdown</h3>
             <div className="space-y-3">
               {churnReasons.map((reason, i) => {
                 const total = churnReasons.reduce((s, r) => s + r.count, 0);
@@ -223,7 +223,7 @@ export default function RetentionMonetization() {
 
       {/* Cohort Retention Table */}
       <div className="card animate-in stagger-4">
-        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
           <Layers className="w-4 h-4 text-accent" />
           Cohort Retention
         </h3>
@@ -263,7 +263,7 @@ export default function RetentionMonetization() {
 
       {/* Pricing Experiments */}
       <div className="animate-in stagger-5">
-        <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
           <FlaskConical className="w-4 h-4 text-accent" />
           Pricing Experiments
         </h3>
@@ -273,7 +273,7 @@ export default function RetentionMonetization() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-2">
-                    <h4 className="text-base font-semibold text-ink truncate">{experiment.name}</h4>
+                    <h4 className="font-semibold text-ink truncate">{experiment.name}</h4>
                     <StatusBadge status={experiment.status} />
                   </div>
                   {experiment.hypothesis && (
@@ -347,7 +347,7 @@ export default function RetentionMonetization() {
       {/* Features by Retention Impact */}
       {retentionFeatures.length > 0 && (
         <div className="card animate-in stagger-6">
-          <h3 className="text-base font-semibold text-ink mb-5 flex items-center gap-2">
+          <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-accent" />
             Features by Retention Impact
           </h3>
