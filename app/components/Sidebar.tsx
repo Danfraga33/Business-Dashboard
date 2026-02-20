@@ -22,6 +22,7 @@ import type { NavItem } from "../types/navigation";
 const navItems: NavItem[] = [
   { to: "/", icon: Sun, label: "Morning Brief" },
   { to: "/health", icon: Activity, label: "Business Health" },
+  { to: "/retention", icon: RefreshCw, label: "Retention" },
   {
     to: "/growth",
     icon: TrendingUp,
@@ -31,7 +32,6 @@ const navItems: NavItem[] = [
       { to: "/growth/conversion-funnel", icon: Target, label: "Conversion Funnel" },
     ],
   },
-  { to: "/retention", icon: RefreshCw, label: "Retention" },
   {
     to: "/diagnostics",
     icon: Hexagon,
