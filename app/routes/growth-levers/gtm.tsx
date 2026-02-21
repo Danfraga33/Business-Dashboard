@@ -1033,6 +1033,116 @@ function PricingStrategyTab() {
     </div>
   );
 }
+interface FacebookCampaign {
+  name: string;
+  spend: number;
+  impressions: number;
+  ctr: number;
+  cpm: number;
+  cpc: number;
+  leads: number;
+  cpl: number;
+  qualifiedLeads: number;
+  cpql: number;
+  lmqlRate: number;
+  leadToCustomerRate: number;
+  customers: number;
+}
+
+const facebookCampaigns: FacebookCampaign[] = [
+  {
+    name: 'Brand Awareness – Q1',
+    spend: 4200,
+    impressions: 310000,
+    ctr: 1.8,
+    cpm: 13.55,
+    cpc: 0.75,
+    leads: 210,
+    cpl: 20.0,
+    qualifiedLeads: 84,
+    cpql: 50.0,
+    lmqlRate: 40.0,
+    leadToCustomerRate: 9.5,
+    customers: 20,
+  },
+  {
+    name: 'Retargeting – Visitors',
+    spend: 1800,
+    impressions: 95000,
+    ctr: 3.2,
+    cpm: 18.95,
+    cpc: 0.59,
+    leads: 145,
+    cpl: 12.41,
+    qualifiedLeads: 72,
+    cpql: 25.0,
+    lmqlRate: 49.7,
+    leadToCustomerRate: 14.6,
+    customers: 21,
+  },
+  {
+    name: 'Lead Gen – Lookalike',
+    spend: 3100,
+    impressions: 220000,
+    ctr: 2.1,
+    cpm: 14.09,
+    cpc: 0.67,
+    leads: 175,
+    cpl: 17.71,
+    qualifiedLeads: 61,
+    cpql: 50.82,
+    lmqlRate: 34.9,
+    leadToCustomerRate: 8.0,
+    customers: 14,
+  },
+];
+
+function PaidTrafficTab() {
+  const fmt = (n: number, prefix = '', decimals = 0) =>
+    `${prefix}${n.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}`;
+
+  return (
+    <div className="space-y-6">
+      <div className="card overflow-x-auto">
+        <h3 className="text-lg font-semibold text-ink mb-4">Facebook Campaigns</h3>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-edge text-left">
+              {[
+                'Campaign', 'Spend', 'Impressions', 'CTR', 'CPM', 'CPC',
+                'Leads', 'CPL', 'QL', 'CPQL', 'LMQL %', 'Lead→Cust %', 'Customers',
+              ].map((col) => (
+                <th key={col} className="pb-3 pr-4 text-xs font-semibold text-ink-muted whitespace-nowrap">
+                  {col}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-edge">
+            {facebookCampaigns.map((c) => (
+              <tr key={c.name} className="hover:bg-base transition-colors">
+                <td className="py-3 pr-4 font-medium text-ink whitespace-nowrap">{c.name}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.spend, '$')}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.impressions)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.ctr, '', 1)}%</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpm, '$', 2)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpc, '$', 2)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.leads)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpl, '$', 2)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.qualifiedLeads)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpql, '$', 2)}</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.lmqlRate, '', 1)}%</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.leadToCustomerRate, '', 1)}%</td>
+                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.customers)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 export default function GoToMarket() {
   return (
     <div className="space-y-8">
@@ -1052,21 +1162,17 @@ export default function GoToMarket() {
           <PricingStrategyTab />
         </Tab>
 
-        {/* Distribution Tab */}
-        <Tab label="Distribution">
+        {/* Paid Traffic Tab */}
+        <Tab label="Paid Traffic">
+          <PaidTrafficTab />
+        </Tab>
+
+        {/* Organic Traffic Tab */}
+        <Tab label="Organic Traffic">
           <div className="space-y-6">
             <div className="card">
-              <h3 className="text-lg font-semibold text-ink mb-4">Distribution Channels</h3>
-              <div className="space-y-4">
-                <div>
-                  <div className="text-sm font-semibold text-ink mb-2">Organic Traffic</div>
-                  <p className="text-sm text-ink-secondary">Coming soon...</p>
-                </div>
-                <div>
-                  <div className="text-sm font-semibold text-ink mb-2">Paid Traffic</div>
-                  <p className="text-sm text-ink-secondary">Coming soon...</p>
-                </div>
-              </div>
+              <h3 className="text-lg font-semibold text-ink mb-4">Organic Traffic</h3>
+              <p className="text-sm text-ink-secondary">Coming soon...</p>
             </div>
           </div>
         </Tab>
