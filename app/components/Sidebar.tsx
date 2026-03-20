@@ -52,29 +52,29 @@ export function Sidebar() {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-screen z-40 flex flex-col border-r border-edge bg-base transition-all duration-300 ease-in-out overflow-hidden ${
-        sidebarCollapsed ? "w-[80px]" : "w-[280px]"
+      className={`fixed top-0 left-0 h-screen z-40 flex flex-col border-r border-sidebar-border bg-sidebar transition-all duration-300 ease-in-out overflow-hidden ${
+        sidebarCollapsed ? "w-[72px]" : "w-[260px]"
       }`}
     >
       {/* Logo */}
       <div
-        className={`flex items-center gap-3 h-[72px] border-b border-edge shrink-0 ${
-          sidebarCollapsed ? "px-5 justify-center" : "px-6"
+        className={`flex items-center gap-3 h-[64px] border-b border-sidebar-border shrink-0 ${
+          sidebarCollapsed ? "px-4 justify-center" : "px-5"
         }`}
       >
-        <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-          <Hexagon className="w-5 h-5 text-accent" strokeWidth={2.5} />
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+          <Hexagon className="w-4.5 h-4.5 text-primary" strokeWidth={2.5} />
         </div>
         {!sidebarCollapsed && (
           <div className="overflow-hidden">
-            <h1 className="text-xs font-semibold text-ink tracking-tight whitespace-nowrap">
+            <h1 className="text-sm font-semibold text-sidebar-foreground tracking-tight whitespace-nowrap font-serif">
               Chief of Staff
             </h1>
           </div>
         )}
       </div>
 
-      <nav className="flex-1 py-5 px-3 flex flex-col gap-1 overflow-y-auto overflow-x-hidden">
+      <nav className="flex-1 py-4 px-2.5 flex flex-col gap-0.5 overflow-y-auto overflow-x-hidden">
         {navItems.map((item) => {
           const hasChildren = item.children && item.children.length > 0;
           const isAnyChildActive = hasChildren
@@ -86,60 +86,56 @@ export function Sidebar() {
             ? location.pathname === "/"
             : location.pathname.startsWith(item.to);
 
-          // Determine section key from route path (e.g., "/growth" -> "growth", "/operations" -> "operations")
           const sectionKey = item.to.replace(/^\//, '');
           const isExpanded = isSectionExpanded(sectionKey);
 
           return (
             <div key={item.to}>
-              {/* Separator */}
               {item.separatorBefore && (
-                <div className="h-px bg-edge mx-1 my-3" />
+                <div className="h-px bg-sidebar-border mx-2 my-3" />
               )}
 
               {hasChildren ? (
                 <>
-                  {/* Dropdown parent */}
                   <button
                     onClick={() => toggleSection(sectionKey)}
-                    className={`group relative w-full flex items-center gap-3 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer ${
+                    className={`group relative w-full flex items-center gap-3 rounded-lg text-[13px] font-medium transition-all duration-150 cursor-pointer ${
                       sidebarCollapsed
                         ? "px-0 py-2.5 justify-center"
-                        : "px-3.5 py-2.5"
+                        : "px-3 py-2.5"
                     } ${
                       isActive
                         ? sidebarCollapsed
-                          ? "bg-accent/10 text-accent"
-                          : "bg-accent/5 text-accent"
-                        : "text-ink-secondary hover:text-ink hover:bg-surface-hover"
+                          ? "bg-sidebar-primary/10 text-sidebar-primary"
+                          : "bg-sidebar-primary/5 text-sidebar-primary"
+                        : "text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
                     }`}
                   >
                     {isActive && !sidebarCollapsed && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent rounded-r-full" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4.5 bg-primary rounded-r-full" />
                     )}
                     <item.icon
-                      className={`w-[18px] h-[18px] shrink-0 ${
+                      className={`w-[17px] h-[17px] shrink-0 ${
                         isActive
-                          ? "text-accent"
-                          : "text-ink-muted group-hover:text-ink-secondary"
+                          ? "text-sidebar-primary"
+                          : "text-muted-foreground group-hover:text-sidebar-foreground"
                       }`}
-                      strokeWidth={1.8}
+                      strokeWidth={1.7}
                     />
                     {!sidebarCollapsed && (
                       <>
                         <span className="whitespace-nowrap flex-1 text-left">{item.label}</span>
                         <ChevronDown
-                          className={`w-3.5 h-3.5 text-ink-muted transition-transform duration-200 ${
+                          className={`w-3.5 h-3.5 text-muted-foreground transition-transform duration-200 ${
                             isExpanded ? "rotate-180" : ""
                           }`}
                         />
                       </>
                     )}
 
-                    {/* Collapsed: flyout with clickable links */}
                     {sidebarCollapsed && (
-                      <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-0 ml-3 py-2 px-1 bg-surface border border-edge rounded-lg shadow-lg transition-all duration-150 pointer-events-auto z-50 min-w-[220px]">
-                        <p className="px-3 py-1.5 text-2xs font-semibold text-ink-muted uppercase tracking-wider">
+                      <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-0 ml-2.5 py-2 px-1 bg-popover border border-border rounded-lg shadow-lg transition-all duration-150 pointer-events-auto z-50 min-w-[200px]">
+                        <p className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
                           {item.label}
                         </p>
                         {item.children!.map((child) => {
@@ -148,13 +144,13 @@ export function Sidebar() {
                             <NavLink
                               key={child.to}
                               to={child.to}
-                              className={`flex items-center gap-2 px-3 py-2 rounded-md text-xs transition-colors ${
+                              className={`flex items-center gap-2 px-3 py-2 rounded-md text-[13px] transition-colors ${
                                 childActive
-                                  ? "text-accent bg-accent/5"
-                                  : "text-ink-secondary hover:text-ink hover:bg-surface-hover"
+                                  ? "text-primary bg-primary/5"
+                                  : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                               }`}
                             >
-                              <child.icon className="w-3.5 h-3.5 shrink-0" strokeWidth={1.8} />
+                              <child.icon className="w-3.5 h-3.5 shrink-0" strokeWidth={1.7} />
                               <span className="whitespace-nowrap">{child.label}</span>
                             </NavLink>
                           );
@@ -163,26 +159,25 @@ export function Sidebar() {
                     )}
                   </button>
 
-                  {/* Expanded children (only when sidebar is open) */}
                   {!sidebarCollapsed && isExpanded && (
-                    <div className="ml-4 mt-1 space-y-0.5">
+                    <div className="ml-4 mt-0.5 space-y-0.5">
                       {item.children!.map((child) => {
                         const childActive = location.pathname.startsWith(child.to);
                         return (
                           <NavLink
                             key={child.to}
                             to={child.to}
-                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 ${
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-150 ${
                               childActive
-                                ? "text-accent bg-accent/5"
-                                : "text-ink-secondary hover:text-ink hover:bg-surface-hover"
+                                ? "text-primary bg-primary/5"
+                                : "text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
                             }`}
                           >
                             <child.icon
                               className={`w-3.5 h-3.5 shrink-0 ${
-                                childActive ? "text-accent" : "text-ink-muted"
+                                childActive ? "text-primary" : "text-muted-foreground"
                               }`}
-                              strokeWidth={1.8}
+                              strokeWidth={1.7}
                             />
                             <span className="whitespace-nowrap">{child.label}</span>
                           </NavLink>
@@ -192,38 +187,37 @@ export function Sidebar() {
                   )}
                 </>
               ) : (
-                /* Regular nav item */
                 <NavLink
                   to={item.to}
-                  className={`group relative flex items-center gap-3 rounded-lg text-xs font-medium transition-all duration-150 ${
+                  className={`group relative flex items-center gap-3 rounded-lg text-[13px] font-medium transition-all duration-150 ${
                     sidebarCollapsed
                       ? "px-0 py-2.5 justify-center"
-                      : "px-3.5 py-2.5"
+                      : "px-3 py-2.5"
                   } ${
                     isActive
                       ? sidebarCollapsed
-                        ? "bg-accent/10 text-accent"
-                        : "bg-accent/5 text-accent"
-                      : "text-ink-secondary hover:text-ink hover:bg-surface-hover"
+                        ? "bg-sidebar-primary/10 text-sidebar-primary"
+                        : "bg-sidebar-primary/5 text-sidebar-primary"
+                      : "text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
                   }`}
                 >
                   {isActive && !sidebarCollapsed && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent rounded-r-full" />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4.5 bg-primary rounded-r-full" />
                   )}
                   <item.icon
-                    className={`w-[18px] h-[18px] shrink-0 ${
+                    className={`w-[17px] h-[17px] shrink-0 ${
                       isActive
-                        ? "text-accent"
-                        : "text-ink-muted group-hover:text-ink-secondary"
+                        ? "text-sidebar-primary"
+                        : "text-muted-foreground group-hover:text-sidebar-foreground"
                     }`}
-                    strokeWidth={1.8}
+                    strokeWidth={1.7}
                   />
                   {!sidebarCollapsed && (
                     <span className="whitespace-nowrap">{item.label}</span>
                   )}
 
                   {sidebarCollapsed && (
-                    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2.5 py-1 bg-surface border border-edge rounded-lg text-xs text-ink whitespace-nowrap shadow-lg transition-all duration-150 pointer-events-none z-50">
+                    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-1/2 -translate-y-1/2 ml-2.5 px-2.5 py-1 bg-popover border border-border rounded-lg text-[13px] text-foreground whitespace-nowrap shadow-lg transition-all duration-150 pointer-events-none z-50">
                       {item.label}
                     </div>
                   )}
@@ -234,46 +228,43 @@ export function Sidebar() {
         })}
       </nav>
 
-      {/* Bottom toolbar — vertical when collapsed, horizontal when expanded */}
-      <div className={`border-t border-edge shrink-0 px-3 py-3 flex items-center justify-center ${
-        sidebarCollapsed ? "flex-col gap-1" : "flex-row gap-1"
+      {/* Bottom toolbar */}
+      <div className={`border-t border-sidebar-border shrink-0 px-2.5 py-2.5 flex items-center justify-center ${
+        sidebarCollapsed ? "flex-col gap-0.5" : "flex-row gap-0.5"
       }`}>
-        {/* Theme toggle */}
         <button
           onClick={toggleTheme}
-          className="group relative p-2.5 rounded-lg text-ink-muted hover:text-ink-secondary hover:bg-surface-hover transition-colors cursor-pointer"
+          className="group relative p-2 rounded-lg text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors cursor-pointer"
           title={theme === "light" ? "Dark mode" : "Light mode"}
         >
           {theme === "light" ? (
-            <Moon className="w-[18px] h-[18px]" strokeWidth={1.8} />
+            <Moon className="w-[17px] h-[17px]" strokeWidth={1.7} />
           ) : (
-            <Sun className="w-[18px] h-[18px]" strokeWidth={1.8} />
+            <Sun className="w-[17px] h-[17px]" strokeWidth={1.7} />
           )}
         </button>
 
-        {/* Settings */}
         <NavLink
           to="/settings"
-          className={`group relative p-2.5 rounded-lg transition-colors ${
+          className={`group relative p-2 rounded-lg transition-colors ${
             location.pathname === "/settings"
-              ? "text-accent bg-accent/10"
-              : "text-ink-muted hover:text-ink-secondary hover:bg-surface-hover"
+              ? "text-primary bg-primary/10"
+              : "text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
           }`}
           title="Settings"
         >
-          <Settings className="w-[18px] h-[18px]" strokeWidth={1.8} />
+          <Settings className="w-[17px] h-[17px]" strokeWidth={1.7} />
         </NavLink>
 
-        {/* Collapse toggle */}
         <button
           onClick={toggleSidebar}
-          className="group relative p-2.5 rounded-lg text-ink-muted hover:text-ink-secondary hover:bg-surface-hover transition-colors cursor-pointer"
+          className="group relative p-2 rounded-lg text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors cursor-pointer"
           title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {sidebarCollapsed ? (
-            <PanelLeft className="w-[18px] h-[18px]" strokeWidth={1.8} />
+            <PanelLeft className="w-[17px] h-[17px]" strokeWidth={1.7} />
           ) : (
-            <PanelLeftClose className="w-[18px] h-[18px]" strokeWidth={1.8} />
+            <PanelLeftClose className="w-[17px] h-[17px]" strokeWidth={1.7} />
           )}
         </button>
       </div>

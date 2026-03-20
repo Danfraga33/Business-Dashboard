@@ -31,26 +31,26 @@ export function FunnelHeader() {
           <button
             key={filter}
             onClick={() => removeFilter(filter)}
-            className="flex items-center gap-1.5 rounded-full border border-edge bg-surface px-3 py-1.5 text-xs font-medium text-ink transition-colors hover:bg-surface-hover"
+            className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary cursor-pointer"
           >
             {filter}
-            <X className="h-3 w-3 text-ink-muted" />
+            <X className="h-3 w-3 text-muted-foreground" />
           </button>
         ))}
-        <button onClick={addFilter} className="cursor-pointer h-7 rounded-full border-edge bg-transparent px-3 text-xs text-ink-muted hover:bg-surface hover:text-ink">
+        <button onClick={addFilter} className="cursor-pointer h-7 rounded-full border-border bg-transparent px-3 text-[13px] text-muted-foreground hover:bg-card hover:text-foreground">
           Add Filter
         </button>
       </div>
       <div className="relative shrink-0">
         <button
           onClick={() => setShowTimeDropdown(!showTimeDropdown)}
-          className="flex items-center gap-1.5 rounded-full border border-edge bg-surface px-4 py-1.5 text-xs font-medium text-ink transition-colors hover:bg-surface-hover"
+          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-1.5 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary cursor-pointer"
         >
           {timeRange}
-          <ChevronDown className="h-3 w-3 text-ink-muted" />
+          <ChevronDown className="h-3 w-3 text-muted-foreground" />
         </button>
         {showTimeDropdown && (
-          <div className="absolute right-0 top-full z-[100] mt-1 min-w-[180px] overflow-hidden rounded-lg border border-edge bg-surface p-1 shadow-xl">
+          <div className="absolute right-0 top-full z-[100] mt-1 min-w-[180px] overflow-hidden rounded-lg border border-border bg-popover p-1 shadow-xl">
             {timeRanges.map((range) => (
               <button
                 key={range}
@@ -58,10 +58,10 @@ export function FunnelHeader() {
                   setTimeRange(range);
                   setShowTimeDropdown(false);
                 }}
-                className={`flex w-full items-center rounded-md px-3 py-2 text-xs transition-colors ${
+                className={`flex w-full items-center rounded-md px-3 py-2 text-[13px] transition-colors cursor-pointer ${
                   timeRange === range
-                    ? "bg-surface-hover text-ink"
-                    : "text-ink-muted hover:bg-surface-hover hover:text-ink"
+                    ? "bg-secondary text-foreground"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                 }`}
               >
                 {range}

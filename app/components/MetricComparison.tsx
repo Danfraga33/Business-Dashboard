@@ -26,12 +26,12 @@ export function MetricComparison({
   const isOver = variance > 0;
 
   return (
-    <tr className="border-b border-edge/50 last:border-0">
-      <td className="py-3 pr-4 text-sm text-ink-secondary">{label}</td>
-      <td className="py-3 px-4 text-sm text-ink-muted font-mono text-right">
+    <tr className="border-b border-border/50 last:border-0">
+      <td className="py-3 pr-4 text-sm text-muted-foreground">{label}</td>
+      <td className="py-3 px-4 text-sm text-muted-foreground font-mono text-right">
         {formatValue(budget, format)}
       </td>
-      <td className="py-3 px-4 text-sm text-ink font-mono text-right font-medium">
+      <td className="py-3 px-4 text-sm text-foreground font-mono text-right font-medium">
         {formatValue(actual, format)}
       </td>
       <td
@@ -41,7 +41,7 @@ export function MetricComparison({
       >
         {isOver ? "+" : ""}
         {formatValue(variance, format)}
-        <span className="text-ink-muted ml-1 text-xs">({variancePct}%)</span>
+        <span className="text-muted-foreground ml-1 text-[13px]">({variancePct}%)</span>
       </td>
     </tr>
   );

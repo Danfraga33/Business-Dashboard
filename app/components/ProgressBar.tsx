@@ -7,14 +7,14 @@ interface ProgressBarProps {
 }
 
 const colorMap = {
-  accent: "bg-accent",
+  accent: "bg-primary",
   success: "bg-success",
   warning: "bg-warning",
   danger: "bg-danger",
 };
 
 const bgMap = {
-  accent: "bg-accent/10",
+  accent: "bg-primary/10",
   success: "bg-success/10",
   warning: "bg-warning/10",
   danger: "bg-danger/10",
@@ -34,10 +34,10 @@ export function ProgressBar({
       {(showLabel || label) && (
         <div className="flex justify-between items-center mb-1.5">
           {label && (
-            <span className="text-xs text-ink-secondary">{label}</span>
+            <span className="text-[13px] text-muted-foreground">{label}</span>
           )}
           {showLabel && (
-            <span className="text-xs font-mono text-ink-muted">
+            <span className="text-[13px] font-mono text-muted-foreground">
               {clamped.toFixed(0)}%
             </span>
           )}

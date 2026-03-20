@@ -23,10 +23,10 @@ export function StatCard({
 
   return (
     <div className={`card ${className}`}>
-      <p className="text-xs font-medium text-ink-muted uppercase tracking-wider mb-3">
+      <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider mb-3">
         {label}
       </p>
-      <p className="metric-value text-2xl text-ink leading-none">
+      <p className="metric-value text-2xl text-foreground leading-none">
         {prefix}
         {value}
       </p>
@@ -34,21 +34,21 @@ export function StatCard({
         <div className="flex items-center gap-1.5 mt-3">
           {isPositive && <TrendingUp className="w-3.5 h-3.5 text-success" />}
           {isNegative && <TrendingDown className="w-3.5 h-3.5 text-danger" />}
-          {isNeutral && <Minus className="w-3.5 h-3.5 text-ink-muted" />}
+          {isNeutral && <Minus className="w-3.5 h-3.5 text-muted-foreground" />}
           <span
-            className={`text-xs font-medium font-mono ${
+            className={`text-[13px] font-medium font-mono ${
               isPositive
                 ? "text-success"
                 : isNegative
                 ? "text-danger"
-                : "text-ink-muted"
+                : "text-muted-foreground"
             }`}
           >
             {isPositive && "+"}
             {change.toFixed(1)}%
           </span>
           {changeLabel && (
-            <span className="text-xs text-ink-muted">{changeLabel}</span>
+            <span className="text-[13px] text-muted-foreground">{changeLabel}</span>
           )}
         </div>
       )}

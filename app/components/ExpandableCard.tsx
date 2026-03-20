@@ -22,14 +22,14 @@ export function ExpandableCard({
       {children}
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          expanded ? "max-h-[500px] opacity-100 mt-4" : "max-h-0 opacity-0"
+          expanded ? "max-h-[500px] opacity-100 mt-5" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="pt-4 border-t border-edge">{expandedContent}</div>
+        <div className="pt-5 border-t border-border">{expandedContent}</div>
       </div>
       <div className="flex justify-center mt-3">
         <ChevronDown
-          className={`w-4 h-4 text-ink-muted transition-transform duration-200 ${
+          className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
             expanded ? "rotate-180" : ""
           }`}
         />

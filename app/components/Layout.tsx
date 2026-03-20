@@ -4,7 +4,7 @@ import { Sidebar } from "./Sidebar";
 import { useDashboardStore } from "../store/dashboard";
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  return <div className="space-y-6">{children}</div>;
+  return <div className="space-y-8">{children}</div>;
 }
 
 export default function DashboardLayout() {
@@ -36,14 +36,13 @@ export default function DashboardLayout() {
       <Sidebar />
       <main
         className={`transition-all duration-300 ease-in-out min-h-screen ${
-          sidebarCollapsed ? "ml-[80px]" : "ml-[280px]"
+          sidebarCollapsed ? "ml-[72px]" : "ml-[260px]"
         }`}
       >
-        <div className="max-w-[2000px] mx-auto px-10 py-10">
+        <div className="max-w-[1800px] mx-auto px-10 py-10">
           <Outlet />
         </div>
       </main>
     </div>
   );
 }
-

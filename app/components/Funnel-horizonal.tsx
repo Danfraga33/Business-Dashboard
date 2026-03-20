@@ -58,15 +58,15 @@ export default function SalesFunnelDashboard() {
         {/* Top Stats */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
+            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl font-serif">
               {funnelStages[0].total.toLocaleString()}
             </h1>
-            <p className="mt-1 text-sm text-ink-muted">Total Prospects</p>
+            <p className="mt-1 text-sm text-muted-foreground">Total Prospects</p>
           </div>
         </div>
 
         {/* Main Funnel Visualization */}
-        <div className="relative overflow-hidden rounded-2xl border border-edge bg-card">
+        <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
           {/* Conversion Metrics Overlay - only show on extra large screens */}
           <div className="absolute inset-x-0 top-0 z-10 hidden items-start justify-around px-12 pt-6 pointer-events-none 2xl:flex">
             <div />
@@ -102,7 +102,7 @@ export default function SalesFunnelDashboard() {
           </div>
 
           {/* Legend */}
-          <div className="border-t border-edge px-4 py-3 sm:px-6 sm:py-4">
+          <div className="border-t border-border px-4 py-3 sm:px-6 sm:py-4">
             <FunnelLegend />
           </div>
         </div>

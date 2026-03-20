@@ -9,17 +9,17 @@ interface ActionButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants = {
   primary:
-    "bg-accent hover:bg-accent-hover text-white shadow-sm shadow-accent/20",
+    "bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm",
   secondary:
-    "bg-surface border border-edge hover:border-accent/40 text-ink",
+    "bg-secondary border border-border hover:border-primary/30 text-secondary-foreground",
   danger:
     "bg-danger/10 hover:bg-danger/20 text-danger border border-danger/20",
   ghost:
-    "bg-transparent hover:bg-surface-hover text-ink-secondary hover:text-ink",
+    "bg-transparent hover:bg-secondary text-muted-foreground hover:text-foreground",
 };
 
 const sizes = {
-  sm: "px-3 py-1.5 text-xs gap-1.5",
+  sm: "px-3 py-1.5 text-[13px] gap-1.5",
   md: "px-4 py-2 text-sm gap-2",
 };
 

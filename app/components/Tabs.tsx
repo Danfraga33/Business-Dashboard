@@ -20,16 +20,16 @@ export function Tabs({ children, defaultTab = 0 }: TabsProps) {
   return (
     <div>
       {/* Tab Headers */}
-      <div className="border-b border-edge mb-6">
+      <div className="border-b border-border mb-6">
         <div className="flex gap-6">
           {children.map((child, index) => (
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`px-1 py-3 text-sm font-medium border-b-2 transition-colors ${
+              className={`px-1 py-3 text-sm font-medium border-b-2 transition-colors cursor-pointer ${
                 activeTab === index
-                  ? "border-accent text-accent"
-                  : "border-transparent text-ink-secondary hover:text-ink"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
               }`}
             >
               {child.props.label}
