@@ -47,9 +47,9 @@ function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
+      <p className="text-[15px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[15px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -104,12 +104,12 @@ export default function ConversionsCac() {
       {/* Header */}
       <div className="animate-in">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-[13px] font-semibold text-primary uppercase tracking-wider">Tier 2 — Efficiency</span>
+          <span className="text-[15px] font-semibold text-primary uppercase tracking-wider">Tier 2 — Efficiency</span>
         </div>
-        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
+        <h2 className="font-serif text-3xl font-semibold text-foreground leading-tight">
           Conversions & CAC Efficiency
         </h2>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-base text-muted-foreground mt-1">
           Conversion optimization, CAC reduction, and funnel performance — last 30 days
         </p>
       </div>
@@ -154,14 +154,14 @@ export default function ConversionsCac() {
                 {i > 0 && (
                   <div className="flex flex-col items-center shrink-0">
                     <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-[11px] text-muted-foreground font-mono">{convRate.toFixed(1)}%</span>
+                    <span className="text-[13px] text-muted-foreground font-mono">{convRate.toFixed(1)}%</span>
                   </div>
                 )}
                 <div className="flex-1 text-center p-3 rounded-lg bg-card border border-border min-w-[100px]">
-                  <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider mb-1">
                     {step.stage}
                   </p>
-                  <p className="text-lg font-mono font-semibold text-foreground">
+                  <p className="text-2xl font-mono font-semibold text-foreground">
                     {formatNumber(step.value)}
                   </p>
                 </div>
@@ -213,19 +213,19 @@ export default function ConversionsCac() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Channel</th>
-                <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Type</th>
-                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Spend</th>
-                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Signups</th>
-                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">CAC</th>
-                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">ROAS</th>
-                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-2">CTR</th>
+                <th className="text-left text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Channel</th>
+                <th className="text-center text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Type</th>
+                <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Spend</th>
+                <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Signups</th>
+                <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">CAC</th>
+                <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">ROAS</th>
+                <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-2">CTR</th>
               </tr>
             </thead>
             <tbody>
               {channels.map((channel, i) => (
                 <tr key={channel.channel_name} className="border-b border-border/50">
-                  <td className="py-2.5 pr-4 text-sm font-medium text-foreground">
+                  <td className="py-2.5 pr-4 text-base font-medium text-foreground">
                     <div className="flex items-center gap-2">
                       <span
                         className="w-2 h-2 rounded-full shrink-0"
@@ -235,25 +235,25 @@ export default function ConversionsCac() {
                     </div>
                   </td>
                   <td className="py-2.5 px-2 text-center">
-                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[13px] font-semibold uppercase tracking-wider ${
                       channel.channel_type === "paid" ? "bg-warning/10 text-warning" : "bg-success/10 text-success"
                     }`}>
                       {channel.channel_type}
                     </span>
                   </td>
-                  <td className="py-2.5 px-2 text-sm font-mono text-right text-foreground">{formatCurrency(channel.spend)}</td>
-                  <td className="py-2.5 px-2 text-sm font-mono text-right text-secondary-foreground">{formatNumber(channel.signups)}</td>
-                  <td className={`py-2.5 px-2 text-sm font-mono text-right ${
+                  <td className="py-2.5 px-2 text-base font-mono text-right text-foreground">{formatCurrency(channel.spend)}</td>
+                  <td className="py-2.5 px-2 text-base font-mono text-right text-secondary-foreground">{formatNumber(channel.signups)}</td>
+                  <td className={`py-2.5 px-2 text-base font-mono text-right ${
                     channel.cac > 0 && channel.cac < 100 ? "text-success" : channel.cac > 200 ? "text-danger" : "text-secondary-foreground"
                   }`}>
                     {channel.cac > 0 ? formatCurrency(channel.cac) : "—"}
                   </td>
-                  <td className={`py-2.5 px-2 text-sm font-mono text-right ${
+                  <td className={`py-2.5 px-2 text-base font-mono text-right ${
                     channel.roas >= 3 ? "text-success font-semibold" : channel.roas >= 1 ? "text-foreground" : "text-danger"
                   }`}>
                     {channel.roas > 0 ? channel.roas.toFixed(2) + "x" : "—"}
                   </td>
-                  <td className="py-2.5 pl-2 text-sm font-mono text-right text-secondary-foreground">
+                  <td className="py-2.5 pl-2 text-base font-mono text-right text-secondary-foreground">
                     {channel.ctr.toFixed(2)}%
                   </td>
                 </tr>

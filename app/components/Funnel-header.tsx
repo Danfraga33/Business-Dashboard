@@ -31,20 +31,20 @@ export function FunnelHeader() {
           <button
             key={filter}
             onClick={() => removeFilter(filter)}
-            className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary cursor-pointer"
+            className="flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-[15px] font-medium text-foreground transition-colors hover:bg-secondary cursor-pointer"
           >
             {filter}
             <X className="h-3 w-3 text-muted-foreground" />
           </button>
         ))}
-        <button onClick={addFilter} className="cursor-pointer h-7 rounded-full border-border bg-transparent px-3 text-[13px] text-muted-foreground hover:bg-card hover:text-foreground">
+        <button onClick={addFilter} className="cursor-pointer h-7 rounded-full border-border bg-transparent px-3 text-[15px] text-muted-foreground hover:bg-card hover:text-foreground">
           Add Filter
         </button>
       </div>
       <div className="relative shrink-0">
         <button
           onClick={() => setShowTimeDropdown(!showTimeDropdown)}
-          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-1.5 text-[13px] font-medium text-foreground transition-colors hover:bg-secondary cursor-pointer"
+          className="flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-1.5 text-[15px] font-medium text-foreground transition-colors hover:bg-secondary cursor-pointer"
         >
           {timeRange}
           <ChevronDown className="h-3 w-3 text-muted-foreground" />
@@ -58,7 +58,7 @@ export function FunnelHeader() {
                   setTimeRange(range);
                   setShowTimeDropdown(false);
                 }}
-                className={`flex w-full items-center rounded-md px-3 py-2 text-[13px] transition-colors cursor-pointer ${
+                className={`flex w-full items-center rounded-md px-3 py-2 text-[15px] transition-colors cursor-pointer ${
                   timeRange === range
                     ? "bg-secondary text-foreground"
                     : "text-muted-foreground hover:bg-secondary hover:text-foreground"

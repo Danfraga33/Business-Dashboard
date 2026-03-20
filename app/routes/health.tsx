@@ -47,9 +47,9 @@ function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-popover border border-border rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
+      <p className="text-[15px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[15px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -87,16 +87,16 @@ function HealthGauge({ label, value, unit, thresholds, target }: {
 
   return (
     <div className="card">
-      <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider mb-3">
+      <p className="text-[15px] font-medium text-muted-foreground uppercase tracking-wider mb-3">
         {label}
       </p>
       <div className="flex items-baseline gap-1.5">
-        <span className={`text-2xl font-mono font-semibold ${color}`}>
+        <span className={`text-3xl font-mono font-semibold ${color}`}>
           {typeof value === "number" ? value.toFixed(1) : value}
         </span>
-        <span className="text-sm text-muted-foreground">{unit}</span>
+        <span className="text-base text-muted-foreground">{unit}</span>
       </div>
-      <div className={`inline-flex items-center gap-1.5 mt-3 px-2 py-0.5 rounded-full text-[11px] font-medium ${bgColor} ${color}`}>
+      <div className={`inline-flex items-center gap-1.5 mt-3 px-2 py-0.5 rounded-full text-[13px] font-medium ${bgColor} ${color}`}>
         {value >= thresholds.good ? (
           <CheckCircle2 className="w-3 h-3" />
         ) : (
@@ -116,8 +116,8 @@ export default function Health() {
     return (
       <div className="space-y-8">
         <div className="animate-in">
-          <h2 className="text-2xl font-semibold text-foreground font-serif">Health</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h2 className="text-3xl font-semibold text-foreground font-serif">Health</h2>
+          <p className="text-base text-muted-foreground mt-1">
             No metrics data available. Run the seed script to populate data.
           </p>
         </div>
@@ -149,8 +149,8 @@ export default function Health() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-foreground leading-tight font-serif">Health</h2>
-        <p className="text-sm text-muted-foreground mt-1.5">
+        <h2 className="text-3xl font-semibold text-foreground leading-tight font-serif">Health</h2>
+        <p className="text-base text-muted-foreground mt-1.5">
           Core health metrics — revenue, retention, and operational pulse
         </p>
       </div>
@@ -225,10 +225,10 @@ export default function Health() {
 
       {/* MRR Trend */}
       <div className="card animate-in stagger-5">
-        <h3 className="text-base font-semibold text-foreground mb-6 flex items-center gap-2 font-serif">
+        <h3 className="text-lg font-semibold text-foreground mb-6 flex items-center gap-2 font-serif">
           <Activity className="w-4 h-4 text-primary" />
           MRR Trend
-          <span className="text-[11px] text-muted-foreground font-normal font-sans ml-auto">Last 30 days</span>
+          <span className="text-[13px] text-muted-foreground font-normal font-sans ml-auto">Last 30 days</span>
         </h3>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={chartData}>
@@ -254,7 +254,7 @@ export default function Health() {
 
       {/* Pulse Summary */}
       <div className="card animate-in stagger-6">
-        <h3 className="text-base font-semibold text-foreground mb-5 flex items-center gap-2 font-serif">
+        <h3 className="text-lg font-semibold text-foreground mb-5 flex items-center gap-2 font-serif">
           <Activity className="w-4 h-4 text-muted-foreground" />
           Pulse Summary
         </h3>
@@ -267,8 +267,8 @@ export default function Health() {
               <TrendingDown className="w-4 h-4 text-danger shrink-0" />
             )}
             <div className="flex-1">
-              <p className="text-sm font-medium text-foreground">MRR {mrrGrowthRate >= 0 ? "Growing" : "Declining"}</p>
-              <p className="text-[13px] text-muted-foreground">
+              <p className="text-base font-medium text-foreground">MRR {mrrGrowthRate >= 0 ? "Growing" : "Declining"}</p>
+              <p className="text-[15px] text-muted-foreground">
                 {Math.abs(mrrGrowthRate).toFixed(1)}% change over 30 days
               </p>
             </div>
@@ -279,8 +279,8 @@ export default function Health() {
             <div className="flex items-center gap-3 p-3.5 rounded-lg bg-danger/5 border border-danger/10">
               <AlertTriangle className="w-4 h-4 text-danger shrink-0" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">Elevated Churn</p>
-                <p className="text-[13px] text-muted-foreground">
+                <p className="text-base font-medium text-foreground">Elevated Churn</p>
+                <p className="text-[15px] text-muted-foreground">
                   {churnRate.toFixed(1)}% total churn rate — investigate retention
                 </p>
               </div>
@@ -289,8 +289,8 @@ export default function Health() {
             <div className="flex items-center gap-3 p-3.5 rounded-lg bg-success/5 border border-success/10">
               <CheckCircle2 className="w-4 h-4 text-success shrink-0" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">Churn Under Control</p>
-                <p className="text-[13px] text-muted-foreground">
+                <p className="text-base font-medium text-foreground">Churn Under Control</p>
+                <p className="text-[15px] text-muted-foreground">
                   {churnRate.toFixed(1)}% total churn rate — within healthy range
                 </p>
               </div>
@@ -302,8 +302,8 @@ export default function Health() {
             <div className="flex items-center gap-3 p-3.5 rounded-lg bg-warning/5 border border-warning/10">
               <AlertTriangle className="w-4 h-4 text-warning shrink-0" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">Support Queue Growing</p>
-                <p className="text-[13px] text-muted-foreground">
+                <p className="text-base font-medium text-foreground">Support Queue Growing</p>
+                <p className="text-[15px] text-muted-foreground">
                   {supportMetrics.open_tickets} open tickets — avg response {Math.round(supportMetrics.avg_first_response_time)}min
                 </p>
               </div>
@@ -312,8 +312,8 @@ export default function Health() {
             <div className="flex items-center gap-3 p-3.5 rounded-lg bg-success/5 border border-success/10">
               <CheckCircle2 className="w-4 h-4 text-success shrink-0" />
               <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">Support Healthy</p>
-                <p className="text-[13px] text-muted-foreground">
+                <p className="text-base font-medium text-foreground">Support Healthy</p>
+                <p className="text-[15px] text-muted-foreground">
                   {supportMetrics.open_tickets} open tickets — avg response {Math.round(supportMetrics.avg_first_response_time)}min
                 </p>
               </div>

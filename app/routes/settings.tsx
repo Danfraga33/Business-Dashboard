@@ -48,8 +48,8 @@ function SettingsSection({
           <Icon className="w-4 h-4 text-primary" />
         </div>
         <div>
-          <h3 className="text-base font-semibold font-serif text-foreground">{title}</h3>
-          <p className="text-[13px] font-sans text-muted-foreground mt-0.5">{description}</p>
+          <h3 className="text-lg font-semibold font-serif text-foreground">{title}</h3>
+          <p className="text-[15px] font-sans text-muted-foreground mt-0.5">{description}</p>
         </div>
       </div>
       <div className="space-y-4">{children}</div>
@@ -69,9 +69,9 @@ function SettingsRow({
   return (
     <div className="flex items-center justify-between gap-4 py-2">
       <div>
-        <p className="text-sm text-foreground">{label}</p>
+        <p className="text-base text-foreground">{label}</p>
         {description && (
-          <p className="text-[13px] text-muted-foreground mt-0.5">{description}</p>
+          <p className="text-[15px] text-muted-foreground mt-0.5">{description}</p>
         )}
       </div>
       {children}
@@ -92,10 +92,10 @@ export default function Settings() {
     <div className="space-y-8 max-w-3xl">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold font-serif text-foreground leading-tight">
+        <h2 className="text-3xl font-semibold font-serif text-foreground leading-tight">
           Settings
         </h2>
-        <p className="text-sm font-sans text-muted-foreground mt-1">
+        <p className="text-base font-sans text-muted-foreground mt-1">
           Configure your dashboard preferences
         </p>
       </div>
@@ -238,10 +238,10 @@ function ConnectionRow({
             status === "connected" ? "bg-success" : "bg-border"
           }`}
         />
-        <span className="text-sm text-foreground">{name}</span>
+        <span className="text-base text-foreground">{name}</span>
       </div>
       {status === "connected" ? (
-        <span className="text-[13px] text-success font-medium">Connected</span>
+        <span className="text-[15px] text-success font-medium">Connected</span>
       ) : (
         <ActionButton variant="ghost" size="sm">
           Connect

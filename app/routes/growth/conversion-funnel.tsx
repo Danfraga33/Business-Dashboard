@@ -225,11 +225,11 @@ function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
+      <p className="text-[15px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
         <p
           key={entry.name}
-          className="text-[13px] font-mono"
+          className="text-[15px] font-mono"
           style={{ color: entry.color }}
         >
           {entry.name}:{" "}
@@ -259,10 +259,10 @@ function BottleneckAlert() {
       <div className="flex items-start gap-3">
         <AlertTriangle className="w-5 h-5 text-danger shrink-0 mt-0.5" />
         <div>
-          <h4 className="text-sm font-semibold text-foreground">
+          <h4 className="text-base font-semibold text-foreground">
             Biggest Bottleneck: {bottleneck.label}
           </h4>
-          <p className="text-[13px] text-secondary-foreground mt-1">
+          <p className="text-[15px] text-secondary-foreground mt-1">
             Only {bottleneck.rate.toFixed(1)}% of{" "}
             {bottleneck.from === "MQL"
               ? "marketing qualified leads"
@@ -290,7 +290,7 @@ function StageDeepDive() {
         <Target className="w-4 h-4 text-primary" />
         Stage-by-Stage Breakdown
       </h3>
-      <p className="text-[13px] text-muted-foreground mb-6">
+      <p className="text-[15px] text-muted-foreground mb-6">
         What's happening at each transition — and what it tells you
       </p>
 
@@ -311,23 +311,23 @@ function StageDeepDive() {
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-semibold text-foreground">
+                    <span className="text-base font-semibold text-foreground">
                       {conv.from}
                     </span>
                     <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
-                    <span className="text-sm font-semibold text-foreground">
+                    <span className="text-base font-semibold text-foreground">
                       {conv.to}
                     </span>
                   </div>
                   {isBottleneck && (
-                    <span className="text-[11px] font-semibold text-danger bg-danger/15 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="text-[13px] font-semibold text-danger bg-danger/15 px-2 py-0.5 rounded-full uppercase tracking-wider">
                       Bottleneck
                     </span>
                   )}
                 </div>
                 <div className="flex items-center gap-3">
                   <span
-                    className={`text-lg font-mono font-bold ${healthColors[health]}`}
+                    className={`text-2xl font-mono font-bold ${healthColors[health]}`}
                   >
                     {conv.rate.toFixed(1)}%
                   </span>
@@ -344,7 +344,7 @@ function StageDeepDive() {
               </div>
 
               {/* Volume flow */}
-              <div className="flex items-center gap-2 text-[13px] text-muted-foreground mb-3">
+              <div className="flex items-center gap-2 text-[15px] text-muted-foreground mb-3">
                 <span className="font-mono">
                   {conv.fromCount.toLocaleString()}
                 </span>
@@ -360,12 +360,12 @@ function StageDeepDive() {
               {/* Diagnosis */}
               {strategy && (
                 <div className="space-y-3">
-                  <p className="text-[13px] text-secondary-foreground">
+                  <p className="text-[15px] text-secondary-foreground">
                     {strategy.diagnosis}
                   </p>
                   <div className="flex items-start gap-2">
                     <Lightbulb className="w-3.5 h-3.5 text-warning shrink-0 mt-0.5" />
-                    <p className="text-[13px] text-secondary-foreground italic">
+                    <p className="text-[15px] text-secondary-foreground italic">
                       {strategy.question}
                     </p>
                   </div>
@@ -386,12 +386,12 @@ function StageMetricsTable() {
         <Clock className="w-4 h-4 text-primary" />
         Metrics per Stage
       </h3>
-      <p className="text-[13px] text-muted-foreground mb-5">
+      <p className="text-[15px] text-muted-foreground mb-5">
         Time, velocity, and source quality at each transition
       </p>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-[13px]">
+        <table className="w-full text-[15px]">
           <thead>
             <tr className="border-b border-border">
               <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
@@ -461,7 +461,7 @@ function SourceQuality() {
         <Zap className="w-4 h-4 text-primary" />
         CAC by Channel
       </h3>
-      <p className="text-[13px] text-muted-foreground mb-5">
+      <p className="text-[15px] text-muted-foreground mb-5">
         Which channels produce leads that actually close — volume vs. quality
       </p>
 
@@ -509,7 +509,7 @@ function SourceQuality() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-[13px]">
+        <table className="w-full text-[15px]">
           <thead>
             <tr className="border-b border-border">
               <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
@@ -573,7 +573,7 @@ function Strategies() {
         <Lightbulb className="w-4 h-4 text-primary" />
         Action Plan by Stage
       </h3>
-      <p className="text-[13px] text-muted-foreground mb-6">
+      <p className="text-[15px] text-muted-foreground mb-6">
         Prioritized strategies — start with the biggest bottleneck
       </p>
 
@@ -597,10 +597,10 @@ function Strategies() {
                           : "bg-danger"
                     }`}
                   />
-                  <h4 className="text-sm font-semibold text-foreground">
+                  <h4 className="text-base font-semibold text-foreground">
                     {conv.label}
                   </h4>
-                  <span className={`text-[13px] font-mono ${healthColors[health]}`}>
+                  <span className={`text-[15px] font-mono ${healthColors[health]}`}>
                     {conv.rate.toFixed(1)}%
                   </span>
                 </div>
@@ -608,7 +608,7 @@ function Strategies() {
                   {strategy.strategies.map((s, i) => (
                     <li
                       key={i}
-                      className="text-[13px] text-secondary-foreground flex items-start gap-2"
+                      className="text-[15px] text-secondary-foreground flex items-start gap-2"
                     >
                       <span className="text-muted-foreground mt-0.5 shrink-0">
                         {i + 1}.
@@ -632,10 +632,10 @@ export default function ConversionFunnel() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
+        <h2 className="font-serif text-3xl font-semibold text-foreground leading-tight">
           Conversion Funnel
         </h2>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-base text-muted-foreground mt-1">
           Sales funnel, conversion rates, and CAC by channel
         </p>
       </div>

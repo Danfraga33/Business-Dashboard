@@ -26,7 +26,7 @@ export function Tabs({ children, defaultTab = 0 }: TabsProps) {
             <button
               key={index}
               onClick={() => setActiveTab(index)}
-              className={`px-1 py-3 text-sm font-medium border-b-2 transition-colors cursor-pointer ${
+              className={`px-1 py-3 text-base font-medium border-b-2 transition-colors cursor-pointer ${
                 activeTab === index
                   ? "border-primary text-primary"
                   : "border-transparent text-muted-foreground hover:text-foreground"

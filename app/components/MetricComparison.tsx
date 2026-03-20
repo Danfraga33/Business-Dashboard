@@ -27,21 +27,21 @@ export function MetricComparison({
 
   return (
     <tr className="border-b border-border/50 last:border-0">
-      <td className="py-3 pr-4 text-sm text-muted-foreground">{label}</td>
-      <td className="py-3 px-4 text-sm text-muted-foreground font-mono text-right">
+      <td className="py-3 pr-4 text-base text-muted-foreground">{label}</td>
+      <td className="py-3 px-4 text-base text-muted-foreground font-mono text-right">
         {formatValue(budget, format)}
       </td>
-      <td className="py-3 px-4 text-sm text-foreground font-mono text-right font-medium">
+      <td className="py-3 px-4 text-base text-foreground font-mono text-right font-medium">
         {formatValue(actual, format)}
       </td>
       <td
-        className={`py-3 pl-4 text-sm font-mono text-right font-medium ${
+        className={`py-3 pl-4 text-base font-mono text-right font-medium ${
           isOver ? "text-danger" : "text-success"
         }`}
       >
         {isOver ? "+" : ""}
         {formatValue(variance, format)}
-        <span className="text-muted-foreground ml-1 text-[13px]">({variancePct}%)</span>
+        <span className="text-muted-foreground ml-1 text-[15px]">({variancePct}%)</span>
       </td>
     </tr>
   );

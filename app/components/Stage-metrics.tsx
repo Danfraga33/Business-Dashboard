@@ -22,7 +22,7 @@ export function StageMetrics({ metrics }: StageMetricsProps) {
           className="group flex flex-col gap-2 rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/30 hover:bg-secondary"
         >
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+            <span className="text-[12px] font-semibold uppercase tracking-widest text-muted-foreground">
               {metric.name}
             </span>
             {metric.trend === "up" && <TrendingUp className="h-3.5 w-3.5 text-accent" />}
@@ -30,11 +30,11 @@ export function StageMetrics({ metrics }: StageMetricsProps) {
             {metric.trend === "flat" && <Minus className="h-3.5 w-3.5 text-muted-foreground" />}
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold tracking-tight text-card-foreground">
+            <span className="text-2xl font-bold tracking-tight text-card-foreground">
               {metric.count.toLocaleString()}
             </span>
             <span
-              className={`text-xs font-semibold ${
+              className={`text-sm font-semibold ${
                 metric.trend === "up"
                   ? "text-accent"
                   : metric.trend === "down"
@@ -52,7 +52,7 @@ export function StageMetrics({ metrics }: StageMetricsProps) {
                 style={{ width: `${metric.conversionRate}%` }}
               />
             </div>
-            <span className="text-[10px] font-medium text-muted-foreground">{metric.conversionRate}%</span>
+            <span className="text-[12px] font-medium text-muted-foreground">{metric.conversionRate}%</span>
           </div>
         </div>
       ))}

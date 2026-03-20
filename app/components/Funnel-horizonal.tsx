@@ -58,10 +58,10 @@ export default function SalesFunnelDashboard() {
         {/* Top Stats */}
         <div className="flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl font-serif">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl font-serif">
               {funnelStages[0].total.toLocaleString()}
             </h1>
-            <p className="mt-1 text-sm text-muted-foreground">Total Prospects</p>
+            <p className="mt-1 text-base text-muted-foreground">Total Prospects</p>
           </div>
         </div>
 

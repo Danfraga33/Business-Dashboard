@@ -15,7 +15,7 @@ export function FunnelLegend() {
       {legendItems.map((item) => (
         <div key={item.label} className="flex items-center gap-2">
           <span className={`h-2.5 w-2.5 rounded-full ${item.color}`} />
-          <span className="text-xs font-medium text-muted-foreground">{item.label}</span>
+          <span className="text-sm font-medium text-muted-foreground">{item.label}</span>
         </div>
       ))}
     </div>

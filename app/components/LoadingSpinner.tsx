@@ -16,7 +16,7 @@ export function LoadingSpinner({ size = "md", message }: LoadingSpinnerProps) {
         className={`${sizeClasses[size]} border-primary border-t-transparent rounded-full animate-spin`}
       />
       {message && (
-        <p className="mt-4 text-sm text-secondary-foreground">{message}</p>
+        <p className="mt-4 text-base text-secondary-foreground">{message}</p>
       )}
     </div>
   );

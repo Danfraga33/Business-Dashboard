@@ -116,7 +116,7 @@ function EntryCard({
         </div>
 
         <div>
-          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
+          <label className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
             Main Focus
           </label>
           <input
@@ -125,7 +125,7 @@ function EntryCard({
             defaultValue={entry.business || ""}
             placeholder="What's the main focus today?"
             required
-            className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors"
+            className="w-full bg-background border border-border rounded-lg px-3 py-2 text-base text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors"
           />
         </div>
 
@@ -152,7 +152,7 @@ function EntryCard({
         />
 
         {actionData?.error && actionData.intent === "update" && (
-          <div className="text-sm text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
+          <div className="text-base text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
             {actionData.error}
           </div>
         )}
@@ -181,7 +181,7 @@ function EntryCard({
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex-1 min-w-0">
-          <span className="text-[13px] font-mono text-muted-foreground">
+          <span className="text-[15px] font-mono text-muted-foreground">
             {new Date(entry.created_at).toLocaleDateString("en-US", {
               weekday: "short",
               month: "short",
@@ -189,7 +189,7 @@ function EntryCard({
               year: "numeric",
             })}
           </span>
-          <p className="text-sm font-semibold text-foreground leading-snug mt-1">
+          <p className="text-base font-semibold text-foreground leading-snug mt-1">
             {entry.business || "Untitled"}
           </p>
         </div>
@@ -244,10 +244,10 @@ function EntryCard({
 function Section({ title, content }: { title: string; content: string }) {
   return (
     <div>
-      <h4 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+      <h4 className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
         {title}
       </h4>
-      <div className="text-sm text-secondary-foreground leading-relaxed whitespace-pre-line">
+      <div className="text-base text-secondary-foreground leading-relaxed whitespace-pre-line">
         {content}
       </div>
     </div>
@@ -269,7 +269,7 @@ function TextArea({
 }) {
   return (
     <div>
-      <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
+      <label className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
         {label}
       </label>
       <textarea
@@ -278,7 +278,7 @@ function TextArea({
         rows={4}
         required={required}
         defaultValue={defaultValue}
-        className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors resize-y"
+        className="w-full bg-background border border-border rounded-lg px-3 py-2 text-base text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors resize-y"
       />
     </div>
   );
@@ -302,10 +302,10 @@ export default function Learnings() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
+        <h2 className="font-serif text-3xl font-semibold text-foreground leading-tight">
           Journal
         </h2>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-base text-muted-foreground mt-1">
           Daily reflections and planning
         </p>
       </div>
@@ -313,7 +313,7 @@ export default function Learnings() {
       {/* New Entry Form */}
       <div>
         <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-muted-foreground">{entries.length} entries</p>
+          <p className="text-base text-muted-foreground">{entries.length} entries</p>
           <ActionButton
             onClick={() => setShowNewEntry(!showNewEntry)}
             icon={showNewEntry ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -341,7 +341,7 @@ export default function Learnings() {
             </div>
 
             <div>
-              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
+              <label className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 Main Focus
               </label>
               <input
@@ -349,7 +349,7 @@ export default function Learnings() {
                 type="text"
                 placeholder="What's the main focus today?"
                 required
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-base text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors"
               />
             </div>
 
@@ -373,7 +373,7 @@ export default function Learnings() {
             />
 
             {actionData?.error && actionData.intent === "create" && (
-              <div className="text-sm text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
+              <div className="text-base text-danger bg-danger/10 border border-danger/30 rounded-lg px-3 py-2">
                 {actionData.error}
               </div>
             )}
@@ -398,7 +398,7 @@ export default function Learnings() {
       {/* Entries List */}
       <div className="space-y-4">
         {entries.length === 0 && !showNewEntry && (
-          <div className="text-center py-12 text-muted-foreground text-sm">
+          <div className="text-center py-12 text-muted-foreground text-base">
             No entries yet. Start journaling to track your daily progress.
           </div>
         )}

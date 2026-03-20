@@ -50,9 +50,9 @@ function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
+      <p className="text-[15px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[15px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -144,10 +144,10 @@ export default function CustomerDeepDive() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
+        <h2 className="font-serif text-3xl font-semibold text-foreground leading-tight">
           Customer Deep Dive
         </h2>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-base text-muted-foreground mt-1">
           Cohort analysis, unit economics, customer composition, and segment performance
         </p>
       </div>
@@ -193,19 +193,19 @@ export default function CustomerDeepDive() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
+                      <th className="text-left text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Cohort
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Customers
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Retention
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Churn
                       </th>
                     </tr>
@@ -213,19 +213,19 @@ export default function CustomerDeepDive() {
                   <tbody>
                     {cohorts.map((cohort) => (
                       <tr key={cohort.cohort} className="border-b border-border/50">
-                        <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{cohort.cohort}</td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
+                        <td className="py-2.5 pr-4 text-base font-medium text-foreground">{cohort.cohort}</td>
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-secondary-foreground">
                           {cohort.customers}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-foreground">
                           ${cohort.mrr.toLocaleString()}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right">
+                        <td className="py-2.5 px-4 text-base font-mono text-right">
                           <span className={cohort.retention_rate >= 80 ? "text-success" : cohort.retention_rate >= 60 ? "text-warning" : "text-danger"}>
                             {Number(cohort.retention_rate).toFixed(1)}%
                           </span>
                         </td>
-                        <td className="py-2.5 pl-4 text-sm font-mono text-right">
+                        <td className="py-2.5 pl-4 text-base font-mono text-right">
                           <span className={cohort.churn_rate <= 5 ? "text-success" : cohort.churn_rate <= 15 ? "text-warning" : "text-danger"}>
                             {Number(cohort.churn_rate).toFixed(1)}%
                           </span>
@@ -302,14 +302,14 @@ export default function CustomerDeepDive() {
                   <div className="w-7 h-7 rounded-lg bg-success/10 flex items-center justify-center">
                     <DollarSign className="w-3.5 h-3.5 text-success" />
                   </div>
-                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">LTV</p>
+                  <p className="text-[15px] font-medium text-muted-foreground uppercase tracking-wider">LTV</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-foreground">
+                  <span className="text-3xl font-bold text-foreground">
                     {latest ? formatCurrency(latest.ltv) : "—"}
                   </span>
                 </div>
-                <p className="text-[11px] text-muted-foreground mt-2">Customer Lifetime Value</p>
+                <p className="text-[13px] text-muted-foreground mt-2">Customer Lifetime Value</p>
               </div>
 
               <div className="card">
@@ -317,14 +317,14 @@ export default function CustomerDeepDive() {
                   <div className="w-7 h-7 rounded-lg bg-danger/10 flex items-center justify-center">
                     <TrendingUp className="w-3.5 h-3.5 text-danger" />
                   </div>
-                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">CAC</p>
+                  <p className="text-[15px] font-medium text-muted-foreground uppercase tracking-wider">CAC</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-foreground">
+                  <span className="text-3xl font-bold text-foreground">
                     {latest ? formatCurrency(latest.cac) : "—"}
                   </span>
                 </div>
-                <p className="text-[11px] text-muted-foreground mt-2">Customer Acquisition Cost</p>
+                <p className="text-[13px] text-muted-foreground mt-2">Customer Acquisition Cost</p>
               </div>
 
               <div className="card">
@@ -332,15 +332,15 @@ export default function CustomerDeepDive() {
                   <div className="w-7 h-7 rounded-lg bg-warning/10 flex items-center justify-center">
                     <BarChart3 className="w-3.5 h-3.5 text-warning" />
                   </div>
-                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Payback</p>
+                  <p className="text-[15px] font-medium text-muted-foreground uppercase tracking-wider">Payback</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-foreground">
+                  <span className="text-3xl font-bold text-foreground">
                     {latest ? Number(latest.payback_period_months).toFixed(1) : "—"}
                   </span>
-                  <span className="text-sm text-muted-foreground">mo</span>
+                  <span className="text-base text-muted-foreground">mo</span>
                 </div>
-                <p className="text-[11px] text-muted-foreground mt-2">CAC Payback Period</p>
+                <p className="text-[13px] text-muted-foreground mt-2">CAC Payback Period</p>
               </div>
 
               <div className="card">
@@ -348,15 +348,15 @@ export default function CustomerDeepDive() {
                   <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
                     <TrendingUp className="w-3.5 h-3.5 text-primary" />
                   </div>
-                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">LTV:CAC</p>
+                  <p className="text-[15px] font-medium text-muted-foreground uppercase tracking-wider">LTV:CAC</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-primary">
+                  <span className="text-3xl font-bold text-primary">
                     {latest ? Number(latest.ltv_cac_ratio).toFixed(1) : "—"}
                   </span>
-                  <span className="text-sm text-muted-foreground">:1</span>
+                  <span className="text-base text-muted-foreground">:1</span>
                 </div>
-                <p className="text-[11px] text-muted-foreground mt-2">Target: &gt;3:1</p>
+                <p className="text-[13px] text-muted-foreground mt-2">Target: &gt;3:1</p>
               </div>
             </div>
 
@@ -370,19 +370,19 @@ export default function CustomerDeepDive() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
+                      <th className="text-left text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Cohort
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         ARPU
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Avg LTV
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Payback
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Margin
                       </th>
                     </tr>
@@ -395,17 +395,17 @@ export default function CustomerDeepDive() {
                       const margin = 70 + Math.random() * 15; // 70-85%
                       return (
                         <tr key={cohort.cohort} className="border-b border-border/50">
-                          <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{cohort.cohort}</td>
-                          <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
+                          <td className="py-2.5 pr-4 text-base font-medium text-foreground">{cohort.cohort}</td>
+                          <td className="py-2.5 px-4 text-base font-mono text-right text-foreground">
                             {formatCurrency(arpu)}
                           </td>
-                          <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
+                          <td className="py-2.5 px-4 text-base font-mono text-right text-foreground">
                             {formatCurrency(estimatedLTV)}
                           </td>
-                          <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
+                          <td className="py-2.5 px-4 text-base font-mono text-right text-secondary-foreground">
                             {payback.toFixed(1)} mo
                           </td>
-                          <td className="py-2.5 pl-4 text-sm font-mono text-right text-success">
+                          <td className="py-2.5 pl-4 text-base font-mono text-right text-success">
                             {margin.toFixed(1)}%
                           </td>
                         </tr>
@@ -458,9 +458,9 @@ export default function CustomerDeepDive() {
                             className="w-3 h-3 rounded-full"
                             style={{ backgroundColor: item.color }}
                           />
-                          <span className="text-sm text-foreground">{item.name}</span>
+                          <span className="text-base text-foreground">{item.name}</span>
                         </div>
-                        <span className={`text-sm font-mono font-semibold ${isPositive ? "text-success" : "text-danger"}`}>
+                        <span className={`text-base font-mono font-semibold ${isPositive ? "text-success" : "text-danger"}`}>
                           {isPositive ? "+" : ""}{formatCurrency(item.value)}
                         </span>
                       </div>
@@ -468,8 +468,8 @@ export default function CustomerDeepDive() {
                   })}
                   <div className="pt-4 border-t border-border">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-foreground">Net MRR Change</span>
-                      <span className="text-sm font-mono font-bold text-success">
+                      <span className="text-base font-bold text-foreground">Net MRR Change</span>
+                      <span className="text-base font-mono font-bold text-success">
                         +{formatCurrency(compositionData.reduce((sum, d) => sum + d.value, 0))}
                       </span>
                     </div>
@@ -519,9 +519,9 @@ export default function CustomerDeepDive() {
                             className="w-2.5 h-2.5 rounded-full shrink-0"
                             style={{ backgroundColor: CHURN_COLORS[i % CHURN_COLORS.length] }}
                           />
-                          <span className="text-sm text-foreground flex-1 truncate">{reason.reason}</span>
-                          <span className="text-sm font-mono text-secondary-foreground">{reason.count}</span>
-                          <span className="text-[13px] font-mono text-muted-foreground w-12 text-right">
+                          <span className="text-base text-foreground flex-1 truncate">{reason.reason}</span>
+                          <span className="text-base font-mono text-secondary-foreground">{reason.count}</span>
+                          <span className="text-[15px] font-mono text-muted-foreground w-12 text-right">
                             {pct.toFixed(0)}%
                           </span>
                         </div>
@@ -547,22 +547,22 @@ export default function CustomerDeepDive() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
+                      <th className="text-left text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Segment
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Customers
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Avg LTV
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         CAC
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Retention
                       </th>
                     </tr>
@@ -570,20 +570,20 @@ export default function CustomerDeepDive() {
                   <tbody>
                     {segmentData.map((segment) => (
                       <tr key={segment.segment} className="border-b border-border/50">
-                        <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{segment.segment}</td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
+                        <td className="py-2.5 pr-4 text-base font-medium text-foreground">{segment.segment}</td>
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-secondary-foreground">
                           {segment.customers}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-foreground">
                           {formatCurrency(segment.mrr)}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-success">
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-success">
                           {formatCurrency(segment.ltv)}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-danger">
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-danger">
                           {formatCurrency(segment.cac)}
                         </td>
-                        <td className="py-2.5 pl-4 text-sm font-mono text-right">
+                        <td className="py-2.5 pl-4 text-base font-mono text-right">
                           <span className={segment.retention >= 85 ? "text-success" : segment.retention >= 70 ? "text-warning" : "text-danger"}>
                             {segment.retention.toFixed(1)}%
                           </span>
@@ -656,29 +656,29 @@ export default function CustomerDeepDive() {
                   placeholder="Search customers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-card border border-border rounded-lg px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors w-64"
+                  className="bg-card border border-border rounded-lg px-3 py-1.5 text-base text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors w-64"
                 />
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-border">
-                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
+                      <th className="text-left text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Name
                       </th>
-                      <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-center text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Plan
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Health
                       </th>
-                      <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
+                      <th className="text-center text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Segment
                       </th>
-                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-left text-[13px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Cohort
                       </th>
                     </tr>
@@ -687,11 +687,11 @@ export default function CustomerDeepDive() {
                     {filteredCustomers.map((customer) => (
                       <tr key={customer.id} className="border-b border-border/50">
                         <td className="py-2.5 pr-4">
-                          <p className="text-sm font-medium text-foreground">{customer.name}</p>
-                          <p className="text-[13px] text-muted-foreground">{customer.email}</p>
+                          <p className="text-base font-medium text-foreground">{customer.name}</p>
+                          <p className="text-[15px] text-muted-foreground">{customer.email}</p>
                         </td>
                         <td className="py-2.5 px-4 text-center">
-                          <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
+                          <span className={`inline-flex px-2 py-0.5 rounded-full text-[13px] font-semibold uppercase tracking-wider ${
                             customer.plan === "enterprise"
                               ? "bg-primary/10 text-primary"
                               : customer.plan === "pro"
@@ -703,10 +703,10 @@ export default function CustomerDeepDive() {
                             {customer.plan}
                           </span>
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
+                        <td className="py-2.5 px-4 text-base font-mono text-right text-foreground">
                           ${customer.mrr}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right">
+                        <td className="py-2.5 px-4 text-base font-mono text-right">
                           <span className={
                             customer.health_score !== null && customer.health_score >= 75
                               ? "text-success"
@@ -717,10 +717,10 @@ export default function CustomerDeepDive() {
                             {customer.health_score ?? "—"}
                           </span>
                         </td>
-                        <td className="py-2.5 px-4 text-[13px] text-center text-secondary-foreground">
+                        <td className="py-2.5 px-4 text-[15px] text-center text-secondary-foreground">
                           {customer.segment}
                         </td>
-                        <td className="py-2.5 pl-4 text-sm font-mono text-secondary-foreground">
+                        <td className="py-2.5 pl-4 text-base font-mono text-secondary-foreground">
                           {customer.cohort}
                         </td>
                       </tr>
@@ -728,7 +728,7 @@ export default function CustomerDeepDive() {
                   </tbody>
                 </table>
                 {filteredCustomers.length === 0 && (
-                  <div className="text-center py-8 text-muted-foreground text-sm">
+                  <div className="text-center py-8 text-muted-foreground text-base">
                     No customers match your search.
                   </div>
                 )}

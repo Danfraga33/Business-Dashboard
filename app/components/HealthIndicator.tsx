@@ -33,7 +33,7 @@ export function HealthIndicator({
         />
       </div>
       {showLabel && (
-        <span className="text-[13px] font-medium text-muted-foreground">
+        <span className="text-[15px] font-medium text-muted-foreground">
           {config.label}
         </span>
       )}

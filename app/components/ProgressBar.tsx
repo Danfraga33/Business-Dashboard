@@ -34,10 +34,10 @@ export function ProgressBar({
       {(showLabel || label) && (
         <div className="flex justify-between items-center mb-1.5">
           {label && (
-            <span className="text-[13px] text-muted-foreground">{label}</span>
+            <span className="text-[15px] text-muted-foreground">{label}</span>
           )}
           {showLabel && (
-            <span className="text-[13px] font-mono text-muted-foreground">
+            <span className="text-[15px] font-mono text-muted-foreground">
               {clamped.toFixed(0)}%
             </span>
           )}

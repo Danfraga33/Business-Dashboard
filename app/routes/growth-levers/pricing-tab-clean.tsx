@@ -58,8 +58,8 @@ export function PricingStrategyTabClean({
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-[13px] text-muted-foreground uppercase tracking-wide mb-1">Starter Tier</div>
-              <div className="text-xl font-semibold text-foreground">$25/month</div>
+              <div className="text-[15px] text-muted-foreground uppercase tracking-wide mb-1">Starter Tier</div>
+              <div className="text-2xl font-semibold text-foreground">$25/month</div>
             </div>
             {expandedTier === 'starter' ? <ChevronUp className="w-5 h-5 text-secondary-foreground" /> : <ChevronDown className="w-5 h-5 text-secondary-foreground" />}
           </div>
@@ -74,8 +74,8 @@ export function PricingStrategyTabClean({
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-[13px] text-muted-foreground uppercase tracking-wide mb-1">Growth Tier</div>
-              <div className="text-xl font-semibold text-foreground">$99/month</div>
+              <div className="text-[15px] text-muted-foreground uppercase tracking-wide mb-1">Growth Tier</div>
+              <div className="text-2xl font-semibold text-foreground">$99/month</div>
             </div>
             {expandedTier === 'growth' ? <ChevronUp className="w-5 h-5 text-secondary-foreground" /> : <ChevronDown className="w-5 h-5 text-secondary-foreground" />}
           </div>
@@ -89,20 +89,20 @@ export function PricingStrategyTabClean({
           <div className="card">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="font-serif text-lg font-semibold text-foreground mb-2">Starter — $25/month</h3>
-                <p className="text-sm text-secondary-foreground">Value capture: {starterValueCapture.capturePercent}%</p>
+                <h3 className="font-serif text-2xl font-semibold text-foreground mb-2">Starter — $25/month</h3>
+                <p className="text-base text-secondary-foreground">Value capture: {starterValueCapture.capturePercent}%</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Problem Solved</div>
-                <p className="text-sm text-secondary-foreground">{starterValueQuantification.problemSolved}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Problem Solved</div>
+                <p className="text-base text-secondary-foreground">{starterValueQuantification.problemSolved}</p>
               </div>
 
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Estimated Value</div>
-                <p className="text-sm text-secondary-foreground">
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Estimated Value</div>
+                <p className="text-base text-secondary-foreground">
                   {starterValueQuantification.timePerWeek} hrs/week × 4 weeks × ${starterValueQuantification.hourlyRate}/hr =
                   ${starterValueQuantification.totalValuePerYear.toLocaleString()}/year
                 </p>
@@ -112,17 +112,17 @@ export function PricingStrategyTabClean({
 
           {/* Customer Validation */}
           <div className="card">
-            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Customer Validation (4 interviews)</h4>
+            <h4 className="font-serif text-base font-semibold text-foreground mb-4">Customer Validation (4 interviews)</h4>
             <div className="space-y-4">
               {starterInterviews.map((interview, idx) => (
                 <div key={idx} className="p-4 rounded-lg bg-background border border-border">
-                  <div className="text-sm font-semibold text-foreground mb-2">Q: {interview.question}</div>
+                  <div className="text-base font-semibold text-foreground mb-2">Q: {interview.question}</div>
                   <div className="space-y-1 mb-2">
                     {interview.responses.map((response, ridx) => (
-                      <div key={ridx} className="text-[13px] text-secondary-foreground">{response}</div>
+                      <div key={ridx} className="text-[15px] text-secondary-foreground">{response}</div>
                     ))}
                   </div>
-                  <div className="text-[13px] font-semibold text-primary">{interview.insight}</div>
+                  <div className="text-[15px] font-semibold text-primary">{interview.insight}</div>
                 </div>
               ))}
             </div>
@@ -130,42 +130,42 @@ export function PricingStrategyTabClean({
 
           {/* Decision */}
           <div className="card">
-            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Strategic Decision</h4>
+            <h4 className="font-serif text-base font-semibold text-foreground mb-4">Strategic Decision</h4>
             <div className="space-y-4">
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Assessment</div>
-                <p className="text-sm text-secondary-foreground">{starterDecision.currentAssessment}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Assessment</div>
+                <p className="text-base text-secondary-foreground">{starterDecision.currentAssessment}</p>
               </div>
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Why Not Raise?</div>
-                <p className="text-sm text-secondary-foreground">{starterDecision.whyNotRaise}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Why Not Raise?</div>
+                <p className="text-base text-secondary-foreground">{starterDecision.whyNotRaise}</p>
               </div>
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Next Action</div>
-                <p className="text-sm text-primary font-medium">{starterDecision.nextAction}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Next Action</div>
+                <p className="text-base text-primary font-medium">{starterDecision.nextAction}</p>
               </div>
             </div>
           </div>
 
           {/* Actual Data */}
           <div className="card">
-            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Actual Segment Data</h4>
+            <h4 className="font-serif text-base font-semibold text-foreground mb-4">Actual Segment Data</h4>
             <div className="grid grid-cols-4 gap-4">
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">Customers</div>
-                <div className="text-xl font-semibold text-foreground">{starterActualData.financial.customers}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">Customers</div>
+                <div className="text-2xl font-semibold text-foreground">{starterActualData.financial.customers}</div>
               </div>
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">MRR</div>
-                <div className="text-xl font-semibold text-foreground">${starterActualData.financial.mrr}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">MRR</div>
+                <div className="text-2xl font-semibold text-foreground">${starterActualData.financial.mrr}</div>
               </div>
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">Churn</div>
-                <div className="text-xl font-semibold text-success">{starterActualData.churnRetention.monthlyChurn}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">Churn</div>
+                <div className="text-2xl font-semibold text-success">{starterActualData.churnRetention.monthlyChurn}</div>
               </div>
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">Retention</div>
-                <div className="text-xl font-semibold text-success">{starterActualData.churnRetention.annualRetention}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">Retention</div>
+                <div className="text-2xl font-semibold text-success">{starterActualData.churnRetention.annualRetention}</div>
               </div>
             </div>
           </div>
@@ -179,20 +179,20 @@ export function PricingStrategyTabClean({
           <div className="card">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="font-serif text-lg font-semibold text-foreground mb-2">Growth — $99/month</h3>
-                <p className="text-sm text-secondary-foreground">Value capture: {growthValueCapture.capturePercent}%</p>
+                <h3 className="font-serif text-2xl font-semibold text-foreground mb-2">Growth — $99/month</h3>
+                <p className="text-base text-secondary-foreground">Value capture: {growthValueCapture.capturePercent}%</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Problem Solved</div>
-                <p className="text-sm text-secondary-foreground">{growthValueQuantification.problemSolved}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Problem Solved</div>
+                <p className="text-base text-secondary-foreground">{growthValueQuantification.problemSolved}</p>
               </div>
 
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Estimated Value</div>
-                <p className="text-sm text-secondary-foreground">
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Estimated Value</div>
+                <p className="text-base text-secondary-foreground">
                   {growthValueQuantification.timePerWeek} hrs/week × ${growthValueQuantification.hourlyRate}/hr +
                   ${growthValueQuantification.revenueImpact}/mo revenue = ${growthValueQuantification.totalValuePerYear.toLocaleString()}/year
                 </p>
@@ -202,17 +202,17 @@ export function PricingStrategyTabClean({
 
           {/* Customer Validation */}
           <div className="card">
-            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Customer Validation (5 interviews)</h4>
+            <h4 className="font-serif text-base font-semibold text-foreground mb-4">Customer Validation (5 interviews)</h4>
             <div className="space-y-4">
               {growthInterviews.map((interview, idx) => (
                 <div key={idx} className="p-4 rounded-lg bg-background border border-border">
-                  <div className="text-sm font-semibold text-foreground mb-2">Q: {interview.question}</div>
+                  <div className="text-base font-semibold text-foreground mb-2">Q: {interview.question}</div>
                   <div className="space-y-1 mb-2">
                     {interview.responses.map((response, ridx) => (
-                      <div key={ridx} className="text-[13px] text-secondary-foreground">{response}</div>
+                      <div key={ridx} className="text-[15px] text-secondary-foreground">{response}</div>
                     ))}
                   </div>
-                  <div className="text-[13px] font-semibold text-primary">{interview.insight}</div>
+                  <div className="text-[15px] font-semibold text-primary">{interview.insight}</div>
                 </div>
               ))}
             </div>
@@ -220,42 +220,42 @@ export function PricingStrategyTabClean({
 
           {/* Decision */}
           <div className="card">
-            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Strategic Decision</h4>
+            <h4 className="font-serif text-base font-semibold text-foreground mb-4">Strategic Decision</h4>
             <div className="space-y-4">
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Assessment</div>
-                <p className="text-sm text-secondary-foreground">{growthDecision.currentAssessment}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Assessment</div>
+                <p className="text-base text-secondary-foreground">{growthDecision.currentAssessment}</p>
               </div>
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Why Not Raise?</div>
-                <p className="text-sm text-secondary-foreground">{growthDecision.whyNotRaise}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Why Not Raise?</div>
+                <p className="text-base text-secondary-foreground">{growthDecision.whyNotRaise}</p>
               </div>
               <div>
-                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Next Action</div>
-                <p className="text-sm text-primary font-medium">{growthDecision.nextAction}</p>
+                <div className="text-[15px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Next Action</div>
+                <p className="text-base text-primary font-medium">{growthDecision.nextAction}</p>
               </div>
             </div>
           </div>
 
           {/* Actual Data */}
           <div className="card">
-            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Actual Segment Data</h4>
+            <h4 className="font-serif text-base font-semibold text-foreground mb-4">Actual Segment Data</h4>
             <div className="grid grid-cols-4 gap-4">
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">Customers</div>
-                <div className="text-xl font-semibold text-foreground">{growthActualData.financial.customers}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">Customers</div>
+                <div className="text-2xl font-semibold text-foreground">{growthActualData.financial.customers}</div>
               </div>
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">MRR</div>
-                <div className="text-xl font-semibold text-foreground">${growthActualData.financial.mrr}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">MRR</div>
+                <div className="text-2xl font-semibold text-foreground">${growthActualData.financial.mrr}</div>
               </div>
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">Churn</div>
-                <div className="text-xl font-semibold text-success">{growthActualData.churnRetention.monthlyChurn}</div>
+                <div className="text-[15px] text-muted-foreground mb-1">Churn</div>
+                <div className="text-2xl font-semibold text-success">{growthActualData.churnRetention.monthlyChurn}</div>
               </div>
               <div>
-                <div className="text-[13px] text-muted-foreground mb-1">Growth</div>
-                <div className="text-xl font-semibold text-success">+50% YoY</div>
+                <div className="text-[15px] text-muted-foreground mb-1">Growth</div>
+                <div className="text-2xl font-semibold text-success">+50% YoY</div>
               </div>
             </div>
           </div>
@@ -264,32 +264,32 @@ export function PricingStrategyTabClean({
 
       {/* Portfolio Health - Always visible */}
       <div className="card">
-        <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Portfolio Health</h3>
+        <h3 className="font-serif text-2xl font-semibold text-foreground mb-6">Portfolio Health</h3>
         <div className="grid grid-cols-2 gap-6">
           {healthMetrics.map((metric, idx) => (
             <div key={idx} className="p-4 rounded-lg bg-background border border-border">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="font-serif text-sm font-semibold text-foreground">{metric.tier} Tier</h4>
+                <h4 className="font-serif text-base font-semibold text-foreground">{metric.tier} Tier</h4>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-success" />
-                  <span className="text-[13px] text-success font-semibold">Healthy</span>
+                  <span className="text-[15px] text-success font-semibold">Healthy</span>
                 </div>
               </div>
-              <div className="grid grid-cols-4 gap-3 text-sm">
+              <div className="grid grid-cols-4 gap-3 text-base">
                 <div>
-                  <div className="text-[13px] text-muted-foreground mb-1">MRR</div>
+                  <div className="text-[15px] text-muted-foreground mb-1">MRR</div>
                   <div className="font-semibold text-foreground">${metric.mrr}</div>
                 </div>
                 <div>
-                  <div className="text-[13px] text-muted-foreground mb-1">Customers</div>
+                  <div className="text-[15px] text-muted-foreground mb-1">Customers</div>
                   <div className="font-semibold text-foreground">{metric.customers}</div>
                 </div>
                 <div>
-                  <div className="text-[13px] text-muted-foreground mb-1">Churn</div>
+                  <div className="text-[15px] text-muted-foreground mb-1">Churn</div>
                   <div className="font-semibold text-success">{metric.churn}</div>
                 </div>
                 <div>
-                  <div className="text-[13px] text-muted-foreground mb-1">Growth</div>
+                  <div className="text-[15px] text-muted-foreground mb-1">Growth</div>
                   <div className="font-semibold text-success">{metric.growth}</div>
                 </div>
               </div>

@@ -23,10 +23,10 @@ export function StatCard({
 
   return (
     <div className={`card ${className}`}>
-      <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider mb-3">
+      <p className="text-[15px] font-medium text-muted-foreground uppercase tracking-wider mb-3">
         {label}
       </p>
-      <p className="metric-value text-2xl text-foreground leading-none">
+      <p className="metric-value text-3xl text-foreground leading-none">
         {prefix}
         {value}
       </p>
@@ -36,7 +36,7 @@ export function StatCard({
           {isNegative && <TrendingDown className="w-3.5 h-3.5 text-danger" />}
           {isNeutral && <Minus className="w-3.5 h-3.5 text-muted-foreground" />}
           <span
-            className={`text-[13px] font-medium font-mono ${
+            className={`text-[15px] font-medium font-mono ${
               isPositive
                 ? "text-success"
                 : isNegative
@@ -48,7 +48,7 @@ export function StatCard({
             {change.toFixed(1)}%
           </span>
           {changeLabel && (
-            <span className="text-[13px] text-muted-foreground">{changeLabel}</span>
+            <span className="text-[15px] text-muted-foreground">{changeLabel}</span>
           )}
         </div>
       )}

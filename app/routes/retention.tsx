@@ -54,9 +54,9 @@ function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
+      <p className="text-[15px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[15px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -80,8 +80,8 @@ export default function Retention() {
     return (
       <div className="space-y-8">
         <div className="animate-in">
-          <h2 className="font-serif text-2xl font-semibold text-foreground">Retention</h2>
-          <p className="text-sm text-muted-foreground mt-1">
+          <h2 className="font-serif text-3xl font-semibold text-foreground">Retention</h2>
+          <p className="text-base text-muted-foreground mt-1">
             No data available. Run the seed script to populate data.
           </p>
         </div>
@@ -167,8 +167,8 @@ export default function Retention() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">Retention</h2>
-        <p className="text-sm text-muted-foreground mt-1">
+        <h2 className="font-serif text-3xl font-semibold text-foreground leading-tight">Retention</h2>
+        <p className="text-base text-muted-foreground mt-1">
           NRR, cohort retention, customer health, and leading indicators
         </p>
       </div>
@@ -206,7 +206,7 @@ export default function Retention() {
               <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-primary" />
                 NRR Breakdown
-                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">This month</span>
+                <span className="font-sans text-[13px] text-muted-foreground font-normal ml-auto">This month</span>
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -233,22 +233,22 @@ export default function Retention() {
                     <div key={item.name} className="flex items-center justify-between py-2 border-b border-border/50">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: item.color }} />
-                        <span className="text-sm text-secondary-foreground">{item.name}</span>
+                        <span className="text-base text-secondary-foreground">{item.name}</span>
                       </div>
-                      <span className={`text-sm font-mono ${item.value >= 0 ? "text-foreground" : "text-danger"}`}>
+                      <span className={`text-base font-mono ${item.value >= 0 ? "text-foreground" : "text-danger"}`}>
                         {item.value >= 0 ? "+" : ""}{formatCurrency(item.value)}
                       </span>
                     </div>
                   ))}
                   <div className="flex items-center justify-between pt-3 border-t-2 border-border">
-                    <span className="text-sm font-semibold text-foreground">Net MRR</span>
-                    <span className={`text-sm font-mono font-bold ${netMRR >= 0 ? "text-success" : "text-danger"}`}>
+                    <span className="text-base font-semibold text-foreground">Net MRR</span>
+                    <span className={`text-base font-mono font-bold ${netMRR >= 0 ? "text-success" : "text-danger"}`}>
                       {netMRR >= 0 ? "+" : ""}{formatCurrency(netMRR)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between pt-2">
-                    <span className="text-sm font-semibold text-foreground">NRR</span>
-                    <span className={`text-sm font-mono font-bold ${Number(nrrValue) >= 100 ? "text-success" : "text-warning"}`}>
+                    <span className="text-base font-semibold text-foreground">NRR</span>
+                    <span className={`text-base font-mono font-bold ${Number(nrrValue) >= 100 ? "text-success" : "text-warning"}`}>
                       {nrrValue}%
                     </span>
                   </div>
@@ -261,7 +261,7 @@ export default function Retention() {
               <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                 <Activity className="w-4 h-4 text-primary" />
                 Cohort Retention Curves
-                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">Monthly retention</span>
+                <span className="font-sans text-[13px] text-muted-foreground font-normal ml-auto">Monthly retention</span>
               </h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={retentionCurves}>
@@ -322,7 +322,7 @@ export default function Retention() {
               <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-primary" />
                 ARPU Trends by Cohort
-                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">Last 6 months</span>
+                <span className="font-sans text-[13px] text-muted-foreground font-normal ml-auto">Last 6 months</span>
               </h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={arpuTrends}>
@@ -375,7 +375,7 @@ export default function Retention() {
                 </ResponsiveContainer>
                 <div className="mt-4 space-y-2">
                   {healthScoreDistribution.map((item) => (
-                    <div key={item.score} className="flex items-center justify-between text-[13px]">
+                    <div key={item.score} className="flex items-center justify-between text-[15px]">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
                         <span className="text-secondary-foreground">{item.score}</span>
@@ -391,24 +391,24 @@ export default function Retention() {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-3 rounded-lg bg-success/5 border border-success/20">
                     <div>
-                      <p className="text-sm font-semibold text-foreground">Expansion MRR</p>
-                      <p className="text-[13px] text-muted-foreground mt-0.5">Upgrades + add-ons</p>
+                      <p className="text-base font-semibold text-foreground">Expansion MRR</p>
+                      <p className="text-[15px] text-muted-foreground mt-0.5">Upgrades + add-ons</p>
                     </div>
-                    <span className="text-lg font-mono font-bold text-success">{formatCurrency(4650)}</span>
+                    <span className="text-2xl font-mono font-bold text-success">{formatCurrency(4650)}</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-primary/5 border border-primary/20">
                     <div>
-                      <p className="text-sm font-semibold text-foreground">% of Total MRR</p>
-                      <p className="text-[13px] text-muted-foreground mt-0.5">Expansion contribution</p>
+                      <p className="text-base font-semibold text-foreground">% of Total MRR</p>
+                      <p className="text-[15px] text-muted-foreground mt-0.5">Expansion contribution</p>
                     </div>
-                    <span className="text-lg font-mono font-bold text-primary">{expansionPct}%</span>
+                    <span className="text-2xl font-mono font-bold text-primary">{expansionPct}%</span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-card border border-border">
                     <div>
-                      <p className="text-sm font-semibold text-foreground">Expanding Customers</p>
-                      <p className="text-[13px] text-muted-foreground mt-0.5">This month</p>
+                      <p className="text-base font-semibold text-foreground">Expanding Customers</p>
+                      <p className="text-[15px] text-muted-foreground mt-0.5">This month</p>
                     </div>
-                    <span className="text-lg font-mono font-bold text-foreground">34</span>
+                    <span className="text-2xl font-mono font-bold text-foreground">34</span>
                   </div>
                 </div>
               </div>
@@ -449,7 +449,7 @@ export default function Retention() {
               <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                 <ThumbsUp className="w-4 h-4 text-primary" />
                 Customer Satisfaction Trends
-                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">Last 6 months</span>
+                <span className="font-sans text-[13px] text-muted-foreground font-normal ml-auto">Last 6 months</span>
               </h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={satisfactionTrends}>
@@ -490,7 +490,7 @@ export default function Retention() {
                 Feature Adoption Rates
               </h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-[13px]">
+                <table className="w-full text-[15px]">
                   <thead>
                     <tr className="border-b border-border">
                       <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
@@ -532,10 +532,10 @@ export default function Retention() {
               <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-danger" />
                 Customers at Risk of Churn
-                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">{churnRiskCustomers.length} customers</span>
+                <span className="font-sans text-[13px] text-muted-foreground font-normal ml-auto">{churnRiskCustomers.length} customers</span>
               </h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-[13px]">
+                <table className="w-full text-[15px]">
                   <thead>
                     <tr className="border-b border-border">
                       <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">

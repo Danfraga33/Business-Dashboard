@@ -67,7 +67,7 @@ export function Sidebar() {
         </div>
         {!sidebarCollapsed && (
           <div className="overflow-hidden">
-            <h1 className="text-sm font-semibold text-sidebar-foreground tracking-tight whitespace-nowrap font-serif">
+            <h1 className="text-base font-semibold text-sidebar-foreground tracking-tight whitespace-nowrap font-serif">
               Chief of Staff
             </h1>
           </div>
@@ -99,7 +99,7 @@ export function Sidebar() {
                 <>
                   <button
                     onClick={() => toggleSection(sectionKey)}
-                    className={`group relative w-full flex items-center gap-3 rounded-lg text-[13px] font-medium transition-all duration-150 cursor-pointer ${
+                    className={`group relative w-full flex items-center gap-3 rounded-lg text-[15px] font-medium transition-all duration-150 cursor-pointer ${
                       sidebarCollapsed
                         ? "px-0 py-2.5 justify-center"
                         : "px-3 py-2.5"
@@ -135,7 +135,7 @@ export function Sidebar() {
 
                     {sidebarCollapsed && (
                       <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-0 ml-2.5 py-2 px-1 bg-popover border border-border rounded-lg shadow-lg transition-all duration-150 pointer-events-auto z-50 min-w-[200px]">
-                        <p className="px-3 py-1.5 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                        <p className="px-3 py-1.5 text-[13px] font-semibold text-muted-foreground uppercase tracking-wider">
                           {item.label}
                         </p>
                         {item.children!.map((child) => {
@@ -144,7 +144,7 @@ export function Sidebar() {
                             <NavLink
                               key={child.to}
                               to={child.to}
-                              className={`flex items-center gap-2 px-3 py-2 rounded-md text-[13px] transition-colors ${
+                              className={`flex items-center gap-2 px-3 py-2 rounded-md text-[15px] transition-colors ${
                                 childActive
                                   ? "text-primary bg-primary/5"
                                   : "text-muted-foreground hover:text-foreground hover:bg-secondary"
@@ -167,7 +167,7 @@ export function Sidebar() {
                           <NavLink
                             key={child.to}
                             to={child.to}
-                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-150 ${
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[15px] font-medium transition-all duration-150 ${
                               childActive
                                 ? "text-primary bg-primary/5"
                                 : "text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent"
@@ -189,7 +189,7 @@ export function Sidebar() {
               ) : (
                 <NavLink
                   to={item.to}
-                  className={`group relative flex items-center gap-3 rounded-lg text-[13px] font-medium transition-all duration-150 ${
+                  className={`group relative flex items-center gap-3 rounded-lg text-[15px] font-medium transition-all duration-150 ${
                     sidebarCollapsed
                       ? "px-0 py-2.5 justify-center"
                       : "px-3 py-2.5"
@@ -217,7 +217,7 @@ export function Sidebar() {
                   )}
 
                   {sidebarCollapsed && (
-                    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-1/2 -translate-y-1/2 ml-2.5 px-2.5 py-1 bg-popover border border-border rounded-lg text-[13px] text-foreground whitespace-nowrap shadow-lg transition-all duration-150 pointer-events-none z-50">
+                    <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 absolute left-full top-1/2 -translate-y-1/2 ml-2.5 px-2.5 py-1 bg-popover border border-border rounded-lg text-[15px] text-foreground whitespace-nowrap shadow-lg transition-all duration-150 pointer-events-none z-50">
                       {item.label}
                     </div>
                   )}
