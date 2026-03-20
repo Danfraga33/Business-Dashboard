@@ -19,7 +19,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap",
   },
 ];
 
@@ -38,7 +38,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       </head>
-      <body className="bg-base text-ink antialiased">
+      <body className="bg-background text-foreground antialiased">
         {children}
         <ScrollRestoration />
         <Scripts />
