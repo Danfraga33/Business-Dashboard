@@ -8,3 +8,10 @@
 
 # Git worktrees
 .worktrees/
+
+# Tooling artifacts
+.serena/
+.claude/settings.json
+_write_ops.js
+docs/
+DESIGN.md
