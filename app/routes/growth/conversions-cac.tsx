@@ -46,10 +46,10 @@ export async function loader() {
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-ink-muted mb-1">{label}</p>
+    <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-xs font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -71,7 +71,7 @@ function formatNumber(value: number) {
 }
 
 const CHANNEL_COLORS = [
-  "#2563EB", "#059669", "#D97706", "#DC2626", "#7C3AED",
+  "oklch(0.85 0.08 55)", "oklch(0.65 0.19 145)", "oklch(0.75 0.15 65)", "oklch(0.637 0.237 25.331)", "oklch(0.627 0.265 303.9)",
   "#0891B2", "#DB2777", "#65A30D",
 ];
 
@@ -104,18 +104,18 @@ export default function ConversionsCac() {
       {/* Header */}
       <div className="animate-in">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-semibold text-accent uppercase tracking-wider">Tier 2 — Efficiency</span>
+          <span className="text-[13px] font-semibold text-primary uppercase tracking-wider">Tier 2 — Efficiency</span>
         </div>
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Conversions & CAC Efficiency
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Conversion optimization, CAC reduction, and funnel performance — last 30 days
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           label="Blended CAC"
           value={formatCurrency(metrics.blendedCAC)}
@@ -140,8 +140,8 @@ export default function ConversionsCac() {
 
       {/* Acquisition Funnel */}
       <div className="card animate-in stagger-3">
-        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-          <MousePointerClick className="w-4 h-4 text-accent" />
+        <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+          <MousePointerClick className="w-4 h-4 text-primary" />
           Acquisition Funnel
         </h3>
         <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
@@ -153,15 +153,15 @@ export default function ConversionsCac() {
               <div key={step.stage} className="flex items-center gap-2 flex-1 min-w-0">
                 {i > 0 && (
                   <div className="flex flex-col items-center shrink-0">
-                    <ArrowRight className="w-4 h-4 text-ink-muted" />
-                    <span className="text-2xs text-ink-muted font-mono">{convRate.toFixed(1)}%</span>
+                    <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-[11px] text-muted-foreground font-mono">{convRate.toFixed(1)}%</span>
                   </div>
                 )}
-                <div className="flex-1 text-center p-3 rounded-lg bg-surface border border-edge min-w-[100px]">
-                  <p className="text-2xs font-medium text-ink-muted uppercase tracking-wider mb-1">
+                <div className="flex-1 text-center p-3 rounded-lg bg-card border border-border min-w-[100px]">
+                  <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider mb-1">
                     {step.stage}
                   </p>
-                  <p className="text-lg font-mono font-semibold text-ink">
+                  <p className="text-lg font-mono font-semibold text-foreground">
                     {formatNumber(step.value)}
                   </p>
                 </div>
@@ -174,16 +174,16 @@ export default function ConversionsCac() {
       {/* CAC by Channel Chart */}
       {cacData.length > 0 && (
         <div className="card animate-in stagger-4">
-          <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
+          <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
             <Target className="w-4 h-4 text-warning" />
             CAC by Channel (Best → Worst)
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={cacData} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis
                 type="number"
-                tick={{ fill: "#78716C", fontSize: 11 }}
+                tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `$${v}`}
@@ -191,13 +191,13 @@ export default function ConversionsCac() {
               <YAxis
                 dataKey="name"
                 type="category"
-                tick={{ fill: "#78716C", fontSize: 11 }}
+                tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 width={120}
               />
               <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="CAC" fill="#EF4444" radius={[0, 3, 3, 0]} />
+              <Bar dataKey="CAC" fill="oklch(0.637 0.237 25.331)" radius={[0, 3, 3, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -205,27 +205,27 @@ export default function ConversionsCac() {
 
       {/* Channel Performance Table */}
       <div className="card animate-in stagger-5">
-        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 text-accent" />
+        <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-primary" />
           Channel Performance
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-edge">
-                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">Channel</th>
-                <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">Type</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">Spend</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">Signups</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">CAC</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-2">ROAS</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-2">CTR</th>
+              <tr className="border-b border-border">
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Channel</th>
+                <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Type</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Spend</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">Signups</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">CAC</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-2">ROAS</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-2">CTR</th>
               </tr>
             </thead>
             <tbody>
               {channels.map((channel, i) => (
-                <tr key={channel.channel_name} className="border-b border-edge/50">
-                  <td className="py-2.5 pr-4 text-sm font-medium text-ink">
+                <tr key={channel.channel_name} className="border-b border-border/50">
+                  <td className="py-2.5 pr-4 text-sm font-medium text-foreground">
                     <div className="flex items-center gap-2">
                       <span
                         className="w-2 h-2 rounded-full shrink-0"
@@ -235,25 +235,25 @@ export default function ConversionsCac() {
                     </div>
                   </td>
                   <td className="py-2.5 px-2 text-center">
-                    <span className={`inline-flex px-2 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-wider ${
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
                       channel.channel_type === "paid" ? "bg-warning/10 text-warning" : "bg-success/10 text-success"
                     }`}>
                       {channel.channel_type}
                     </span>
                   </td>
-                  <td className="py-2.5 px-2 text-sm font-mono text-right text-ink">{formatCurrency(channel.spend)}</td>
-                  <td className="py-2.5 px-2 text-sm font-mono text-right text-ink-secondary">{formatNumber(channel.signups)}</td>
+                  <td className="py-2.5 px-2 text-sm font-mono text-right text-foreground">{formatCurrency(channel.spend)}</td>
+                  <td className="py-2.5 px-2 text-sm font-mono text-right text-secondary-foreground">{formatNumber(channel.signups)}</td>
                   <td className={`py-2.5 px-2 text-sm font-mono text-right ${
-                    channel.cac > 0 && channel.cac < 100 ? "text-success" : channel.cac > 200 ? "text-danger" : "text-ink-secondary"
+                    channel.cac > 0 && channel.cac < 100 ? "text-success" : channel.cac > 200 ? "text-danger" : "text-secondary-foreground"
                   }`}>
                     {channel.cac > 0 ? formatCurrency(channel.cac) : "—"}
                   </td>
                   <td className={`py-2.5 px-2 text-sm font-mono text-right ${
-                    channel.roas >= 3 ? "text-success font-semibold" : channel.roas >= 1 ? "text-ink" : "text-danger"
+                    channel.roas >= 3 ? "text-success font-semibold" : channel.roas >= 1 ? "text-foreground" : "text-danger"
                   }`}>
                     {channel.roas > 0 ? channel.roas.toFixed(2) + "x" : "—"}
                   </td>
-                  <td className="py-2.5 pl-2 text-sm font-mono text-right text-ink-secondary">
+                  <td className="py-2.5 pl-2 text-sm font-mono text-right text-secondary-foreground">
                     {channel.ctr.toFixed(2)}%
                   </td>
                 </tr>

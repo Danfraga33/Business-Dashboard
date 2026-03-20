@@ -712,7 +712,7 @@ function TierHeader({ tier, valueCapture }: { tier: PricingTier; valueCapture: V
       <div className="pl-8 pr-6 py-8 bg-gradient-to-br from-slate-50 to-white border-b-4 border-slate-200">
         <div className="flex items-start justify-between mb-6">
           <div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+            <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
               {tier.name} Tier
             </div>
             <div className="text-5xl font-bold text-slate-900 mb-2" style={{ fontFamily: 'Crimson Pro, serif' }}>
@@ -724,7 +724,7 @@ function TierHeader({ tier, valueCapture }: { tier: PricingTier; valueCapture: V
           </div>
 
           <div className={`px-6 py-3 rounded-full bg-${accentColor}-50 border-2 border-${accentColor}-200`}>
-            <div className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+            <div className="text-[13px] font-bold text-slate-600 uppercase tracking-wider mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
               Value Capture
             </div>
             <div className={`text-3xl font-black text-${accentColor}-700 tabular-nums`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -748,7 +748,7 @@ function StatusBadge({ status }: { status: TierStatus }) {
   const { bg, text, border, label, icon: Icon } = config[status];
 
   return (
-    <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold border ${bg} ${text} ${border} uppercase tracking-wider`}>
+    <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-[13px] font-bold border ${bg} ${text} ${border} uppercase tracking-wider`}>
       <Icon className="w-3.5 h-3.5" />
       {label}
     </div>
@@ -761,7 +761,7 @@ function HealthBar({ value, status }: { value: number; status: TierStatus }) {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-1.5">
-        <span className="text-xs font-semibold text-slate-600 uppercase tracking-wide">Health Score</span>
+        <span className="text-[13px] font-semibold text-slate-600 uppercase tracking-wide">Health Score</span>
         <span className="text-sm font-bold text-slate-900 tabular-nums">{value}%</span>
       </div>
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
@@ -785,32 +785,32 @@ function PricingStrategyTab() {
           onClick={() => setExpandedTier(expandedTier === 'starter' ? null : 'starter')}
           className={`px-6 py-4 rounded-lg border transition-all text-left ${
             expandedTier === 'starter'
-              ? 'bg-surface border-accent'
-              : 'bg-surface-hover border-edge hover:border-accent/50'
+              ? 'bg-card border-primary'
+              : 'bg-secondary border-border hover:border-primary/50'
           }`}
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs text-ink-muted uppercase tracking-wide mb-1">Starter Tier</div>
-              <div className="text-xl font-semibold text-ink">$25/month</div>
+              <div className="text-[13px] text-muted-foreground uppercase tracking-wide mb-1">Starter Tier</div>
+              <div className="text-xl font-semibold text-foreground">$25/month</div>
             </div>
-            {expandedTier === 'starter' ? <ChevronUp className="w-5 h-5 text-ink-secondary" /> : <ChevronDown className="w-5 h-5 text-ink-secondary" />}
+            {expandedTier === 'starter' ? <ChevronUp className="w-5 h-5 text-secondary-foreground" /> : <ChevronDown className="w-5 h-5 text-secondary-foreground" />}
           </div>
         </button>
         <button
           onClick={() => setExpandedTier(expandedTier === 'growth' ? null : 'growth')}
           className={`px-6 py-4 rounded-lg border transition-all text-left ${
             expandedTier === 'growth'
-              ? 'bg-surface border-accent'
-              : 'bg-surface-hover border-edge hover:border-accent/50'
+              ? 'bg-card border-primary'
+              : 'bg-secondary border-border hover:border-primary/50'
           }`}
         >
           <div className="flex items-center justify-between">
             <div>
-              <div className="text-xs text-ink-muted uppercase tracking-wide mb-1">Growth Tier</div>
-              <div className="text-xl font-semibold text-ink">$99/month</div>
+              <div className="text-[13px] text-muted-foreground uppercase tracking-wide mb-1">Growth Tier</div>
+              <div className="text-xl font-semibold text-foreground">$99/month</div>
             </div>
-            {expandedTier === 'growth' ? <ChevronUp className="w-5 h-5 text-ink-secondary" /> : <ChevronDown className="w-5 h-5 text-ink-secondary" />}
+            {expandedTier === 'growth' ? <ChevronUp className="w-5 h-5 text-secondary-foreground" /> : <ChevronDown className="w-5 h-5 text-secondary-foreground" />}
           </div>
         </button>
       </div>
@@ -822,20 +822,20 @@ function PricingStrategyTab() {
           <div className="card">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-lg font-semibold text-ink mb-2">Starter — $25/month</h3>
-                <p className="text-sm text-ink-secondary">Value capture: {starterValueCapture.capturePercent}%</p>
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-2">Starter — $25/month</h3>
+                <p className="text-sm text-secondary-foreground">Value capture: {starterValueCapture.capturePercent}%</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Problem Solved</div>
-                <p className="text-sm text-ink-secondary">{starterValueQuantification.problemSolved}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Problem Solved</div>
+                <p className="text-sm text-secondary-foreground">{starterValueQuantification.problemSolved}</p>
               </div>
 
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Estimated Value</div>
-                <p className="text-sm text-ink-secondary">
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Estimated Value</div>
+                <p className="text-sm text-secondary-foreground">
                   {starterValueQuantification.timePerWeek} hrs/week × 4 weeks × ${starterValueQuantification.hourlyRate}/hr =
                   ${starterValueQuantification.totalValuePerYear.toLocaleString()}/year
                 </p>
@@ -845,17 +845,17 @@ function PricingStrategyTab() {
 
           {/* Customer Validation */}
           <div className="card">
-            <h4 className="text-sm font-semibold text-ink mb-4">Customer Validation (4 interviews)</h4>
+            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Customer Validation (4 interviews)</h4>
             <div className="space-y-4">
               {starterInterviews.map((interview, idx) => (
-                <div key={idx} className="p-4 rounded-lg bg-base border border-edge">
-                  <div className="text-sm font-semibold text-ink mb-2">Q: {interview.question}</div>
+                <div key={idx} className="p-4 rounded-lg bg-background border border-border">
+                  <div className="text-sm font-semibold text-foreground mb-2">Q: {interview.question}</div>
                   <div className="space-y-1 mb-2">
                     {interview.responses.map((response, ridx) => (
-                      <div key={ridx} className="text-xs text-ink-secondary">{response}</div>
+                      <div key={ridx} className="text-[13px] text-secondary-foreground">{response}</div>
                     ))}
                   </div>
-                  <div className="text-xs font-semibold text-accent">{interview.insight}</div>
+                  <div className="text-[13px] font-semibold text-primary">{interview.insight}</div>
                 </div>
               ))}
             </div>
@@ -863,41 +863,41 @@ function PricingStrategyTab() {
 
           {/* Decision */}
           <div className="card">
-            <h4 className="text-sm font-semibold text-ink mb-4">Strategic Decision</h4>
+            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Strategic Decision</h4>
             <div className="space-y-4">
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Assessment</div>
-                <p className="text-sm text-ink-secondary">{starterDecision.currentAssessment}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Assessment</div>
+                <p className="text-sm text-secondary-foreground">{starterDecision.currentAssessment}</p>
               </div>
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Why Not Raise?</div>
-                <p className="text-sm text-ink-secondary">{starterDecision.whyNotRaise}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Why Not Raise?</div>
+                <p className="text-sm text-secondary-foreground">{starterDecision.whyNotRaise}</p>
               </div>
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Next Action</div>
-                <p className="text-sm text-accent font-medium">{starterDecision.nextAction}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Next Action</div>
+                <p className="text-sm text-primary font-medium">{starterDecision.nextAction}</p>
               </div>
             </div>
           </div>
 
           {/* Actual Data */}
           <div className="card">
-            <h4 className="text-sm font-semibold text-ink mb-4">Actual Segment Data</h4>
+            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Actual Segment Data</h4>
             <div className="grid grid-cols-4 gap-4">
               <div>
-                <div className="text-xs text-ink-muted mb-1">Customers</div>
-                <div className="text-xl font-semibold text-ink">{starterActualData.financial.customers}</div>
+                <div className="text-[13px] text-muted-foreground mb-1">Customers</div>
+                <div className="text-xl font-semibold text-foreground">{starterActualData.financial.customers}</div>
               </div>
               <div>
-                <div className="text-xs text-ink-muted mb-1">MRR</div>
-                <div className="text-xl font-semibold text-ink">${starterActualData.financial.mrr}</div>
+                <div className="text-[13px] text-muted-foreground mb-1">MRR</div>
+                <div className="text-xl font-semibold text-foreground">${starterActualData.financial.mrr}</div>
               </div>
               <div>
-                <div className="text-xs text-ink-muted mb-1">Churn</div>
+                <div className="text-[13px] text-muted-foreground mb-1">Churn</div>
                 <div className="text-xl font-semibold text-success">{starterActualData.churnRetention.monthlyChurn}</div>
               </div>
               <div>
-                <div className="text-xs text-ink-muted mb-1">Retention</div>
+                <div className="text-[13px] text-muted-foreground mb-1">Retention</div>
                 <div className="text-xl font-semibold text-success">{starterActualData.churnRetention.annualRetention}</div>
               </div>
             </div>
@@ -912,20 +912,20 @@ function PricingStrategyTab() {
           <div className="card">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h3 className="text-lg font-semibold text-ink mb-2">Growth — $99/month</h3>
-                <p className="text-sm text-ink-secondary">Value capture: {growthValueCapture.capturePercent}%</p>
+                <h3 className="font-serif text-lg font-semibold text-foreground mb-2">Growth — $99/month</h3>
+                <p className="text-sm text-secondary-foreground">Value capture: {growthValueCapture.capturePercent}%</p>
               </div>
             </div>
 
             <div className="space-y-4">
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Problem Solved</div>
-                <p className="text-sm text-ink-secondary">{growthValueQuantification.problemSolved}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Problem Solved</div>
+                <p className="text-sm text-secondary-foreground">{growthValueQuantification.problemSolved}</p>
               </div>
 
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Estimated Value</div>
-                <p className="text-sm text-ink-secondary">
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Estimated Value</div>
+                <p className="text-sm text-secondary-foreground">
                   {growthValueQuantification.timePerWeek} hrs/week × ${growthValueQuantification.hourlyRate}/hr +
                   ${growthValueQuantification.revenueImpact}/mo revenue = ${growthValueQuantification.totalValuePerYear.toLocaleString()}/year
                 </p>
@@ -935,17 +935,17 @@ function PricingStrategyTab() {
 
           {/* Customer Validation */}
           <div className="card">
-            <h4 className="text-sm font-semibold text-ink mb-4">Customer Validation (5 interviews)</h4>
+            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Customer Validation (5 interviews)</h4>
             <div className="space-y-4">
               {growthInterviews.map((interview, idx) => (
-                <div key={idx} className="p-4 rounded-lg bg-base border border-edge">
-                  <div className="text-sm font-semibold text-ink mb-2">Q: {interview.question}</div>
+                <div key={idx} className="p-4 rounded-lg bg-background border border-border">
+                  <div className="text-sm font-semibold text-foreground mb-2">Q: {interview.question}</div>
                   <div className="space-y-1 mb-2">
                     {interview.responses.map((response, ridx) => (
-                      <div key={ridx} className="text-xs text-ink-secondary">{response}</div>
+                      <div key={ridx} className="text-[13px] text-secondary-foreground">{response}</div>
                     ))}
                   </div>
-                  <div className="text-xs font-semibold text-accent">{interview.insight}</div>
+                  <div className="text-[13px] font-semibold text-primary">{interview.insight}</div>
                 </div>
               ))}
             </div>
@@ -953,41 +953,41 @@ function PricingStrategyTab() {
 
           {/* Decision */}
           <div className="card">
-            <h4 className="text-sm font-semibold text-ink mb-4">Strategic Decision</h4>
+            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Strategic Decision</h4>
             <div className="space-y-4">
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Assessment</div>
-                <p className="text-sm text-ink-secondary">{growthDecision.currentAssessment}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Assessment</div>
+                <p className="text-sm text-secondary-foreground">{growthDecision.currentAssessment}</p>
               </div>
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Why Not Raise?</div>
-                <p className="text-sm text-ink-secondary">{growthDecision.whyNotRaise}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Why Not Raise?</div>
+                <p className="text-sm text-secondary-foreground">{growthDecision.whyNotRaise}</p>
               </div>
               <div>
-                <div className="text-xs font-semibold text-ink-muted uppercase tracking-wide mb-2">Next Action</div>
-                <p className="text-sm text-accent font-medium">{growthDecision.nextAction}</p>
+                <div className="text-[13px] font-semibold text-muted-foreground uppercase tracking-wide mb-2">Next Action</div>
+                <p className="text-sm text-primary font-medium">{growthDecision.nextAction}</p>
               </div>
             </div>
           </div>
 
           {/* Actual Data */}
           <div className="card">
-            <h4 className="text-sm font-semibold text-ink mb-4">Actual Segment Data</h4>
+            <h4 className="font-serif text-sm font-semibold text-foreground mb-4">Actual Segment Data</h4>
             <div className="grid grid-cols-4 gap-4">
               <div>
-                <div className="text-xs text-ink-muted mb-1">Customers</div>
-                <div className="text-xl font-semibold text-ink">{growthActualData.financial.customers}</div>
+                <div className="text-[13px] text-muted-foreground mb-1">Customers</div>
+                <div className="text-xl font-semibold text-foreground">{growthActualData.financial.customers}</div>
               </div>
               <div>
-                <div className="text-xs text-ink-muted mb-1">MRR</div>
-                <div className="text-xl font-semibold text-ink">${growthActualData.financial.mrr}</div>
+                <div className="text-[13px] text-muted-foreground mb-1">MRR</div>
+                <div className="text-xl font-semibold text-foreground">${growthActualData.financial.mrr}</div>
               </div>
               <div>
-                <div className="text-xs text-ink-muted mb-1">Churn</div>
+                <div className="text-[13px] text-muted-foreground mb-1">Churn</div>
                 <div className="text-xl font-semibold text-success">{growthActualData.churnRetention.monthlyChurn}</div>
               </div>
               <div>
-                <div className="text-xs text-ink-muted mb-1">Growth</div>
+                <div className="text-[13px] text-muted-foreground mb-1">Growth</div>
                 <div className="text-xl font-semibold text-success">+50% YoY</div>
               </div>
             </div>
@@ -997,32 +997,32 @@ function PricingStrategyTab() {
 
       {/* Portfolio Health - Always visible */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-ink mb-6">Portfolio Health</h3>
+        <h3 className="font-serif text-lg font-semibold text-foreground mb-6">Portfolio Health</h3>
         <div className="grid grid-cols-2 gap-6">
           {healthMetrics.map((metric, idx) => (
-            <div key={idx} className="p-4 rounded-lg bg-base border border-edge">
+            <div key={idx} className="p-4 rounded-lg bg-background border border-border">
               <div className="flex items-center justify-between mb-4">
-                <h4 className="text-sm font-semibold text-ink">{metric.tier} Tier</h4>
+                <h4 className="font-serif text-sm font-semibold text-foreground">{metric.tier} Tier</h4>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-success" />
-                  <span className="text-xs text-success font-semibold">Healthy</span>
+                  <span className="text-[13px] text-success font-semibold">Healthy</span>
                 </div>
               </div>
               <div className="grid grid-cols-4 gap-3 text-sm">
                 <div>
-                  <div className="text-xs text-ink-muted mb-1">MRR</div>
-                  <div className="font-semibold text-ink">${metric.mrr}</div>
+                  <div className="text-[13px] text-muted-foreground mb-1">MRR</div>
+                  <div className="font-semibold text-foreground">${metric.mrr}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-ink-muted mb-1">Customers</div>
-                  <div className="font-semibold text-ink">{metric.customers}</div>
+                  <div className="text-[13px] text-muted-foreground mb-1">Customers</div>
+                  <div className="font-semibold text-foreground">{metric.customers}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-ink-muted mb-1">Churn</div>
+                  <div className="text-[13px] text-muted-foreground mb-1">Churn</div>
                   <div className="font-semibold text-success">{metric.churn}</div>
                 </div>
                 <div>
-                  <div className="text-xs text-ink-muted mb-1">Growth</div>
+                  <div className="text-[13px] text-muted-foreground mb-1">Growth</div>
                   <div className="font-semibold text-success">{metric.growth}</div>
                 </div>
               </div>
@@ -1104,36 +1104,36 @@ function PaidTrafficTab() {
   return (
     <div className="space-y-6">
       <div className="card overflow-x-auto">
-        <h3 className="text-lg font-semibold text-ink mb-4">Facebook Campaigns</h3>
+        <h3 className="font-serif text-lg font-semibold text-foreground mb-4">Facebook Campaigns</h3>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-edge text-left">
+            <tr className="border-b border-border text-left">
               {[
                 'Campaign', 'Spend', 'Impressions', 'CTR', 'CPM', 'CPC',
                 'Leads', 'CPL', 'QL', 'CPQL', 'LMQL %', 'Lead→Cust %', 'Customers',
               ].map((col) => (
-                <th key={col} className="pb-3 pr-4 text-xs font-semibold text-ink-muted whitespace-nowrap">
+                <th key={col} className="pb-3 pr-4 text-[13px] font-semibold text-muted-foreground whitespace-nowrap">
                   {col}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-edge">
+          <tbody className="divide-y divide-border">
             {facebookCampaigns.map((c) => (
-              <tr key={c.name} className="hover:bg-base transition-colors">
-                <td className="py-3 pr-4 font-medium text-ink whitespace-nowrap">{c.name}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.spend, '$')}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.impressions)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.ctr, '', 1)}%</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpm, '$', 2)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpc, '$', 2)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.leads)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpl, '$', 2)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.qualifiedLeads)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.cpql, '$', 2)}</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.lmqlRate, '', 1)}%</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.leadToCustomerRate, '', 1)}%</td>
-                <td className="py-3 pr-4 text-ink-secondary">{fmt(c.customers)}</td>
+              <tr key={c.name} className="hover:bg-background transition-colors">
+                <td className="py-3 pr-4 font-medium text-foreground whitespace-nowrap">{c.name}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.spend, '$')}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.impressions)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.ctr, '', 1)}%</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.cpm, '$', 2)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.cpc, '$', 2)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.leads)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.cpl, '$', 2)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.qualifiedLeads)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.cpql, '$', 2)}</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.lmqlRate, '', 1)}%</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.leadToCustomerRate, '', 1)}%</td>
+                <td className="py-3 pr-4 text-secondary-foreground">{fmt(c.customers)}</td>
               </tr>
             ))}
           </tbody>
@@ -1148,11 +1148,11 @@ export default function GoToMarket() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Go-to-Market Strategy
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
-          Pricing strategy, messaging, and market positioning
+        <p className="text-sm text-muted-foreground mt-1">
+          <span className="font-sans">Pricing strategy, messaging, and market positioning</span>
         </p>
       </div>
 
@@ -1171,8 +1171,8 @@ export default function GoToMarket() {
         <Tab label="Organic Traffic">
           <div className="space-y-6">
             <div className="card">
-              <h3 className="text-lg font-semibold text-ink mb-4">Organic Traffic</h3>
-              <p className="text-sm text-ink-secondary">Coming soon...</p>
+              <h3 className="font-serif text-lg font-semibold text-foreground mb-4">Organic Traffic</h3>
+              <p className="text-sm text-secondary-foreground">Coming soon...</p>
             </div>
           </div>
         </Tab>

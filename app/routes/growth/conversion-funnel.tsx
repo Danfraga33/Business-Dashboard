@@ -224,12 +224,12 @@ const stageStrategies: Record<
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-ink-muted mb-1">{label}</p>
+    <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
         <p
           key={entry.name}
-          className="text-xs font-mono"
+          className="text-[13px] font-mono"
           style={{ color: entry.color }}
         >
           {entry.name}:{" "}
@@ -259,10 +259,10 @@ function BottleneckAlert() {
       <div className="flex items-start gap-3">
         <AlertTriangle className="w-5 h-5 text-danger shrink-0 mt-0.5" />
         <div>
-          <h4 className="text-sm font-semibold text-ink">
+          <h4 className="text-sm font-semibold text-foreground">
             Biggest Bottleneck: {bottleneck.label}
           </h4>
-          <p className="text-xs text-ink-secondary mt-1">
+          <p className="text-[13px] text-secondary-foreground mt-1">
             Only {bottleneck.rate.toFixed(1)}% of{" "}
             {bottleneck.from === "MQL"
               ? "marketing qualified leads"
@@ -286,11 +286,11 @@ function BottleneckAlert() {
 function StageDeepDive() {
   return (
     <div className="card animate-in stagger-4">
-      <h3 className="font-semibold text-ink mb-1 flex items-center gap-2">
-        <Target className="w-4 h-4 text-accent" />
+      <h3 className="font-serif font-semibold text-foreground mb-1 flex items-center gap-2">
+        <Target className="w-4 h-4 text-primary" />
         Stage-by-Stage Breakdown
       </h3>
-      <p className="text-xs text-ink-muted mb-6">
+      <p className="text-[13px] text-muted-foreground mb-6">
         What's happening at each transition — and what it tells you
       </p>
 
@@ -304,23 +304,23 @@ function StageDeepDive() {
             <div
               key={conv.label}
               className={`border rounded-xl p-4 transition-colors ${
-                isBottleneck ? healthBg.critical : "border-edge bg-surface/50"
+                isBottleneck ? healthBg.critical : "border-border bg-card/50"
               }`}
             >
               {/* Header row */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-semibold text-ink">
+                    <span className="text-sm font-semibold text-foreground">
                       {conv.from}
                     </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-ink-muted" />
-                    <span className="text-sm font-semibold text-ink">
+                    <ChevronRight className="w-3.5 h-3.5 text-muted-foreground" />
+                    <span className="text-sm font-semibold text-foreground">
                       {conv.to}
                     </span>
                   </div>
                   {isBottleneck && (
-                    <span className="text-2xs font-semibold text-danger bg-danger/15 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                    <span className="text-[11px] font-semibold text-danger bg-danger/15 px-2 py-0.5 rounded-full uppercase tracking-wider">
                       Bottleneck
                     </span>
                   )}
@@ -344,7 +344,7 @@ function StageDeepDive() {
               </div>
 
               {/* Volume flow */}
-              <div className="flex items-center gap-2 text-xs text-ink-muted mb-3">
+              <div className="flex items-center gap-2 text-[13px] text-muted-foreground mb-3">
                 <span className="font-mono">
                   {conv.fromCount.toLocaleString()}
                 </span>
@@ -360,12 +360,12 @@ function StageDeepDive() {
               {/* Diagnosis */}
               {strategy && (
                 <div className="space-y-3">
-                  <p className="text-xs text-ink-secondary">
+                  <p className="text-[13px] text-secondary-foreground">
                     {strategy.diagnosis}
                   </p>
                   <div className="flex items-start gap-2">
                     <Lightbulb className="w-3.5 h-3.5 text-warning shrink-0 mt-0.5" />
-                    <p className="text-xs text-ink-secondary italic">
+                    <p className="text-[13px] text-secondary-foreground italic">
                       {strategy.question}
                     </p>
                   </div>
@@ -382,31 +382,31 @@ function StageDeepDive() {
 function StageMetricsTable() {
   return (
     <div className="card animate-in stagger-5">
-      <h3 className="font-semibold text-ink mb-1 flex items-center gap-2">
-        <Clock className="w-4 h-4 text-accent" />
+      <h3 className="font-serif font-semibold text-foreground mb-1 flex items-center gap-2">
+        <Clock className="w-4 h-4 text-primary" />
         Metrics per Stage
       </h3>
-      <p className="text-xs text-ink-muted mb-5">
+      <p className="text-[13px] text-muted-foreground mb-5">
         Time, velocity, and source quality at each transition
       </p>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-[13px]">
           <thead>
-            <tr className="border-b border-edge">
-              <th className="text-left text-ink-muted font-semibold uppercase tracking-wider pb-3 pr-4">
+            <tr className="border-b border-border">
+              <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
                 Stage
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 Time in Stage
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 Touchpoints
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 Best Source
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 pl-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 pl-4">
                 Avg Deal Size
               </th>
             </tr>
@@ -417,11 +417,11 @@ function StageMetricsTable() {
               return (
                 <tr
                   key={row.stage}
-                  className={`border-b border-edge/50 ${
+                  className={`border-b border-border/50 ${
                     isBottleneckRow ? "bg-danger/5" : ""
                   }`}
                 >
-                  <td className="py-3 pr-4 font-medium text-ink">
+                  <td className="py-3 pr-4 font-medium text-foreground">
                     <div className="flex items-center gap-2">
                       {row.stage}
                       {isBottleneckRow && (
@@ -429,19 +429,19 @@ function StageMetricsTable() {
                       )}
                     </div>
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-ink-secondary">
+                  <td className="py-3 px-4 text-right font-mono text-secondary-foreground">
                     {row.timeInStage}
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-ink-secondary">
+                  <td className="py-3 px-4 text-right font-mono text-secondary-foreground">
                     {row.touchpoints}
                   </td>
-                  <td className="py-3 px-4 text-right text-ink-secondary">
+                  <td className="py-3 px-4 text-right text-secondary-foreground">
                     {row.topSource}{" "}
-                    <span className="font-mono text-accent">
+                    <span className="font-mono text-primary">
                       ({row.topSourceRate})
                     </span>
                   </td>
-                  <td className="py-3 pl-4 text-right font-mono text-ink-secondary">
+                  <td className="py-3 pl-4 text-right font-mono text-secondary-foreground">
                     {row.avgDealSize}
                   </td>
                 </tr>
@@ -457,11 +457,11 @@ function StageMetricsTable() {
 function SourceQuality() {
   return (
     <div className="card animate-in stagger-6">
-      <h3 className="font-semibold text-ink mb-1 flex items-center gap-2">
-        <Zap className="w-4 h-4 text-accent" />
+      <h3 className="font-serif font-semibold text-foreground mb-1 flex items-center gap-2">
+        <Zap className="w-4 h-4 text-primary" />
         CAC by Channel
       </h3>
-      <p className="text-xs text-ink-muted mb-5">
+      <p className="text-[13px] text-muted-foreground mb-5">
         Which channels produce leads that actually close — volume vs. quality
       </p>
 
@@ -473,7 +473,7 @@ function SourceQuality() {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              stroke="var(--color-edge)"
+              stroke="var(--border)"
               vertical={false}
             />
             <XAxis
@@ -509,25 +509,25 @@ function SourceQuality() {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-xs">
+        <table className="w-full text-[13px]">
           <thead>
-            <tr className="border-b border-edge">
-              <th className="text-left text-ink-muted font-semibold uppercase tracking-wider pb-3 pr-4">
+            <tr className="border-b border-border">
+              <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
                 Channel
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 Prospects
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 Won
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 Win Rate
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                 CAC
               </th>
-              <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 pl-4">
+              <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 pl-4">
                 Avg ARR
               </th>
             </tr>
@@ -536,17 +536,17 @@ function SourceQuality() {
             {[...sourcePerformance]
               .sort((a, b) => a.cac - b.cac)
               .map((row) => (
-                <tr key={row.source} className="border-b border-edge/50">
-                  <td className="py-3 pr-4 font-medium text-ink">
+                <tr key={row.source} className="border-b border-border/50">
+                  <td className="py-3 pr-4 font-medium text-foreground">
                     {row.source}
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-ink-secondary">
+                  <td className="py-3 px-4 text-right font-mono text-secondary-foreground">
                     {row.prospects.toLocaleString()}
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-ink-secondary">
+                  <td className="py-3 px-4 text-right font-mono text-secondary-foreground">
                     {row.won}
                   </td>
-                  <td className="py-3 px-4 text-right font-mono font-semibold text-accent">
+                  <td className="py-3 px-4 text-right font-mono font-semibold text-primary">
                     {row.winRate.toFixed(2)}%
                   </td>
                   <td className={`py-3 px-4 text-right font-mono font-semibold ${
@@ -554,7 +554,7 @@ function SourceQuality() {
                   }`}>
                     ${row.cac}
                   </td>
-                  <td className="py-3 pl-4 text-right font-mono text-ink-secondary">
+                  <td className="py-3 pl-4 text-right font-mono text-secondary-foreground">
                     ${row.avgARR.toLocaleString()}
                   </td>
                 </tr>
@@ -569,11 +569,11 @@ function SourceQuality() {
 function Strategies() {
   return (
     <div className="card animate-in stagger-7">
-      <h3 className="font-semibold text-ink mb-1 flex items-center gap-2">
-        <Lightbulb className="w-4 h-4 text-accent" />
+      <h3 className="font-serif font-semibold text-foreground mb-1 flex items-center gap-2">
+        <Lightbulb className="w-4 h-4 text-primary" />
         Action Plan by Stage
       </h3>
-      <p className="text-xs text-ink-muted mb-6">
+      <p className="text-[13px] text-muted-foreground mb-6">
         Prioritized strategies — start with the biggest bottleneck
       </p>
 
@@ -597,10 +597,10 @@ function Strategies() {
                           : "bg-danger"
                     }`}
                   />
-                  <h4 className="text-sm font-semibold text-ink">
+                  <h4 className="text-sm font-semibold text-foreground">
                     {conv.label}
                   </h4>
-                  <span className={`text-xs font-mono ${healthColors[health]}`}>
+                  <span className={`text-[13px] font-mono ${healthColors[health]}`}>
                     {conv.rate.toFixed(1)}%
                   </span>
                 </div>
@@ -608,9 +608,9 @@ function Strategies() {
                   {strategy.strategies.map((s, i) => (
                     <li
                       key={i}
-                      className="text-xs text-ink-secondary flex items-start gap-2"
+                      className="text-[13px] text-secondary-foreground flex items-start gap-2"
                     >
-                      <span className="text-ink-muted mt-0.5 shrink-0">
+                      <span className="text-muted-foreground mt-0.5 shrink-0">
                         {i + 1}.
                       </span>
                       {s}
@@ -632,16 +632,16 @@ export default function ConversionFunnel() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Conversion Funnel
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Sales funnel, conversion rates, and CAC by channel
         </p>
       </div>
 
       {/* Top-line stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         <StatCard
           label="Total Prospects"
           value={formatNumber(funnelStages[0].count)}

@@ -48,10 +48,10 @@ export async function loader() {
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-ink-muted mb-1">{label}</p>
+    <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-xs font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -69,13 +69,13 @@ function formatCurrency(value: number) {
 }
 
 const CHURN_COLORS = [
-  "#EF4444", "#F97316", "#EAB308", "#D97706", "#DC2626",
-  "#FB923C", "#FBBF24", "#F59E0B",
+  "oklch(0.637 0.237 25.331)", "#F97316", "oklch(0.75 0.15 65)", "oklch(0.75 0.15 65)", "oklch(0.637 0.237 25.331)",
+  "#FB923C", "#FBBF24", "oklch(0.75 0.15 65)",
 ];
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    active: "bg-accent/10 text-accent",
+    active: "bg-primary/10 text-primary",
     completed: "bg-success/10 text-success",
     cancelled: "bg-danger/10 text-danger",
   };
@@ -85,8 +85,8 @@ function StatusBadge({ status }: { status: string }) {
     cancelled: <XCircle className="w-3 h-3" />,
   };
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-2xs font-semibold uppercase tracking-wider ${
-      styles[status] || "bg-surface text-ink-muted"
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
+      styles[status] || "bg-card text-muted-foreground"
     }`}>
       {icons[status]}
       {status}
@@ -95,9 +95,9 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 function WinnerBadge({ winner }: { winner: string | null }) {
-  if (!winner) return <span className="text-xs text-ink-muted">Pending</span>;
+  if (!winner) return <span className="text-[13px] text-muted-foreground">Pending</span>;
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-2xs font-semibold bg-success/10 text-success">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-success/10 text-success">
       <CheckCircle2 className="w-3 h-3" />
       Variant {winner}
     </span>
@@ -133,18 +133,18 @@ export default function RetentionMonetization() {
       {/* Header */}
       <div className="animate-in">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-semibold text-accent uppercase tracking-wider">Tier 1 — Foundation</span>
+          <span className="text-[13px] font-semibold text-primary uppercase tracking-wider">Tier 1 — Foundation</span>
         </div>
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Retention & Monetization
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Churn optimization, ARPU, pricing experiments, and upsell levers
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           label="Avg Cohort Retention"
           value={avgRetention.toFixed(1) + "%"}
@@ -169,9 +169,9 @@ export default function RetentionMonetization() {
 
       {/* Churn Analysis */}
       {churnReasons.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="card animate-in stagger-3">
-            <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
+            <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
               <UserX className="w-4 h-4 text-danger" />
               Churn Reasons
             </h3>
@@ -197,7 +197,7 @@ export default function RetentionMonetization() {
           </div>
 
           <div className="card animate-in stagger-3">
-            <h3 className="font-semibold text-ink mb-5">Churn Breakdown</h3>
+            <h3 className="font-serif font-semibold text-foreground mb-5">Churn Breakdown</h3>
             <div className="space-y-3">
               {churnReasons.map((reason, i) => {
                 const total = churnReasons.reduce((s, r) => s + r.count, 0);
@@ -208,9 +208,9 @@ export default function RetentionMonetization() {
                       className="w-2.5 h-2.5 rounded-full shrink-0"
                       style={{ backgroundColor: CHURN_COLORS[i % CHURN_COLORS.length] }}
                     />
-                    <span className="text-sm text-ink flex-1 truncate">{reason.reason}</span>
-                    <span className="text-sm font-mono text-ink-secondary">{reason.count}</span>
-                    <span className="text-xs font-mono text-ink-muted w-12 text-right">
+                    <span className="text-sm text-foreground flex-1 truncate">{reason.reason}</span>
+                    <span className="text-sm font-mono text-secondary-foreground">{reason.count}</span>
+                    <span className="text-[13px] font-mono text-muted-foreground w-12 text-right">
                       {pct.toFixed(0)}%
                     </span>
                   </div>
@@ -223,27 +223,27 @@ export default function RetentionMonetization() {
 
       {/* Cohort Retention Table */}
       <div className="card animate-in stagger-4">
-        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-          <Layers className="w-4 h-4 text-accent" />
+        <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+          <Layers className="w-4 h-4 text-primary" />
           Cohort Retention
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-edge">
-                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">Cohort</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Customers</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">MRR</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Retention</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">Churn</th>
+              <tr className="border-b border-border">
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Cohort</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Customers</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">MRR</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Retention</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">Churn</th>
               </tr>
             </thead>
             <tbody>
               {cohorts.map((cohort) => (
-                <tr key={cohort.cohort} className="border-b border-edge/50">
-                  <td className="py-2.5 pr-4 text-sm font-medium text-ink">{cohort.cohort}</td>
-                  <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">{cohort.customers}</td>
-                  <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">${cohort.mrr.toLocaleString()}</td>
+                <tr key={cohort.cohort} className="border-b border-border/50">
+                  <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{cohort.cohort}</td>
+                  <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">{cohort.customers}</td>
+                  <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">${cohort.mrr.toLocaleString()}</td>
                   <td className="py-2.5 px-4 text-sm font-mono text-right">
                     <span className={cohort.retention_rate >= 80 ? "text-success" : cohort.retention_rate >= 60 ? "text-warning" : "text-danger"}>
                       {Number(cohort.retention_rate).toFixed(1)}%
@@ -263,8 +263,8 @@ export default function RetentionMonetization() {
 
       {/* Pricing Experiments */}
       <div className="animate-in stagger-5">
-        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-          <FlaskConical className="w-4 h-4 text-accent" />
+        <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+          <FlaskConical className="w-4 h-4 text-primary" />
           Pricing Experiments
         </h3>
         <div className="space-y-5">
@@ -273,50 +273,50 @@ export default function RetentionMonetization() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-2">
-                    <h4 className="font-semibold text-ink truncate">{experiment.name}</h4>
+                    <h4 className="font-semibold text-foreground truncate">{experiment.name}</h4>
                     <StatusBadge status={experiment.status} />
                   </div>
                   {experiment.hypothesis && (
-                    <p className="text-sm text-ink-secondary leading-relaxed">{experiment.hypothesis}</p>
+                    <p className="text-sm text-secondary-foreground leading-relaxed">{experiment.hypothesis}</p>
                   )}
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div className={`p-4 rounded-lg border ${experiment.winner === "A" ? "border-success/30 bg-success/5" : "border-edge bg-surface"}`}>
+                <div className={`p-4 rounded-lg border ${experiment.winner === "A" ? "border-success/30 bg-success/5" : "border-border bg-card"}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xs font-semibold text-ink-muted uppercase tracking-wider">Variant A</span>
+                    <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Variant A</span>
                     {experiment.winner === "A" && <CheckCircle2 className="w-3.5 h-3.5 text-success" />}
                   </div>
-                  <p className="text-sm font-medium text-ink">{experiment.variant_a.plan}</p>
-                  <p className="text-lg font-mono font-semibold text-ink mt-1">
+                  <p className="text-sm font-medium text-foreground">{experiment.variant_a.plan}</p>
+                  <p className="text-lg font-mono font-semibold text-foreground mt-1">
                     ${experiment.variant_a.price}
-                    <span className="text-xs text-ink-muted font-normal">/{experiment.variant_a.billing}</span>
+                    <span className="text-[13px] text-muted-foreground font-normal">/{experiment.variant_a.billing}</span>
                   </p>
                 </div>
-                <div className={`p-4 rounded-lg border ${experiment.winner === "B" ? "border-success/30 bg-success/5" : "border-edge bg-surface"}`}>
+                <div className={`p-4 rounded-lg border ${experiment.winner === "B" ? "border-success/30 bg-success/5" : "border-border bg-card"}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xs font-semibold text-ink-muted uppercase tracking-wider">Variant B</span>
+                    <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Variant B</span>
                     {experiment.winner === "B" && <CheckCircle2 className="w-3.5 h-3.5 text-success" />}
                   </div>
-                  <p className="text-sm font-medium text-ink">{experiment.variant_b.plan}</p>
-                  <p className="text-lg font-mono font-semibold text-ink mt-1">
+                  <p className="text-sm font-medium text-foreground">{experiment.variant_b.plan}</p>
+                  <p className="text-lg font-mono font-semibold text-foreground mt-1">
                     ${experiment.variant_b.price}
-                    <span className="text-xs text-ink-muted font-normal">/{experiment.variant_b.billing}</span>
+                    <span className="text-[13px] text-muted-foreground font-normal">/{experiment.variant_b.billing}</span>
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-6 pt-4 border-t border-edge">
+              <div className="flex items-center gap-6 pt-4 border-t border-border">
                 {experiment.start_date && (
                   <div>
-                    <p className="text-2xs text-ink-muted uppercase tracking-wider">Started</p>
-                    <p className="text-sm font-mono text-ink-secondary">
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Started</p>
+                    <p className="text-sm font-mono text-secondary-foreground">
                       {new Date(experiment.start_date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                     </p>
                   </div>
                 )}
                 {experiment.revenue_impact != null && (
                   <div>
-                    <p className="text-2xs text-ink-muted uppercase tracking-wider">Revenue Impact</p>
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Revenue Impact</p>
                     <p className={`text-sm font-mono font-semibold ${experiment.revenue_impact >= 0 ? "text-success" : "text-danger"}`}>
                       {experiment.revenue_impact >= 0 ? "+" : ""}{formatCurrency(experiment.revenue_impact)}
                     </p>
@@ -324,7 +324,7 @@ export default function RetentionMonetization() {
                 )}
                 {experiment.statistical_significance != null && (
                   <div>
-                    <p className="text-2xs text-ink-muted uppercase tracking-wider">Significance</p>
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Significance</p>
                     <p className={`text-sm font-mono font-semibold ${experiment.statistical_significance >= 95 ? "text-success" : "text-warning"}`}>
                       {Number(experiment.statistical_significance).toFixed(1)}%
                     </p>
@@ -337,7 +337,7 @@ export default function RetentionMonetization() {
             </div>
           ))}
           {experiments.length === 0 && (
-            <div className="text-center py-8 text-ink-muted text-sm">
+            <div className="text-center py-8 text-muted-foreground text-sm">
               No pricing experiments yet.
             </div>
           )}
@@ -347,35 +347,35 @@ export default function RetentionMonetization() {
       {/* Features by Retention Impact */}
       {retentionFeatures.length > 0 && (
         <div className="card animate-in stagger-6">
-          <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-accent" />
+          <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-primary" />
             Features by Retention Impact
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-edge">
-                  <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">Feature</th>
-                  <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Status</th>
-                  <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Adoption</th>
-                  <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">Retention Impact</th>
+                <tr className="border-b border-border">
+                  <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Feature</th>
+                  <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Status</th>
+                  <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Adoption</th>
+                  <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">Retention Impact</th>
                 </tr>
               </thead>
               <tbody>
                 {retentionFeatures.map((feature) => (
-                  <tr key={feature.id} className="border-b border-edge/50">
+                  <tr key={feature.id} className="border-b border-border/50">
                     <td className="py-2.5 pr-4">
-                      <p className="text-sm font-medium text-ink">{feature.feature_name}</p>
+                      <p className="text-sm font-medium text-foreground">{feature.feature_name}</p>
                     </td>
                     <td className="py-2.5 px-4 text-center">
-                      <span className={`inline-flex px-2 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-wider ${
+                      <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
                         feature.status === "production" ? "bg-success/10 text-success" :
-                        feature.status === "beta" ? "bg-warning/10 text-warning" : "bg-accent/10 text-accent"
+                        feature.status === "beta" ? "bg-warning/10 text-warning" : "bg-primary/10 text-primary"
                       }`}>
                         {feature.status}
                       </span>
                     </td>
-                    <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">
+                    <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
                       {feature.adoption_rate != null ? `${Number(feature.adoption_rate).toFixed(0)}%` : "—"}
                     </td>
                     <td className="py-2.5 pl-4 text-sm font-mono text-right">

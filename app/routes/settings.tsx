@@ -18,7 +18,7 @@ function ToggleSwitch({
     <button
       onClick={onToggle}
       className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors cursor-pointer ${
-        enabled ? "bg-accent" : "bg-edge"
+        enabled ? "bg-primary" : "bg-border"
       }`}
     >
       <span
@@ -44,12 +44,12 @@ function SettingsSection({
   return (
     <div className="card">
       <div className="flex items-start gap-3 mb-5">
-        <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">
-          <Icon className="w-4 h-4 text-accent" />
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+          <Icon className="w-4 h-4 text-primary" />
         </div>
         <div>
-          <h3 className="text-base font-semibold text-ink">{title}</h3>
-          <p className="text-xs text-ink-muted mt-0.5">{description}</p>
+          <h3 className="text-base font-semibold font-serif text-foreground">{title}</h3>
+          <p className="text-[13px] font-sans text-muted-foreground mt-0.5">{description}</p>
         </div>
       </div>
       <div className="space-y-4">{children}</div>
@@ -69,9 +69,9 @@ function SettingsRow({
   return (
     <div className="flex items-center justify-between gap-4 py-2">
       <div>
-        <p className="text-sm text-ink">{label}</p>
+        <p className="text-sm text-foreground">{label}</p>
         {description && (
-          <p className="text-xs text-ink-muted mt-0.5">{description}</p>
+          <p className="text-[13px] text-muted-foreground mt-0.5">{description}</p>
         )}
       </div>
       {children}
@@ -92,10 +92,10 @@ export default function Settings() {
     <div className="space-y-8 max-w-3xl">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="text-2xl font-semibold font-serif text-foreground leading-tight">
           Settings
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm font-sans text-muted-foreground mt-1">
           Configure your dashboard preferences
         </p>
       </div>
@@ -235,13 +235,13 @@ function ConnectionRow({
       <div className="flex items-center gap-3">
         <div
           className={`w-2 h-2 rounded-full ${
-            status === "connected" ? "bg-success" : "bg-edge"
+            status === "connected" ? "bg-success" : "bg-border"
           }`}
         />
-        <span className="text-sm text-ink">{name}</span>
+        <span className="text-sm text-foreground">{name}</span>
       </div>
       {status === "connected" ? (
-        <span className="text-xs text-success font-medium">Connected</span>
+        <span className="text-[13px] text-success font-medium">Connected</span>
       ) : (
         <ActionButton variant="ghost" size="sm">
           Connect

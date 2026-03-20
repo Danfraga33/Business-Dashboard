@@ -50,10 +50,10 @@ export async function loader() {
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-ink-muted mb-1">{label}</p>
+    <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-xs font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -96,18 +96,18 @@ export default function AcquisitionExpansion() {
       {/* Header */}
       <div className="animate-in">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xs font-semibold text-accent uppercase tracking-wider">Tier 3 — Scale</span>
+          <span className="text-[13px] font-semibold text-primary uppercase tracking-wider">Tier 3 — Scale</span>
         </div>
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Acquisition & Expansion
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Acquisition channels, expansion revenue, and growth levers — last 30 days
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           label="Total Spend"
           value={formatCurrency(metrics.totalSpend)}
@@ -133,8 +133,8 @@ export default function AcquisitionExpansion() {
       {/* NRR Health Gauge */}
       {latestSaas && (
         <div className="card animate-in stagger-3">
-          <h3 className="font-semibold text-ink mb-4 flex items-center gap-2">
-            <Rocket className="w-4 h-4 text-accent" />
+          <h3 className="font-serif font-semibold text-foreground mb-4 flex items-center gap-2">
+            <Rocket className="w-4 h-4 text-primary" />
             Net Revenue Retention
           </h3>
           <div className="flex items-baseline gap-1.5">
@@ -144,7 +144,7 @@ export default function AcquisitionExpansion() {
               {Number(latestSaas.nrr).toFixed(1)}%
             </span>
           </div>
-          <div className={`inline-flex items-center gap-1.5 mt-3 px-2 py-0.5 rounded-full text-2xs font-medium ${
+          <div className={`inline-flex items-center gap-1.5 mt-3 px-2 py-0.5 rounded-full text-[11px] font-medium ${
             Number(latestSaas.nrr) >= 110 ? "bg-success/10 text-success" : Number(latestSaas.nrr) >= 100 ? "bg-warning/10 text-warning" : "bg-danger/10 text-danger"
           }`}>
             {Number(latestSaas.nrr) >= 110 ? (
@@ -154,7 +154,7 @@ export default function AcquisitionExpansion() {
             )}
             Target: &gt;110%
           </div>
-          <p className="text-xs text-ink-muted mt-2">
+          <p className="text-[13px] text-muted-foreground mt-2">
             {Number(latestSaas.nrr) >= 110
               ? "Expansion revenue exceeds churn — healthy growth dynamics"
               : Number(latestSaas.nrr) >= 100
@@ -167,16 +167,16 @@ export default function AcquisitionExpansion() {
       {/* Spend vs Revenue by Channel */}
       {spendData.length > 0 && (
         <div className="card animate-in stagger-4">
-          <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
+          <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
             <DollarSign className="w-4 h-4 text-warning" />
             Spend vs Revenue by Channel
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={spendData} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis
                 type="number"
-                tick={{ fill: "#78716C", fontSize: 11 }}
+                tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
@@ -184,14 +184,14 @@ export default function AcquisitionExpansion() {
               <YAxis
                 dataKey="name"
                 type="category"
-                tick={{ fill: "#78716C", fontSize: 11 }}
+                tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 width={120}
               />
               <Tooltip content={<ChartTooltip />} />
-              <Bar dataKey="spend" fill="#EF4444" radius={[0, 3, 3, 0]} name="Spend" />
-              <Bar dataKey="revenue" fill="#059669" radius={[0, 3, 3, 0]} name="Revenue" />
+              <Bar dataKey="spend" fill="oklch(0.637 0.237 25.331)" radius={[0, 3, 3, 0]} name="Spend" />
+              <Bar dataKey="revenue" fill="oklch(0.65 0.19 145)" radius={[0, 3, 3, 0]} name="Revenue" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -199,35 +199,35 @@ export default function AcquisitionExpansion() {
 
       {/* Channel Acquisition Table */}
       <div className="card animate-in stagger-5">
-        <h3 className="font-semibold text-ink mb-5">Channel Acquisition</h3>
+        <h3 className="font-serif font-semibold text-foreground mb-5">Channel Acquisition</h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-edge">
-                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">Channel</th>
-                <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Type</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Spend</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Signups</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Revenue</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">ROAS</th>
+              <tr className="border-b border-border">
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Channel</th>
+                <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Type</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Spend</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Signups</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Revenue</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">ROAS</th>
               </tr>
             </thead>
             <tbody>
               {channels.map((channel) => (
-                <tr key={channel.channel_name} className="border-b border-edge/50">
-                  <td className="py-2.5 pr-4 text-sm font-medium text-ink">{channel.channel_name}</td>
+                <tr key={channel.channel_name} className="border-b border-border/50">
+                  <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{channel.channel_name}</td>
                   <td className="py-2.5 px-4 text-center">
-                    <span className={`inline-flex px-2 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-wider ${
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
                       channel.channel_type === "paid" ? "bg-warning/10 text-warning" : "bg-success/10 text-success"
                     }`}>
                       {channel.channel_type}
                     </span>
                   </td>
-                  <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">{formatCurrency(channel.spend)}</td>
-                  <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">{formatNumber(channel.signups)}</td>
-                  <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">{formatCurrency(channel.revenue)}</td>
+                  <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">{formatCurrency(channel.spend)}</td>
+                  <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">{formatNumber(channel.signups)}</td>
+                  <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">{formatCurrency(channel.revenue)}</td>
                   <td className={`py-2.5 pl-4 text-sm font-mono text-right ${
-                    channel.roas >= 3 ? "text-success font-semibold" : channel.roas >= 1 ? "text-ink" : "text-danger"
+                    channel.roas >= 3 ? "text-success font-semibold" : channel.roas >= 1 ? "text-foreground" : "text-danger"
                   }`}>
                     {channel.roas > 0 ? channel.roas.toFixed(2) + "x" : "—"}
                   </td>
@@ -240,44 +240,44 @@ export default function AcquisitionExpansion() {
 
       {/* Feature Rollouts for Expansion */}
       <div className="card animate-in stagger-6">
-        <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-accent" />
+        <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+          <Sparkles className="w-4 h-4 text-primary" />
           Feature Rollouts — Expansion Levers
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-edge">
-                <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">Feature</th>
-                <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Status</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">Adoption</th>
-                <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">Engagement</th>
+              <tr className="border-b border-border">
+                <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">Feature</th>
+                <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Status</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">Adoption</th>
+                <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">Engagement</th>
               </tr>
             </thead>
             <tbody>
               {features.map((feature) => (
-                <tr key={feature.id} className="border-b border-edge/50">
+                <tr key={feature.id} className="border-b border-border/50">
                   <td className="py-2.5 pr-4">
-                    <p className="text-sm font-medium text-ink">{feature.feature_name}</p>
+                    <p className="text-sm font-medium text-foreground">{feature.feature_name}</p>
                     {feature.description && (
-                      <p className="text-xs text-ink-muted mt-0.5 truncate max-w-xs">{feature.description}</p>
+                      <p className="text-[13px] text-muted-foreground mt-0.5 truncate max-w-xs">{feature.description}</p>
                     )}
                   </td>
                   <td className="py-2.5 px-4 text-center">
-                    <span className={`inline-flex px-2 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-wider ${
+                    <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
                       feature.status === "production" ? "bg-success/10 text-success" :
-                      feature.status === "beta" ? "bg-warning/10 text-warning" : "bg-accent/10 text-accent"
+                      feature.status === "beta" ? "bg-warning/10 text-warning" : "bg-primary/10 text-primary"
                     }`}>
                       {feature.status}
                     </span>
                   </td>
-                  <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">
+                  <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
                     {feature.adoption_rate != null ? `${Number(feature.adoption_rate).toFixed(0)}%` : "—"}
                   </td>
                   <td className="py-2.5 pl-4 text-sm font-mono text-right">
                     <span className={
                       (feature.engagement_score ?? 0) >= 70 ? "text-success" :
-                      (feature.engagement_score ?? 0) >= 40 ? "text-warning" : "text-ink-secondary"
+                      (feature.engagement_score ?? 0) >= 40 ? "text-warning" : "text-secondary-foreground"
                     }>
                       {feature.engagement_score != null ? `${feature.engagement_score}/100` : "—"}
                     </span>

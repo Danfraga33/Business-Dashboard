@@ -336,7 +336,7 @@ function TierHeader({ tier, valueQuantification, valueCapture }: {
       <div className="pl-8 pr-6 py-8 bg-gradient-to-br from-slate-50 to-white border-b-4 border-slate-200">
         <div className="flex items-start justify-between mb-6">
           <div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+            <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.2em] mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
               {tier.name} Tier
             </div>
             <div className="text-5xl font-bold text-slate-900 mb-2" style={{ fontFamily: 'Crimson Pro, serif' }}>
@@ -349,7 +349,7 @@ function TierHeader({ tier, valueQuantification, valueCapture }: {
 
           {/* Value capture pill */}
           <div className={`px-6 py-3 rounded-full bg-${accentColor}-50 border-2 border-${accentColor}-200`}>
-            <div className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+            <div className="text-[13px] font-bold text-slate-600 uppercase tracking-wider mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
               Value Capture
             </div>
             <div className={`text-3xl font-black text-${accentColor}-700 tabular-nums`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -373,14 +373,14 @@ function ValueQuantificationSection({ data, tier }: { data: ValueQuantification;
     <div className="px-8 py-8 bg-white border-b border-slate-200">
       <div className="flex items-center gap-3 mb-6">
         <div className={`w-8 h-1 bg-${accentColor}-500`} />
-        <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Step 1: Value Quantification
         </h3>
       </div>
 
       <div className="space-y-6">
         <div>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             What problem does {tier.name} solve?
           </div>
           <div className="text-base text-slate-800 font-medium" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -389,7 +389,7 @@ function ValueQuantificationSection({ data, tier }: { data: ValueQuantification;
         </div>
 
         <div>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             What's that worth?
           </div>
           <div className="pl-4 space-y-2 text-sm text-slate-700" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -428,7 +428,7 @@ function CustomerValidationSection({ interviews, tier }: { interviews: CustomerI
     <div className="px-8 py-8 bg-slate-50 border-b border-slate-200">
       <div className="flex items-center gap-3 mb-6">
         <div className={`w-8 h-1 bg-${accentColor}-500`} />
-        <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Step 2: Customer Validation ({interviews.length + 1} customers interviewed)
         </h3>
       </div>
@@ -466,14 +466,14 @@ function ValueCaptureSection({ data, tier }: { data: ValueCapture; tier: Pricing
     <div className="px-8 py-8 bg-white border-b border-slate-200">
       <div className="flex items-center gap-3 mb-6">
         <div className={`w-8 h-1 bg-${accentColor}-500`} />
-        <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Step 3: Value Capture Analysis
         </h3>
       </div>
 
       <div className="grid grid-cols-3 gap-6 mb-6">
         <div className="bg-slate-50 rounded-lg p-6 border border-slate-200">
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Estimated customer value
           </div>
           <div className="text-2xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -482,7 +482,7 @@ function ValueCaptureSection({ data, tier }: { data: ValueCapture; tier: Pricing
         </div>
 
         <div className="bg-slate-50 rounded-lg p-6 border border-slate-200">
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Current price
           </div>
           <div className="text-2xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -491,7 +491,7 @@ function ValueCaptureSection({ data, tier }: { data: ValueCapture; tier: Pricing
         </div>
 
         <div className={`bg-${accentColor}-50 rounded-lg p-6 border-2 border-${accentColor}-300`}>
-          <div className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-600 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Value capture
           </div>
           <div className={`text-2xl font-black text-${accentColor}-700 tabular-nums`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -501,7 +501,7 @@ function ValueCaptureSection({ data, tier }: { data: ValueCapture; tier: Pricing
       </div>
 
       <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-500">
-        <div className="text-xs font-bold text-blue-700 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <div className="text-[13px] font-bold text-blue-700 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Interpretation
         </div>
         <div className="text-sm text-blue-900 leading-relaxed" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -520,14 +520,14 @@ function DecisionSection({ decision, tier }: { decision: Decision; tier: Pricing
     <div className="px-8 py-8 bg-slate-900 text-white">
       <div className="flex items-center gap-3 mb-8">
         <div className={`w-8 h-1 bg-${accentColor}-400`} />
-        <h3 className="text-sm font-black uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Decision
         </h3>
       </div>
 
       <div className="space-y-6">
         <div>
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Current assessment
           </div>
           <div className="text-lg font-bold text-white" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -536,7 +536,7 @@ function DecisionSection({ decision, tier }: { decision: Decision; tier: Pricing
         </div>
 
         <div>
-          <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-400 uppercase tracking-wider mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Why not raise immediately?
           </div>
           <div className="text-sm text-slate-300 flex items-start gap-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -546,7 +546,7 @@ function DecisionSection({ decision, tier }: { decision: Decision; tier: Pricing
         </div>
 
         <div className={`bg-${accentColor}-500/10 border-2 border-${accentColor}-500/30 rounded-lg p-6`}>
-          <div className={`text-xs font-bold text-${accentColor}-300 uppercase tracking-wider mb-3`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className={`text-[13px] font-bold text-${accentColor}-300 uppercase tracking-wider mb-3`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Next action
           </div>
           <div className={`text-base font-medium text-${accentColor}-50 leading-relaxed`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -566,47 +566,47 @@ function ActualDataSection({ data, tier }: { data: ActualData; tier: PricingTier
     <div className="px-8 py-8 bg-gradient-to-br from-slate-50 to-white border-b border-slate-200">
       <div className="flex items-center gap-3 mb-8">
         <div className={`w-8 h-1 bg-${accentColor}-500`} />
-        <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           {tier.name} Segment — Actual Data
         </h3>
       </div>
 
       {/* Financial Metrics */}
       <div className="mb-8">
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Financial Metrics
         </div>
         <div className="grid grid-cols-4 gap-4">
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Current price</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Current price</div>
             <div className="text-xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.financial.currentPrice}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Customers</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Customers</div>
             <div className="text-xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.financial.customers}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>MRR</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>MRR</div>
             <div className="text-xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>${data.financial.mrr}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>ARR</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>ARR</div>
             <div className="text-xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>${data.financial.arr}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>CAC</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>CAC</div>
             <div className="text-xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>${data.financial.cac}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>CAC payback</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>CAC payback</div>
             <div className="text-xl font-black text-slate-900" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.financial.cacPayback}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Gross margin</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Gross margin</div>
             <div className="text-xl font-black text-slate-900" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.financial.grossMargin}</div>
           </div>
           <div className="bg-white rounded-lg p-4 border border-slate-200 shadow-sm">
-            <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Rev/cust/yr</div>
+            <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Rev/cust/yr</div>
             <div className="text-xl font-black text-slate-900 tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>${data.financial.revenuePerCustomerPerYear}</div>
           </div>
         </div>
@@ -614,28 +614,28 @@ function ActualDataSection({ data, tier }: { data: ActualData; tier: PricingTier
 
       {/* Churn & Retention */}
       <div className="mb-8">
-        <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Churn & Retention
         </div>
         <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-sm space-y-4">
           <div className="grid grid-cols-3 gap-6">
             <div>
-              <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Last 12 months</div>
+              <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Last 12 months</div>
               <div className="text-base font-bold text-slate-900" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.churnRetention.customersLast12Months}</div>
             </div>
             <div>
-              <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Monthly churn</div>
+              <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Monthly churn</div>
               <div className="text-base font-bold text-slate-900" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.churnRetention.monthlyChurn}</div>
             </div>
             <div>
-              <div className="text-xs text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Annual retention</div>
+              <div className="text-[13px] text-slate-500 mb-1" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Annual retention</div>
               <div className="text-base font-bold text-emerald-700" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{data.churnRetention.annualRetention}</div>
             </div>
           </div>
 
           {data.churnRetention.churnReasons.length > 0 && (
             <div className="pt-4 border-t border-slate-100">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+              <div className="text-[13px] font-bold text-slate-500 uppercase tracking-wider mb-3" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
                 Churn reasons (last 3 churned customers)
               </div>
               <div className="space-y-2">
@@ -654,7 +654,7 @@ function ActualDataSection({ data, tier }: { data: ActualData; tier: PricingTier
       {/* Customer Profile & Satisfaction in 2 columns */}
       <div className="grid grid-cols-2 gap-6">
         <div>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Customer Profile
           </div>
           <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-sm space-y-3 text-sm" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -686,7 +686,7 @@ function ActualDataSection({ data, tier }: { data: ActualData; tier: PricingTier
         </div>
 
         <div>
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Satisfaction & Engagement
           </div>
           <div className="bg-white rounded-lg p-6 border border-slate-200 shadow-sm space-y-3 text-sm" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -717,7 +717,7 @@ function ActualDataSection({ data, tier }: { data: ActualData; tier: PricingTier
       {/* Expansion signals for Growth tier */}
       {data.expansionSignals && (
         <div className="mt-6">
-          <div className="text-xs font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Expansion Signals
           </div>
           <div className="bg-emerald-50 rounded-lg p-6 border-2 border-emerald-200">
@@ -754,7 +754,7 @@ function HealthDashboard({ metrics }: { metrics: HealthMetric[] }) {
     <div className="bg-slate-900 text-white px-8 py-10">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-8 h-1 bg-emerald-400" />
-        <h3 className="text-sm font-black uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           At-A-Glance Health Metrics
         </h3>
       </div>
@@ -779,7 +779,7 @@ function HealthDashboard({ metrics }: { metrics: HealthMetric[] }) {
                 </div>
                 <div className={`flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border ${config.border}`}>
                   <Icon className={`w-4 h-4 ${config.text}`} />
-                  <span className={`text-xs font-bold ${config.text}`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+                  <span className={`text-[13px] font-bold ${config.text}`} style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
                     {config.label}
                   </span>
                 </div>
@@ -810,24 +810,24 @@ function HealthDashboard({ metrics }: { metrics: HealthMetric[] }) {
 
       {/* Portfolio level */}
       <div className="border-t-2 border-white/20 pt-8">
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <div className="text-[13px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Portfolio Level
         </div>
         <div className="grid grid-cols-4 gap-6">
           <div className="bg-white/5 rounded-lg p-5 border border-white/10">
-            <div className="text-xs text-slate-400 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Total MRR</div>
+            <div className="text-[13px] text-slate-400 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Total MRR</div>
             <div className="text-2xl font-black tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>${totalMRR}</div>
           </div>
           <div className="bg-white/5 rounded-lg p-5 border border-white/10">
-            <div className="text-xs text-slate-400 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Total Customers</div>
+            <div className="text-[13px] text-slate-400 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Total Customers</div>
             <div className="text-2xl font-black tabular-nums" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>{totalCustomers}</div>
           </div>
           <div className="bg-white/5 rounded-lg p-5 border border-white/10">
-            <div className="text-xs text-slate-400 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Avg Churn</div>
+            <div className="text-[13px] text-slate-400 mb-2" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Avg Churn</div>
             <div className="text-2xl font-black" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>0.25%</div>
           </div>
           <div className="bg-emerald-500/10 rounded-lg p-5 border-2 border-emerald-500/30">
-            <div className="text-xs text-emerald-300 mb-2 font-bold" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Status</div>
+            <div className="text-[13px] text-emerald-300 mb-2 font-bold" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Status</div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-6 h-6 text-emerald-400" />
               <div className="text-2xl font-black text-emerald-300" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>Green</div>
@@ -844,13 +844,13 @@ function ResearchTemplatesSection({ templates }: { templates: typeof researchTem
     <div className="bg-gradient-to-br from-amber-50 to-orange-50 px-8 py-10 border-t-4 border-amber-400">
       <div className="flex items-center gap-3 mb-8">
         <div className="w-8 h-1 bg-amber-500" />
-        <h3 className="text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <h3 className="font-serif text-sm font-black text-slate-900 uppercase tracking-[0.15em]" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Download Research Templates — Stay Current
         </h3>
       </div>
 
       <div className="bg-white rounded-lg p-6 border-2 border-amber-200 mb-6 shadow-lg">
-        <div className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-3" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <div className="text-[13px] font-bold text-amber-700 uppercase tracking-wider mb-3" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Do these again when:
         </div>
         <ul className="space-y-2 text-sm text-slate-700" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
@@ -893,7 +893,7 @@ function ResearchTemplatesSection({ templates }: { templates: typeof researchTem
                 Download
               </button>
             </div>
-            <div className="text-xs text-slate-500" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+            <div className="text-[13px] text-slate-500" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
               Last version: {template.lastVersion}
             </div>
           </div>
@@ -901,7 +901,7 @@ function ResearchTemplatesSection({ templates }: { templates: typeof researchTem
       </div>
 
       <div className="bg-slate-900 text-white rounded-lg p-8 shadow-2xl">
-        <div className="text-xs font-bold text-amber-300 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+        <div className="text-[13px] font-bold text-amber-300 uppercase tracking-[0.15em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
           Quick Actions
         </div>
 
@@ -970,7 +970,7 @@ export default function PricingStrategyRedesign() {
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white px-8 py-16 border-b-8 border-amber-500">
         <div className="max-w-5xl">
-          <div className="text-xs font-bold text-amber-300 uppercase tracking-[0.3em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
+          <div className="text-[13px] font-bold text-amber-300 uppercase tracking-[0.3em] mb-4" style={{ fontFamily: 'IBM Plex Sans, sans-serif' }}>
             Pricing Intelligence Framework
           </div>
           <h1 className="text-6xl font-bold mb-6 leading-tight" style={{ fontFamily: 'Crimson Pro, serif' }}>

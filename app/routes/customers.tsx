@@ -49,10 +49,10 @@ export async function loader() {
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-ink-muted mb-1">{label}</p>
+    <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-xs font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -70,12 +70,12 @@ function formatCurrency(value: number) {
 }
 
 const CHURN_COLORS = [
-  "#EF4444", "#F97316", "#EAB308", "#D97706", "#DC2626",
-  "#FB923C", "#FBBF24", "#F59E0B",
+  "oklch(0.637 0.237 25.331)", "oklch(0.75 0.15 65)", "oklch(0.75 0.15 65)", "oklch(0.75 0.15 65)", "oklch(0.637 0.237 25.331)",
+  "oklch(0.75 0.15 65)", "oklch(0.75 0.15 65)", "oklch(0.75 0.15 65)",
 ];
 
 const COHORT_COLORS = [
-  "#2563EB", "#059669", "#D97706", "#DC2626", "#7C3AED",
+  "oklch(0.85 0.08 55)", "oklch(0.65 0.19 145)", "oklch(0.75 0.15 65)", "oklch(0.637 0.237 25.331)", "oklch(0.627 0.265 303.9)",
   "#0891B2", "#DB2777", "#65A30D", "#4F46E5", "#0D9488",
   "#C026D3", "#EA580C",
 ];
@@ -113,11 +113,11 @@ export default function CustomerDeepDive() {
   // Customer Composition (MRR breakdown)
   const totalMRR = customers.reduce((sum, c) => sum + (c.status === "active" ? c.mrr : 0), 0);
   const compositionData = [
-    { name: "New MRR", value: totalMRR * 0.25, color: "#059669" },
-    { name: "Expansion MRR", value: totalMRR * 0.15, color: "#2563EB" },
-    { name: "Contraction MRR", value: totalMRR * -0.05, color: "#EF4444" },
-    { name: "Reactivation MRR", value: totalMRR * 0.05, color: "#7C3AED" },
-    { name: "Churned MRR", value: totalMRR * -0.08, color: "#DC2626" },
+    { name: "New MRR", value: totalMRR * 0.25, color: "oklch(0.65 0.19 145)" },
+    { name: "Expansion MRR", value: totalMRR * 0.15, color: "oklch(0.85 0.08 55)" },
+    { name: "Contraction MRR", value: totalMRR * -0.05, color: "oklch(0.637 0.237 25.331)" },
+    { name: "Reactivation MRR", value: totalMRR * 0.05, color: "oklch(0.627 0.265 303.9)" },
+    { name: "Churned MRR", value: totalMRR * -0.08, color: "oklch(0.637 0.237 25.331)" },
   ];
 
   // Segment performance (mock data)
@@ -144,16 +144,16 @@ export default function CustomerDeepDive() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Customer Deep Dive
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Cohort analysis, unit economics, customer composition, and segment performance
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
           label="Total Customers"
           value={customerStats.total.toString()}
@@ -185,39 +185,39 @@ export default function CustomerDeepDive() {
           <div className="space-y-6">
             {/* Cohort Retention Table */}
             <div className="card">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <Layers className="w-4 h-4 text-primary" />
                 Cohort Retention Analysis
               </h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-edge">
-                      <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
+                    <tr className="border-b border-border">
+                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Cohort
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Customers
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Retention
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Churn
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {cohorts.map((cohort) => (
-                      <tr key={cohort.cohort} className="border-b border-edge/50">
-                        <td className="py-2.5 pr-4 text-sm font-medium text-ink">{cohort.cohort}</td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">
+                      <tr key={cohort.cohort} className="border-b border-border/50">
+                        <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{cohort.cohort}</td>
+                        <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
                           {cohort.customers}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">
+                        <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
                           ${cohort.mrr.toLocaleString()}
                         </td>
                         <td className="py-2.5 px-4 text-sm font-mono text-right">
@@ -238,53 +238,53 @@ export default function CustomerDeepDive() {
             </div>
 
             {/* Retention Curves & Expansion */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Retention Curve */}
               <div className="card">
-                <h3 className="font-semibold text-ink mb-5">Retention Curves by Cohort</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">Retention Curves by Cohort</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <LineChart data={retentionData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis
                       dataKey="month"
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                       label={{ value: "Months since signup", position: "insideBottom", offset: -5, fontSize: 11 }}
                     />
                     <YAxis
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                       tickFormatter={(v) => `${v}%`}
                       domain={[0, 100]}
                     />
                     <Tooltip content={<ChartTooltip />} />
-                    <Line type="monotone" dataKey="retention" stroke="#059669" strokeWidth={2} dot={false} name="Retention %" />
+                    <Line type="monotone" dataKey="retention" stroke="oklch(0.65 0.19 145)" strokeWidth={2} dot={false} name="Retention %" />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
 
               {/* Expansion by Cohort */}
               <div className="card">
-                <h3 className="font-semibold text-ink mb-5">Expansion by Cohort</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">Expansion by Cohort</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={expansionData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis
                       dataKey="cohort"
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                     />
                     <YAxis
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                       tickFormatter={(v) => `${v}%`}
                     />
                     <Tooltip content={<ChartTooltip />} />
-                    <Bar dataKey="expansion" fill="#2563EB" radius={[4, 4, 0, 0]} name="Expansion %" />
+                    <Bar dataKey="expansion" fill="oklch(0.85 0.08 55)" radius={[4, 4, 0, 0]} name="Expansion %" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -296,20 +296,20 @@ export default function CustomerDeepDive() {
         <Tab label="Unit Economics">
           <div className="space-y-6">
             {/* Unit Economics Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="card">
                 <div className="flex items-center gap-2 mb-3">
                   <div className="w-7 h-7 rounded-lg bg-success/10 flex items-center justify-center">
                     <DollarSign className="w-3.5 h-3.5 text-success" />
                   </div>
-                  <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">LTV</p>
+                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">LTV</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-ink">
+                  <span className="text-2xl font-bold text-foreground">
                     {latest ? formatCurrency(latest.ltv) : "—"}
                   </span>
                 </div>
-                <p className="text-2xs text-ink-muted mt-2">Customer Lifetime Value</p>
+                <p className="text-[11px] text-muted-foreground mt-2">Customer Lifetime Value</p>
               </div>
 
               <div className="card">
@@ -317,14 +317,14 @@ export default function CustomerDeepDive() {
                   <div className="w-7 h-7 rounded-lg bg-danger/10 flex items-center justify-center">
                     <TrendingUp className="w-3.5 h-3.5 text-danger" />
                   </div>
-                  <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">CAC</p>
+                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">CAC</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-ink">
+                  <span className="text-2xl font-bold text-foreground">
                     {latest ? formatCurrency(latest.cac) : "—"}
                   </span>
                 </div>
-                <p className="text-2xs text-ink-muted mt-2">Customer Acquisition Cost</p>
+                <p className="text-[11px] text-muted-foreground mt-2">Customer Acquisition Cost</p>
               </div>
 
               <div className="card">
@@ -332,57 +332,57 @@ export default function CustomerDeepDive() {
                   <div className="w-7 h-7 rounded-lg bg-warning/10 flex items-center justify-center">
                     <BarChart3 className="w-3.5 h-3.5 text-warning" />
                   </div>
-                  <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">Payback</p>
+                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">Payback</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-ink">
+                  <span className="text-2xl font-bold text-foreground">
                     {latest ? Number(latest.payback_period_months).toFixed(1) : "—"}
                   </span>
-                  <span className="text-sm text-ink-muted">mo</span>
+                  <span className="text-sm text-muted-foreground">mo</span>
                 </div>
-                <p className="text-2xs text-ink-muted mt-2">CAC Payback Period</p>
+                <p className="text-[11px] text-muted-foreground mt-2">CAC Payback Period</p>
               </div>
 
               <div className="card">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-7 h-7 rounded-lg bg-accent/10 flex items-center justify-center">
-                    <TrendingUp className="w-3.5 h-3.5 text-accent" />
+                  <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <TrendingUp className="w-3.5 h-3.5 text-primary" />
                   </div>
-                  <p className="text-xs font-medium text-ink-muted uppercase tracking-wider">LTV:CAC</p>
+                  <p className="text-[13px] font-medium text-muted-foreground uppercase tracking-wider">LTV:CAC</p>
                 </div>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold text-accent">
+                  <span className="text-2xl font-bold text-primary">
                     {latest ? Number(latest.ltv_cac_ratio).toFixed(1) : "—"}
                   </span>
-                  <span className="text-sm text-ink-muted">:1</span>
+                  <span className="text-sm text-muted-foreground">:1</span>
                 </div>
-                <p className="text-2xs text-ink-muted mt-2">Target: &gt;3:1</p>
+                <p className="text-[11px] text-muted-foreground mt-2">Target: &gt;3:1</p>
               </div>
             </div>
 
             {/* Unit Economics by Cohort */}
             <div className="card">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <DollarSign className="w-4 h-4 text-primary" />
                 Unit Economics by Cohort
               </h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-edge">
-                      <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
+                    <tr className="border-b border-border">
+                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Cohort
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         ARPU
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Avg LTV
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Payback
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Margin
                       </th>
                     </tr>
@@ -394,15 +394,15 @@ export default function CustomerDeepDive() {
                       const payback = latest ? Number(latest.payback_period_months) * (0.8 + Math.random() * 0.4) : 0; // Vary by cohort
                       const margin = 70 + Math.random() * 15; // 70-85%
                       return (
-                        <tr key={cohort.cohort} className="border-b border-edge/50">
-                          <td className="py-2.5 pr-4 text-sm font-medium text-ink">{cohort.cohort}</td>
-                          <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">
+                        <tr key={cohort.cohort} className="border-b border-border/50">
+                          <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{cohort.cohort}</td>
+                          <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
                             {formatCurrency(arpu)}
                           </td>
-                          <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">
+                          <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
                             {formatCurrency(estimatedLTV)}
                           </td>
-                          <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">
+                          <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
                             {payback.toFixed(1)} mo
                           </td>
                           <td className="py-2.5 pl-4 text-sm font-mono text-right text-success">
@@ -422,9 +422,9 @@ export default function CustomerDeepDive() {
         <Tab label="Customer Composition">
           <div className="space-y-6">
             {/* MRR Breakdown */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="card">
-                <h3 className="font-semibold text-ink mb-5">MRR Composition</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">MRR Composition</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <PieChart>
                     <Pie
@@ -447,7 +447,7 @@ export default function CustomerDeepDive() {
               </div>
 
               <div className="card">
-                <h3 className="font-semibold text-ink mb-5">MRR Movement Breakdown</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">MRR Movement Breakdown</h3>
                 <div className="space-y-4">
                   {compositionData.map((item) => {
                     const isPositive = item.value > 0;
@@ -458,7 +458,7 @@ export default function CustomerDeepDive() {
                             className="w-3 h-3 rounded-full"
                             style={{ backgroundColor: item.color }}
                           />
-                          <span className="text-sm text-ink">{item.name}</span>
+                          <span className="text-sm text-foreground">{item.name}</span>
                         </div>
                         <span className={`text-sm font-mono font-semibold ${isPositive ? "text-success" : "text-danger"}`}>
                           {isPositive ? "+" : ""}{formatCurrency(item.value)}
@@ -466,9 +466,9 @@ export default function CustomerDeepDive() {
                       </div>
                     );
                   })}
-                  <div className="pt-4 border-t border-edge">
+                  <div className="pt-4 border-t border-border">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-ink">Net MRR Change</span>
+                      <span className="text-sm font-bold text-foreground">Net MRR Change</span>
                       <span className="text-sm font-mono font-bold text-success">
                         +{formatCurrency(compositionData.reduce((sum, d) => sum + d.value, 0))}
                       </span>
@@ -480,9 +480,9 @@ export default function CustomerDeepDive() {
 
             {/* Churn Reasons */}
             {churnReasons.length > 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div className="card">
-                  <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
+                  <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                     <UserX className="w-4 h-4 text-danger" />
                     Churn Reasons
                   </h3>
@@ -508,7 +508,7 @@ export default function CustomerDeepDive() {
                 </div>
 
                 <div className="card">
-                  <h3 className="font-semibold text-ink mb-5">Churn Breakdown</h3>
+                  <h3 className="font-serif font-semibold text-foreground mb-5">Churn Breakdown</h3>
                   <div className="space-y-3">
                     {churnReasons.map((reason, i) => {
                       const total = churnReasons.reduce((s, r) => s + r.count, 0);
@@ -519,9 +519,9 @@ export default function CustomerDeepDive() {
                             className="w-2.5 h-2.5 rounded-full shrink-0"
                             style={{ backgroundColor: CHURN_COLORS[i % CHURN_COLORS.length] }}
                           />
-                          <span className="text-sm text-ink flex-1 truncate">{reason.reason}</span>
-                          <span className="text-sm font-mono text-ink-secondary">{reason.count}</span>
-                          <span className="text-xs font-mono text-ink-muted w-12 text-right">
+                          <span className="text-sm text-foreground flex-1 truncate">{reason.reason}</span>
+                          <span className="text-sm font-mono text-secondary-foreground">{reason.count}</span>
+                          <span className="text-[13px] font-mono text-muted-foreground w-12 text-right">
                             {pct.toFixed(0)}%
                           </span>
                         </div>
@@ -539,42 +539,42 @@ export default function CustomerDeepDive() {
           <div className="space-y-6">
             {/* Segment Performance Table */}
             <div className="card">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <Users className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
                 Segment Performance
               </h3>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-edge">
-                      <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
+                    <tr className="border-b border-border">
+                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Segment
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Customers
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Avg LTV
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         CAC
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Retention
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {segmentData.map((segment) => (
-                      <tr key={segment.segment} className="border-b border-edge/50">
-                        <td className="py-2.5 pr-4 text-sm font-medium text-ink">{segment.segment}</td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-ink-secondary">
+                      <tr key={segment.segment} className="border-b border-border/50">
+                        <td className="py-2.5 pr-4 text-sm font-medium text-foreground">{segment.segment}</td>
+                        <td className="py-2.5 px-4 text-sm font-mono text-right text-secondary-foreground">
                           {segment.customers}
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">
+                        <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
                           {formatCurrency(segment.mrr)}
                         </td>
                         <td className="py-2.5 px-4 text-sm font-mono text-right text-success">
@@ -596,49 +596,49 @@ export default function CustomerDeepDive() {
             </div>
 
             {/* Segment Charts */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="card">
-                <h3 className="font-semibold text-ink mb-5">MRR by Segment</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">MRR by Segment</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={segmentData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis
                       dataKey="segment"
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                     />
                     <YAxis
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                       tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
                     />
                     <Tooltip content={<ChartTooltip />} />
-                    <Bar dataKey="mrr" fill="#2563EB" radius={[4, 4, 0, 0]} name="MRR" />
+                    <Bar dataKey="mrr" fill="oklch(0.85 0.08 55)" radius={[4, 4, 0, 0]} name="MRR" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
 
               <div className="card">
-                <h3 className="font-semibold text-ink mb-5">LTV by Segment</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">LTV by Segment</h3>
                 <ResponsiveContainer width="100%" height={280}>
                   <BarChart data={segmentData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                     <XAxis
                       dataKey="segment"
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                     />
                     <YAxis
-                      tick={{ fill: "#78716C", fontSize: 11 }}
+                      tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                       axisLine={false}
                       tickLine={false}
                       tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`}
                     />
                     <Tooltip content={<ChartTooltip />} />
-                    <Bar dataKey="ltv" fill="#059669" radius={[4, 4, 0, 0]} name="LTV" />
+                    <Bar dataKey="ltv" fill="oklch(0.65 0.19 145)" radius={[4, 4, 0, 0]} name="LTV" />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -647,8 +647,8 @@ export default function CustomerDeepDive() {
             {/* Customer List */}
             <div className="card">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="font-semibold text-ink flex items-center gap-2">
-                  <Users className="w-4 h-4 text-accent" />
+                <h3 className="font-serif font-semibold text-foreground flex items-center gap-2">
+                  <Users className="w-4 h-4 text-primary" />
                   All Customers
                 </h3>
                 <input
@@ -656,54 +656,54 @@ export default function CustomerDeepDive() {
                   placeholder="Search customers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="bg-surface border border-edge rounded-lg px-3 py-1.5 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent/50 transition-colors w-64"
+                  className="bg-card border border-border rounded-lg px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors w-64"
                 />
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-edge">
-                      <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pr-4">
+                    <tr className="border-b border-border">
+                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pr-4">
                         Name
                       </th>
-                      <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Plan
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Health
                       </th>
-                      <th className="text-center text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 px-4">
+                      <th className="text-center text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 px-4">
                         Segment
                       </th>
-                      <th className="text-left text-2xs font-semibold text-ink-muted uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-left text-[11px] font-semibold text-muted-foreground uppercase tracking-wider pb-3 pl-4">
                         Cohort
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredCustomers.map((customer) => (
-                      <tr key={customer.id} className="border-b border-edge/50">
+                      <tr key={customer.id} className="border-b border-border/50">
                         <td className="py-2.5 pr-4">
-                          <p className="text-sm font-medium text-ink">{customer.name}</p>
-                          <p className="text-xs text-ink-muted">{customer.email}</p>
+                          <p className="text-sm font-medium text-foreground">{customer.name}</p>
+                          <p className="text-[13px] text-muted-foreground">{customer.email}</p>
                         </td>
                         <td className="py-2.5 px-4 text-center">
-                          <span className={`inline-flex px-2 py-0.5 rounded-full text-2xs font-semibold uppercase tracking-wider ${
+                          <span className={`inline-flex px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase tracking-wider ${
                             customer.plan === "enterprise"
-                              ? "bg-accent/10 text-accent"
+                              ? "bg-primary/10 text-primary"
                               : customer.plan === "pro"
                               ? "bg-success/10 text-success"
                               : customer.plan === "starter"
                               ? "bg-warning/10 text-warning"
-                              : "bg-surface text-ink-muted"
+                              : "bg-card text-muted-foreground"
                           }`}>
                             {customer.plan}
                           </span>
                         </td>
-                        <td className="py-2.5 px-4 text-sm font-mono text-right text-ink">
+                        <td className="py-2.5 px-4 text-sm font-mono text-right text-foreground">
                           ${customer.mrr}
                         </td>
                         <td className="py-2.5 px-4 text-sm font-mono text-right">
@@ -717,10 +717,10 @@ export default function CustomerDeepDive() {
                             {customer.health_score ?? "—"}
                           </span>
                         </td>
-                        <td className="py-2.5 px-4 text-xs text-center text-ink-secondary">
+                        <td className="py-2.5 px-4 text-[13px] text-center text-secondary-foreground">
                           {customer.segment}
                         </td>
-                        <td className="py-2.5 pl-4 text-sm font-mono text-ink-secondary">
+                        <td className="py-2.5 pl-4 text-sm font-mono text-secondary-foreground">
                           {customer.cohort}
                         </td>
                       </tr>
@@ -728,7 +728,7 @@ export default function CustomerDeepDive() {
                   </tbody>
                 </table>
                 {filteredCustomers.length === 0 && (
-                  <div className="text-center py-8 text-ink-muted text-sm">
+                  <div className="text-center py-8 text-muted-foreground text-sm">
                     No customers match your search.
                   </div>
                 )}

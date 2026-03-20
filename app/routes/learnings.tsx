@@ -98,25 +98,25 @@ function EntryCard({
 
   if (editing) {
     return (
-      <Form method="post" className="card space-y-5 border-accent/30">
+      <Form method="post" className="card space-y-5 border-primary/30">
         <input type="hidden" name="intent" value="update" />
         <input type="hidden" name="id" value={entry.id} />
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Edit3 className="w-4 h-4 text-accent" />
-            <h3 className="font-semibold text-ink">Edit Entry</h3>
+            <Edit3 className="w-4 h-4 text-primary" />
+            <h3 className="font-serif font-semibold text-foreground">Edit Entry</h3>
           </div>
           <button
             type="button"
             onClick={() => setEditing(false)}
-            className="p-1.5 rounded-lg text-ink-muted hover:text-ink hover:bg-surface-hover transition-colors"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         <div>
-          <label className="text-2xs font-semibold text-ink-muted uppercase tracking-wider block mb-1.5">
+          <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
             Main Focus
           </label>
           <input
@@ -125,7 +125,7 @@ function EntryCard({
             defaultValue={entry.business || ""}
             placeholder="What's the main focus today?"
             required
-            className="w-full bg-base border border-edge rounded-lg px-3 py-2 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent/50 transition-colors"
+            className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors"
           />
         </div>
 
@@ -181,7 +181,7 @@ function EntryCard({
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex-1 min-w-0">
-          <span className="text-xs font-mono text-ink-muted">
+          <span className="text-[13px] font-mono text-muted-foreground">
             {new Date(entry.created_at).toLocaleDateString("en-US", {
               weekday: "short",
               month: "short",
@@ -189,7 +189,7 @@ function EntryCard({
               year: "numeric",
             })}
           </span>
-          <p className="text-sm font-semibold text-ink leading-snug mt-1">
+          <p className="text-sm font-semibold text-foreground leading-snug mt-1">
             {entry.business || "Untitled"}
           </p>
         </div>
@@ -201,7 +201,7 @@ function EntryCard({
               setEditing(true);
               setExpanded(false);
             }}
-            className="p-1.5 rounded-lg text-ink-muted hover:text-accent hover:bg-accent/10 transition-colors"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
             title="Edit entry"
           >
             <Edit3 className="w-4 h-4" />
@@ -212,14 +212,14 @@ function EntryCard({
             <button
               type="submit"
               disabled={isDeleting}
-              className="p-1.5 rounded-lg text-ink-muted hover:text-danger hover:bg-danger/10 transition-colors"
+              className="p-1.5 rounded-lg text-muted-foreground hover:text-danger hover:bg-danger/10 transition-colors"
               title="Delete entry"
             >
               <Trash2 className="w-4 h-4" />
             </button>
           </Form>
           <ChevronDown
-            className={`w-4 h-4 text-ink-muted transition-transform duration-200 ${
+            className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
               expanded ? "rotate-180" : ""
             }`}
           />
@@ -231,7 +231,7 @@ function EntryCard({
           expanded ? "max-h-[800px] opacity-100 mt-5" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="space-y-4 pt-4 border-t border-edge">
+        <div className="space-y-4 pt-4 border-t border-border">
           <Section title="My Thoughts" content={entry.hypothesis} />
           <Section title="What I Did Today" content={entry.shipped} />
           <Section title="Tomorrow's Plan" content={entry.learned} />
@@ -244,10 +244,10 @@ function EntryCard({
 function Section({ title, content }: { title: string; content: string }) {
   return (
     <div>
-      <h4 className="text-2xs font-semibold text-ink-muted uppercase tracking-wider mb-1.5">
+      <h4 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
         {title}
       </h4>
-      <div className="text-sm text-ink-secondary leading-relaxed whitespace-pre-line">
+      <div className="text-sm text-secondary-foreground leading-relaxed whitespace-pre-line">
         {content}
       </div>
     </div>
@@ -269,7 +269,7 @@ function TextArea({
 }) {
   return (
     <div>
-      <label className="text-2xs font-semibold text-ink-muted uppercase tracking-wider block mb-1.5">
+      <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
         {label}
       </label>
       <textarea
@@ -278,7 +278,7 @@ function TextArea({
         rows={4}
         required={required}
         defaultValue={defaultValue}
-        className="w-full bg-base border border-edge rounded-lg px-3 py-2 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent/50 transition-colors resize-y"
+        className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors resize-y"
       />
     </div>
   );
@@ -302,10 +302,10 @@ export default function Learnings() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">
           Journal
         </h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Daily reflections and planning
         </p>
       </div>
@@ -313,7 +313,7 @@ export default function Learnings() {
       {/* New Entry Form */}
       <div>
         <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-ink-muted">{entries.length} entries</p>
+          <p className="text-sm text-muted-foreground">{entries.length} entries</p>
           <ActionButton
             onClick={() => setShowNewEntry(!showNewEntry)}
             icon={showNewEntry ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -325,12 +325,12 @@ export default function Learnings() {
         {showNewEntry && (
           <Form
             method="post"
-            className="card space-y-5 border-accent/30 mb-6"
+            className="card space-y-5 border-primary/30 mb-6"
           >
             <input type="hidden" name="intent" value="create" />
             <div className="flex items-center gap-2 mb-2">
-              <Edit3 className="w-4 h-4 text-accent" />
-              <h3 className="font-semibold text-ink">
+              <Edit3 className="w-4 h-4 text-primary" />
+              <h3 className="font-serif font-semibold text-foreground">
                 New Entry &mdash;{" "}
                 {new Date().toLocaleDateString("en-US", {
                   month: "short",
@@ -341,7 +341,7 @@ export default function Learnings() {
             </div>
 
             <div>
-              <label className="text-2xs font-semibold text-ink-muted uppercase tracking-wider block mb-1.5">
+              <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider block mb-1.5">
                 Main Focus
               </label>
               <input
@@ -349,7 +349,7 @@ export default function Learnings() {
                 type="text"
                 placeholder="What's the main focus today?"
                 required
-                className="w-full bg-base border border-edge rounded-lg px-3 py-2 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent/50 transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary/50 transition-colors"
               />
             </div>
 
@@ -398,7 +398,7 @@ export default function Learnings() {
       {/* Entries List */}
       <div className="space-y-4">
         {entries.length === 0 && !showNewEntry && (
-          <div className="text-center py-12 text-ink-muted text-sm">
+          <div className="text-center py-12 text-muted-foreground text-sm">
             No entries yet. Start journaling to track your daily progress.
           </div>
         )}

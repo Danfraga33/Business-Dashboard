@@ -53,10 +53,10 @@ export async function loader() {
 function ChartTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-surface border border-edge rounded-lg px-3 py-2 shadow-xl">
-      <p className="text-xs text-ink-muted mb-1">{label}</p>
+    <div className="bg-card border border-border rounded-lg px-3 py-2 shadow-xl">
+      <p className="text-[13px] text-muted-foreground mb-1">{label}</p>
       {payload.map((entry: any) => (
-        <p key={entry.name} className="text-xs font-mono" style={{ color: entry.color }}>
+        <p key={entry.name} className="text-[13px] font-mono" style={{ color: entry.color }}>
           {entry.name}: {typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}
         </p>
       ))}
@@ -80,8 +80,8 @@ export default function Retention() {
     return (
       <div className="space-y-8">
         <div className="animate-in">
-          <h2 className="text-2xl font-semibold text-ink">Retention</h2>
-          <p className="text-sm text-ink-muted mt-1">
+          <h2 className="font-serif text-2xl font-semibold text-foreground">Retention</h2>
+          <p className="text-sm text-muted-foreground mt-1">
             No data available. Run the seed script to populate data.
           </p>
         </div>
@@ -91,10 +91,10 @@ export default function Retention() {
 
   // Mock NRR breakdown data
   const nrrBreakdown = [
-    { name: "Base MRR", value: 31000, color: "#78716C" },
-    { name: "Expansion", value: 4650, color: "#059669" },
-    { name: "Contraction", value: -1550, color: "#EF4444" },
-    { name: "Churn", value: -2480, color: "#DC2626" },
+    { name: "Base MRR", value: 31000, color: "oklch(0.60 0.01 80)" },
+    { name: "Expansion", value: 4650, color: "oklch(0.65 0.19 145)" },
+    { name: "Contraction", value: -1550, color: "oklch(0.637 0.237 25.331)" },
+    { name: "Churn", value: -2480, color: "oklch(0.637 0.237 25.331)" },
   ];
 
   const netMRR = nrrBreakdown.reduce((sum, item) => sum + item.value, 0);
@@ -123,9 +123,9 @@ export default function Retention() {
 
   // Mock customer health scores
   const healthScoreDistribution = [
-    { score: "High (80-100)", count: 89, color: "#059669" },
+    { score: "High (80-100)", count: 89, color: "oklch(0.65 0.19 145)" },
     { score: "Medium (50-79)", count: 112, color: "#F59E0B" },
-    { score: "Low (0-49)", count: 21, color: "#DC2626" },
+    { score: "Low (0-49)", count: 21, color: "oklch(0.637 0.237 25.331)" },
   ];
 
   // Mock NPS/CSAT trends
@@ -167,8 +167,8 @@ export default function Retention() {
     <div className="space-y-8">
       {/* Header */}
       <div className="animate-in">
-        <h2 className="text-2xl font-semibold text-ink leading-tight">Retention</h2>
-        <p className="text-sm text-ink-muted mt-1">
+        <h2 className="font-serif text-2xl font-semibold text-foreground leading-tight">Retention</h2>
+        <p className="text-sm text-muted-foreground mt-1">
           NRR, cohort retention, customer health, and leading indicators
         </p>
       </div>
@@ -178,7 +178,7 @@ export default function Retention() {
         <Tab label="Retention Metrics" >
           <div className="space-y-6">
             {/* Key Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard
                 label="Net Revenue Retention"
                 value={`${nrrValue}%`}
@@ -203,10 +203,10 @@ export default function Retention() {
 
             {/* NRR Breakdown */}
             <div className="card animate-in stagger-3">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-primary" />
                 NRR Breakdown
-                <span className="text-2xs text-ink-muted font-normal ml-auto">This month</span>
+                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">This month</span>
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -214,9 +214,9 @@ export default function Retention() {
                 <div>
                   <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={nrrBreakdown} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
-                      <XAxis type="number" tick={{ fill: "#78716C", fontSize: 11 }} />
-                      <YAxis dataKey="name" type="category" tick={{ fill: "#78716C", fontSize: 11 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                      <XAxis type="number" tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }} />
+                      <YAxis dataKey="name" type="category" tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }} />
                       <Tooltip content={<ChartTooltip />} />
                       <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                         {nrrBreakdown.map((entry, index) => (
@@ -230,24 +230,24 @@ export default function Retention() {
                 {/* Table breakdown */}
                 <div className="space-y-2">
                   {nrrBreakdown.map((item) => (
-                    <div key={item.name} className="flex items-center justify-between py-2 border-b border-edge/50">
+                    <div key={item.name} className="flex items-center justify-between py-2 border-b border-border/50">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: item.color }} />
-                        <span className="text-sm text-ink-secondary">{item.name}</span>
+                        <span className="text-sm text-secondary-foreground">{item.name}</span>
                       </div>
-                      <span className={`text-sm font-mono ${item.value >= 0 ? "text-ink" : "text-danger"}`}>
+                      <span className={`text-sm font-mono ${item.value >= 0 ? "text-foreground" : "text-danger"}`}>
                         {item.value >= 0 ? "+" : ""}{formatCurrency(item.value)}
                       </span>
                     </div>
                   ))}
-                  <div className="flex items-center justify-between pt-3 border-t-2 border-edge">
-                    <span className="text-sm font-semibold text-ink">Net MRR</span>
+                  <div className="flex items-center justify-between pt-3 border-t-2 border-border">
+                    <span className="text-sm font-semibold text-foreground">Net MRR</span>
                     <span className={`text-sm font-mono font-bold ${netMRR >= 0 ? "text-success" : "text-danger"}`}>
                       {netMRR >= 0 ? "+" : ""}{formatCurrency(netMRR)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between pt-2">
-                    <span className="text-sm font-semibold text-ink">NRR</span>
+                    <span className="text-sm font-semibold text-foreground">NRR</span>
                     <span className={`text-sm font-mono font-bold ${Number(nrrValue) >= 100 ? "text-success" : "text-warning"}`}>
                       {nrrValue}%
                     </span>
@@ -258,32 +258,32 @@ export default function Retention() {
 
             {/* Cohort Retention Curves */}
             <div className="card animate-in stagger-4">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <Activity className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <Activity className="w-4 h-4 text-primary" />
                 Cohort Retention Curves
-                <span className="text-2xs text-ink-muted font-normal ml-auto">Monthly retention</span>
+                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">Monthly retention</span>
               </h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={retentionCurves}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis
                     dataKey="month"
-                    tick={{ fill: "#78716C", fontSize: 11 }}
-                    axisLine={{ stroke: "var(--color-edge)" }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
+                    axisLine={{ stroke: "var(--border)" }}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fill: "#78716C", fontSize: 11 }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                     axisLine={false}
                     tickLine={false}
                     domain={[0, 100]}
                   />
                   <Tooltip content={<ChartTooltip />} />
                   <Legend />
-                  <Line type="monotone" dataKey="Jan 26" stroke="#2563EB" strokeWidth={2} dot={{ r: 3 }} />
-                  <Line type="monotone" dataKey="Dec 25" stroke="#059669" strokeWidth={2} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="Jan 26" stroke="oklch(0.85 0.08 55)" strokeWidth={2} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="Dec 25" stroke="oklch(0.65 0.19 145)" strokeWidth={2} dot={{ r: 3 }} />
                   <Line type="monotone" dataKey="Nov 25" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3 }} />
-                  <Line type="monotone" dataKey="Oct 25" stroke="#DC2626" strokeWidth={2} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="Oct 25" stroke="oklch(0.637 0.237 25.331)" strokeWidth={2} dot={{ r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -294,7 +294,7 @@ export default function Retention() {
         <Tab label="Customer Metrics">
           <div className="space-y-6">
             {/* Key Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard
                 label="Average ARPU"
                 value={formatCurrency(latest.mrr / 222)}
@@ -319,30 +319,30 @@ export default function Retention() {
 
             {/* ARPU Trends by Cohort */}
             <div className="card animate-in stagger-3">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-primary" />
                 ARPU Trends by Cohort
-                <span className="text-2xs text-ink-muted font-normal ml-auto">Last 6 months</span>
+                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">Last 6 months</span>
               </h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={arpuTrends}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis
                     dataKey="month"
-                    tick={{ fill: "#78716C", fontSize: 11 }}
-                    axisLine={{ stroke: "var(--color-edge)" }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
+                    axisLine={{ stroke: "var(--border)" }}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fill: "#78716C", fontSize: 11 }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(v) => `$${v}`}
                   />
                   <Tooltip content={<ChartTooltip />} />
                   <Legend />
-                  <Line type="monotone" dataKey="Q3 25" stroke="#059669" strokeWidth={2} dot={{ r: 3 }} />
-                  <Line type="monotone" dataKey="Q4 25" stroke="#2563EB" strokeWidth={2} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="Q3 25" stroke="oklch(0.65 0.19 145)" strokeWidth={2} dot={{ r: 3 }} />
+                  <Line type="monotone" dataKey="Q4 25" stroke="oklch(0.85 0.08 55)" strokeWidth={2} dot={{ r: 3 }} />
                   <Line type="monotone" dataKey="Q1 26" stroke="#7C3AED" strokeWidth={2} dot={{ r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
@@ -351,8 +351,8 @@ export default function Retention() {
             {/* Customer Health Score Distribution */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="card animate-in stagger-4">
-                <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-accent" />
+                <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-primary" />
                   Health Score Distribution
                 </h3>
                 <ResponsiveContainer width="100%" height={200}>
@@ -375,40 +375,40 @@ export default function Retention() {
                 </ResponsiveContainer>
                 <div className="mt-4 space-y-2">
                   {healthScoreDistribution.map((item) => (
-                    <div key={item.score} className="flex items-center justify-between text-xs">
+                    <div key={item.score} className="flex items-center justify-between text-[13px]">
                       <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-                        <span className="text-ink-secondary">{item.score}</span>
+                        <span className="text-secondary-foreground">{item.score}</span>
                       </div>
-                      <span className="font-mono text-ink">{item.count} customers</span>
+                      <span className="font-mono text-foreground">{item.count} customers</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="card animate-in stagger-4">
-                <h3 className="font-semibold text-ink mb-5">Expansion Breakdown</h3>
+                <h3 className="font-serif font-semibold text-foreground mb-5">Expansion Breakdown</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between p-3 rounded-lg bg-success/5 border border-success/20">
                     <div>
-                      <p className="text-sm font-semibold text-ink">Expansion MRR</p>
-                      <p className="text-xs text-ink-muted mt-0.5">Upgrades + add-ons</p>
+                      <p className="text-sm font-semibold text-foreground">Expansion MRR</p>
+                      <p className="text-[13px] text-muted-foreground mt-0.5">Upgrades + add-ons</p>
                     </div>
                     <span className="text-lg font-mono font-bold text-success">{formatCurrency(4650)}</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-accent/5 border border-accent/20">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-primary/5 border border-primary/20">
                     <div>
-                      <p className="text-sm font-semibold text-ink">% of Total MRR</p>
-                      <p className="text-xs text-ink-muted mt-0.5">Expansion contribution</p>
+                      <p className="text-sm font-semibold text-foreground">% of Total MRR</p>
+                      <p className="text-[13px] text-muted-foreground mt-0.5">Expansion contribution</p>
                     </div>
-                    <span className="text-lg font-mono font-bold text-accent">{expansionPct}%</span>
+                    <span className="text-lg font-mono font-bold text-primary">{expansionPct}%</span>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-surface border border-edge">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-card border border-border">
                     <div>
-                      <p className="text-sm font-semibold text-ink">Expanding Customers</p>
-                      <p className="text-xs text-ink-muted mt-0.5">This month</p>
+                      <p className="text-sm font-semibold text-foreground">Expanding Customers</p>
+                      <p className="text-[13px] text-muted-foreground mt-0.5">This month</p>
                     </div>
-                    <span className="text-lg font-mono font-bold text-ink">34</span>
+                    <span className="text-lg font-mono font-bold text-foreground">34</span>
                   </div>
                 </div>
               </div>
@@ -420,7 +420,7 @@ export default function Retention() {
         <Tab label="Leading Indicators">
           <div className="space-y-6">
             {/* Key Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard
                 label="NPS Score"
                 value="53"
@@ -446,23 +446,23 @@ export default function Retention() {
 
             {/* NPS/CSAT Trends */}
             <div className="card animate-in stagger-3">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <ThumbsUp className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <ThumbsUp className="w-4 h-4 text-primary" />
                 Customer Satisfaction Trends
-                <span className="text-2xs text-ink-muted font-normal ml-auto">Last 6 months</span>
+                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">Last 6 months</span>
               </h3>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={satisfactionTrends}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="var(--color-edge)" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
                   <XAxis
                     dataKey="month"
-                    tick={{ fill: "#78716C", fontSize: 11 }}
-                    axisLine={{ stroke: "var(--color-edge)" }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
+                    axisLine={{ stroke: "var(--border)" }}
                     tickLine={false}
                   />
                   <YAxis
                     yAxisId="left"
-                    tick={{ fill: "#78716C", fontSize: 11 }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                     axisLine={false}
                     tickLine={false}
                     domain={[0, 100]}
@@ -470,47 +470,47 @@ export default function Retention() {
                   <YAxis
                     yAxisId="right"
                     orientation="right"
-                    tick={{ fill: "#78716C", fontSize: 11 }}
+                    tick={{ fill: "oklch(0.60 0.01 80)", fontSize: 11 }}
                     axisLine={false}
                     tickLine={false}
                     domain={[0, 5]}
                   />
                   <Tooltip content={<ChartTooltip />} />
                   <Legend />
-                  <Line yAxisId="left" type="monotone" dataKey="nps" name="NPS" stroke="#2563EB" strokeWidth={2} dot={{ r: 4 }} />
-                  <Line yAxisId="right" type="monotone" dataKey="csat" name="CSAT" stroke="#059669" strokeWidth={2} dot={{ r: 4 }} />
+                  <Line yAxisId="left" type="monotone" dataKey="nps" name="NPS" stroke="oklch(0.85 0.08 55)" strokeWidth={2} dot={{ r: 4 }} />
+                  <Line yAxisId="right" type="monotone" dataKey="csat" name="CSAT" stroke="oklch(0.65 0.19 145)" strokeWidth={2} dot={{ r: 4 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
 
             {/* Feature Adoption */}
             {/* <div className="card animate-in stagger-4">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-accent" />
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-primary" />
                 Feature Adoption Rates
               </h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-xs">
+                <table className="w-full text-[13px]">
                   <thead>
-                    <tr className="border-b border-edge">
-                      <th className="text-left text-ink-muted font-semibold uppercase tracking-wider pb-3 pr-4">
+                    <tr className="border-b border-border">
+                      <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
                         Feature
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                         Adoption %
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                         Active Users
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 pl-4">
                         Total Users
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {featureAdoption.map((feature) => (
-                      <tr key={feature.feature} className="border-b border-edge/50">
-                        <td className="py-3 pr-4 font-medium text-ink">{feature.feature}</td>
+                      <tr key={feature.feature} className="border-b border-border/50">
+                        <td className="py-3 pr-4 font-medium text-foreground">{feature.feature}</td>
                         <td className="py-3 px-4 text-right">
                           <span className={`font-mono font-semibold ${
                             feature.adoption >= 70 ? "text-success" : feature.adoption >= 50 ? "text-warning" : "text-danger"
@@ -518,8 +518,8 @@ export default function Retention() {
                             {feature.adoption}%
                           </span>
                         </td>
-                        <td className="py-3 px-4 text-right font-mono text-ink-secondary">{feature.active}</td>
-                        <td className="py-3 pl-4 text-right font-mono text-ink-secondary">{feature.total}</td>
+                        <td className="py-3 px-4 text-right font-mono text-secondary-foreground">{feature.active}</td>
+                        <td className="py-3 pl-4 text-right font-mono text-secondary-foreground">{feature.total}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -529,37 +529,37 @@ export default function Retention() {
 
             {/* Churn Risk Signals */}
             <div className="card animate-in stagger-5">
-              <h3 className="font-semibold text-ink mb-5 flex items-center gap-2">
+              <h3 className="font-serif font-semibold text-foreground mb-5 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 text-danger" />
                 Customers at Risk of Churn
-                <span className="text-2xs text-ink-muted font-normal ml-auto">{churnRiskCustomers.length} customers</span>
+                <span className="font-sans text-[11px] text-muted-foreground font-normal ml-auto">{churnRiskCustomers.length} customers</span>
               </h3>
               <div className="overflow-x-auto">
-                <table className="w-full text-xs">
+                <table className="w-full text-[13px]">
                   <thead>
-                    <tr className="border-b border-edge">
-                      <th className="text-left text-ink-muted font-semibold uppercase tracking-wider pb-3 pr-4">
+                    <tr className="border-b border-border">
+                      <th className="text-left text-muted-foreground font-semibold uppercase tracking-wider pb-3 pr-4">
                         Company
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                         MRR
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                         Health Score
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 px-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 px-4">
                         Days Inactive
                       </th>
-                      <th className="text-right text-ink-muted font-semibold uppercase tracking-wider pb-3 pl-4">
+                      <th className="text-right text-muted-foreground font-semibold uppercase tracking-wider pb-3 pl-4">
                         Support Tickets
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {churnRiskCustomers.map((customer) => (
-                      <tr key={customer.id} className="border-b border-edge/50 hover:bg-surface/50">
-                        <td className="py-3 pr-4 font-medium text-ink">{customer.company}</td>
-                        <td className="py-3 px-4 text-right font-mono text-ink-secondary">
+                      <tr key={customer.id} className="border-b border-border/50 hover:bg-card/50">
+                        <td className="py-3 pr-4 font-medium text-foreground">{customer.company}</td>
+                        <td className="py-3 px-4 text-right font-mono text-secondary-foreground">
                           {formatCurrency(customer.mrr)}
                         </td>
                         <td className="py-3 px-4 text-right">
@@ -569,10 +569,10 @@ export default function Retention() {
                             {customer.health}
                           </span>
                         </td>
-                        <td className="py-3 px-4 text-right font-mono text-ink-secondary">
+                        <td className="py-3 px-4 text-right font-mono text-secondary-foreground">
                           {customer.daysInactive}d
                         </td>
-                        <td className="py-3 pl-4 text-right font-mono text-ink-secondary">
+                        <td className="py-3 pl-4 text-right font-mono text-secondary-foreground">
                           {customer.supportTickets}
                         </td>
                       </tr>
