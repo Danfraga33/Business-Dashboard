@@ -2,7 +2,26 @@
   "permissions": {
     "allow": [
       "Bash(npm run build:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git worktree add:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run migrate:*)",
+      "Bash(npx tsx:*)",
+      "Bash(node -e:*)",
+      "Bash(npx tsc:*)",
+      "Bash(grep:*)",
+      "Bash(npm run dev:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "Bash(git branch:*)",
+      "Bash(npm run seed:*)",
+      "Bash(del:*)",
+      "Bash(del \"c:\\\\Users\\\\danfr\\\\OneDrive\\\\Documents\\\\Net Worth\\\\Coding\\\\Business_Dashboard\\\\business_dashboard\\\\app\\\\routes\\\\experiments.tsx\")",
+      "Bash(del \"c:\\\\Users\\\\danfr\\\\OneDrive\\\\Documents\\\\Net Worth\\\\Coding\\\\Business_Dashboard\\\\business_dashboard\\\\app\\\\routes\\\\retention.tsx\")"
     ]
   }
 }
